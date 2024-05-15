@@ -1,34 +1,27 @@
 ## Ex1
 ```py
-gabarito = []
-nomes = []
-respostas_alunos = []
-pontuacao = []
+a=''
+b=''
+list_a=[]
+list_b=[]
+nome=''
+res=0
+cont=0
+for i in range(0, 10):
+    a = input(f"Digite o gabarito do Ex{i+1}");
+    list_a.append(a)
+while res!=2:
+    nome = input("Digite seu nome:")
+    list_b=[]
+    cont=0
+    for i in range(0, 10):
+        b = input(f"Digite a sua resposta do Ex {i+1}")
+        list_b.append(b)
+        if list_a[i] == list_b[i]:
+            cont+=1
+    print(f"{nome} tirou {cont} pontos de 10")
+    res = int(input("Deseja continuar: 1-sim, 2-nao?"))
 
-for i in range(1, 11):
-    resp_gabarito = input(f"Digite a resposta do exercício {i}: ")
-    gabarito.append(resp_gabarito)
-
-continuar = True
-while continuar:
-    nome_aluno = input("Digite o seu nome: ")
-    respostas_aluno = []
-    for i in range(1, 11):
-        resp_aluno = input(f"Digite sua resposta do Ex{i}: ")
-        respostas_aluno.append(resp_aluno)
-    nomes.append(nome_aluno)
-    respostas_alunos.append(respostas_aluno)
-    continuar = int(input("Deseja continuar? (1 - sim, 2 - não): ")) == 1
-
-for aluno, respostas in zip(nomes, respostas_alunos):
-    pontuacao_aluno = 0
-    for i in range(10):
-        if gabarito[i] == respostas[i]:
-            pontuacao_aluno += 1
-    pontuacao.append(pontuacao_aluno)
-
-for nome, pont in zip(nomes, pontuacao):
-    print(f"O aluno {nome} acertou {pont} de 10 questões.")
 ```
 ## Ex2
 ```py
