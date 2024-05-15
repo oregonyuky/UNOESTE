@@ -1,4 +1,5 @@
-![image](https://github.com/oregonyuky/AP/assets/152916454/c9a59bc9-0ea8-4383-b9f5-df9483c170f2)
+![image](https://github.com/oregonyuky/UNOESTE/assets/152916454/245f3da9-bbd0-4803-af59-5f85033f939f)
+
 ## Ex1
 ```py
 import random 
