@@ -1,7 +1,8 @@
 # Here's all the solution of the exercise of the CRISTIANE
 There's all exercise that we have done until now 
 ## 09/05/2024 - Python - Estruturas de Dados - Listas
-![image](https://github.com/oregonyuky/trabalho-da-cris/assets/152916454/7ecfd373-88cc-44d0-a8ab-493948ebd1dc)
+![image](https://github.com/oregonyuky/UNOESTE/assets/152916454/e8ebcf15-4474-47cb-9a63-3e59597cac27)
+
 ### ex1
 ```py
 num = int(input("digite o numero"))
