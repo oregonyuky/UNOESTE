@@ -1,4 +1,5 @@
-![image](https://github.com/oregonyuky/AP/assets/152916454/d4edb87e-df92-4144-b76e-f77fb61e4272)
+![image](https://github.com/oregonyuky/UNOESTE/assets/152916454/55464c81-8c9f-4bcd-bf5b-8e353d7d43d2)
+
 ## Ex1 
 ```py
 par=0
