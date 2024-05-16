@@ -3,7 +3,7 @@
 #define TF 3
 int main(){
     int i, vconta[TF], saldo[TF], op, conta, depos, pos, saque, soma=0, por;
-    char nome[TF];
+    char nome[TF][100];
     for(i=0;i<TF;i++){
         printf("Digite o numero da conta %d\n", i+1);
         scanf("%d", &vconta[i]);
@@ -11,17 +11,17 @@ int main(){
     for(i=0;i<TF;i++){
         printf("Digite o seu nome da conta %d:\n", vconta[i]);
         fflush(stdin);
-        scanf("%s", &nome[i]);
+        scanf("%s", nome[i]);
     }
     for(i=0;i<TF;i++){
         printf("Digite o seu saldo da conta %d:\n", i+1);
         scanf("%d", &saldo[i]);
     }
-    printf("1.Efetuar deposito\n");
+    printf("\n1.Efetuar deposito\n");
     printf("2.Efetuar saque\n");
     printf("3.Consultar o ativo bancario (ou seja, o somatorio do ssaldos de todos os clientes)\n");
     printf("4.Aplicar uma porcentagem de juros mensal (acrescimo)\n");
-    printf("5.Finalizar o programa\n");
+    printf("5.Finalizar o programa\n\n");
     scanf("%d", &op);
     while(op!=5){
         switch(op){
@@ -37,7 +37,7 @@ int main(){
                 else{
                     printf("Qual e o valor a ser depositado?\n");
                     scanf("%d", &depos);
-                    //printf("nome: %s\n", nome[pos]);
+					printf("Nome: %s\n", nome[pos]);
                     printf("Saldo atual: %d\n", saldo[pos]);
                     saldo[pos]+=depos;
                     printf("Saldo atualizado: %d\n", saldo[pos]);
@@ -55,7 +55,7 @@ int main(){
                 else{
                     printf("Qual e o valor do saque?\n");
                     scanf("%d", &saque);
-                    if(vconta[pos]<saque)
+                    if(saldo[pos]<saque)
                         printf("Saldo insuficiente\n");
                     else{
                         printf("Nome: %s\n", nome[pos]);
@@ -78,13 +78,15 @@ int main(){
                     saldo[i]*=(1+por/100);
                 }
                 break;
+			default:
+				break;
 
         }
-        printf("1.Efetuar deposito\n");
+        printf("\n1.Efetuar deposito\n");
         printf("2.Efetuar saque\n");
         printf("3.Consultar o ativo bancario (ou seja, o somatorio do ssaldos de todos os clientes)\n");
         printf("4.Aplicar uma porcentagem de juros mensal (acrescimo)\n");
-        printf("5.Finalizar o programa\n");
+        printf("5.Finalizar o programa\n\n");
         scanf("%d", &op);
     }
     return 0;
