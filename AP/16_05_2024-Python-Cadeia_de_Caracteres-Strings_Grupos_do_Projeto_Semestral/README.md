@@ -1,3 +1,6 @@
+![image](https://github.com/oregonyuky/UNOESTE/assets/152916454/4e581705-2ea0-497a-b356-935f65cb6046)
+
+
 ## Ex1
 ```py
 a=''
@@ -11,6 +14,8 @@ for i in range(0, len(a)):
             cont+=1
 print(f"Quantidade de vogais: {cont}")
 ```
+![image](https://github.com/oregonyuky/UNOESTE/assets/152916454/f52cf187-719f-4c73-92b7-38cbc50ee4fa)
+
 ## Ex2
 ```py
 a=''
