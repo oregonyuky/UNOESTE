@@ -37,4 +37,26 @@ int main(){
 		}
 		printf("Custo do arm %d: %.2f\n", l+1, somaC);
 	}
+	menor = maior = matEst[0][0];
+	for(i=0;i<TFA;i++){
+		for(c=0;c<TFP;c++){
+			if(matEst[l][c]<menor){
+				menor = matEst[l][c];
+			}
+			if(matEst[l][c] > maior)
+				maior = matEst[l][c];
+		}
+		for(l=0;l<TFA;l++){
+			for(c=0;c<TFP;c++){
+				if(matEst[l][c]==menor)
+					printf("Produto %s Arm %d tem o menor estoque\n", vetNoome[c], l+1);
+			}
+		}
+	}
+	for(l=0;l<TFA;l++){
+		for(c=0;c<TFP;c++){
+			if(matEst[l][c]==maior)
+				printf("prod %s Arm %d tem o maior estoque\n", vetNome[c], l+1);;
+		}
+	}
 }
