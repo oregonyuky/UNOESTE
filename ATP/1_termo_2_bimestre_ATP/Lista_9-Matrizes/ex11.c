@@ -30,4 +30,11 @@ int main(){
 			soma+=matEst[l][c];
 		printf("Itens do prod %s: %d\n", vetNome[c], soma);
 	}
+	for(l=0;l<TFA;l++){
+		somaC=0;
+		for(c=0;c<TFP;c++){
+			soma+=matEst[l][c]*vetCusto[c];
+		}
+		printf("Custo do arm %d: %.2f\n", l+1, somaC);
+	}
 }
