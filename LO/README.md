@@ -23,19 +23,21 @@
 ## Agora usando a prova direta
 ### Tecnica dedutiva
 Existem 4 tecnicas dedutivas 
-> [!NOTE]
+> [!IMPORTANT]
 > - prova direta
 > - prova indireta
 > - prova condicional
 > - prova indireta condicional
 #### prova direta
-> [!TIP]
+> [!NOTE]
 > Encontre o s'. Usando $t, t \to q', q' \to s'$
 >   1) $t$ -------------- 1. $p$
 >   2) $t' \to q'$    --- 2. $p$
 >   3) $q' \to s'$    --- 3. $p$
 >   4) $t \to s'$    ---- $SD$
 >   5) $s'$ ------------ $MP$
+
+---
 
 ***exercicio 1***
 
@@ -47,6 +49,8 @@ Existem 4 tecnicas dedutivas
 > 3) $a' \to b$
 > 4) $b'$
 > 5) $a$
+
+---
 
 ***exercicio 2***
 
@@ -60,6 +64,8 @@ Existem 4 tecnicas dedutivas
 >  6) $s$
 >  7) $s'*s$
 >  8) $r \to q'$
+
+---
 
 ***exercicio 3***
 
