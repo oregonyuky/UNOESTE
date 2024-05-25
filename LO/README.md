@@ -71,3 +71,4 @@ Existem 4 tecnicas dedutivas
 
 > [!TIP]
 > Encontre r. Usando $p' \to r, r' \to q, (p*q)'$
+> <div align="right">slkdfs.</div>
