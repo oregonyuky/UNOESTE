@@ -31,7 +31,7 @@ Existem 4 tecnicas dedutivas
 #### prova direta
 > [!NOTE]
 > Encontre o s'. Usando $t, t \to q', q' \to s'$
->   1) $t$ -------------- 1. $p$
+>   1) $t$  1. $p$
 >   2) $t' \to q'$    --- 2. $p$
 >   3) $q' \to s'$    --- 3. $p$
 >   4) $t \to s'$    ---- $SD$
@@ -44,11 +44,13 @@ Existem 4 tecnicas dedutivas
 
 > [!TIP]
 > Encontre o a. Usando $c', b \to c, a' \to b$
-> 1) $c'$
-> 2) $b \to c$
-> 3) $a' \to b$
-> 4) $b'$
-> 5) $a$
+> |tipo | argumentos | regra de inferencia ou equivalencia notavel |
+> | --- | ---------- | --------------------------------------------|
+> |1)   | $c'$ | $p$ |
+> |2)   | $b \to c$ | $p$ |
+> |3)   | $a' \to b$ | $p$ |
+> |4)   | $b'$ | $MT \ 2, 1$ |
+> |5)   | $a$ | $MT \ 3, 4$ |
 
 ---
 
@@ -56,14 +58,14 @@ Existem 4 tecnicas dedutivas
 
 > [!TIP]
 > Encontre $r \to q'$. Usando $r'+s', q \to s$
->  1) $r' \to s'$
->  2) $q \to s$
->  3) $r$
->  4) $q$
->  5) $s'$
->  6) $s$
->  7) $s'*s$
->  8) $r \to q'$
+> | tipo | argumentos | regra de inferencia ou equivalencia notavel |
+> | --- | ------------| --------------------------------------------|
+> |1)   | $r'+s'$ | $p$ |
+> |2)   | $q \to s$ | $p$ |
+> |3)   | $r$ | $pp$ |
+> |4)   | $s'$ | $SD \ 1, 3$ |
+> |5)   | $q'$ | $MT \ 2, 4$ |
+> |6)   | $r \to q'$ | $PC \ 3 \ a \ 5$ |
 
 ---
 
@@ -71,4 +73,20 @@ Existem 4 tecnicas dedutivas
 
 > [!TIP]
 > Encontre r. Usando $p' \to r, r' \to q, (p*q)'$
-> <div align="right">slkdfs.</div>
+>
+> ## Tip
+
+> [!TIP]
+> Encontre $r \to q'$. Usando $r'+s', q \to s$
+> <pre>
+>  1) $r' \to s'$              asdf
+>  2) $q \to s$                asfas
+>  3) $r$
+>  4) $q$
+>  5) $s'$
+>  6) $s$
+>  7) $s'*s$
+>  8) $r \to q'$
+>  </pre>
+
+
