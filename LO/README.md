@@ -31,11 +31,13 @@ Existem 4 tecnicas dedutivas
 #### prova direta
 > [!NOTE]
 > Encontre o s'. Usando $t, t \to q', q' \to s'$
->   1) $t$  1. $p$
->   2) $t' \to q'$    --- 2. $p$
->   3) $q' \to s'$    --- 3. $p$
->   4) $t \to s'$    ---- $SD$
->   5) $s'$ ------------ $MP$
+> |tipo | argumentos | regra de inferencia ou equivalencia notavel |
+> | --- | ---------- | --------------------------------------------|
+> |1)   | $t$ | $p$ |
+> |2)   | $t' \to q'$ | $p$ |
+> |3)   | $q' \to s'$ | $p$ |
+> |4)   | $t \to s'$ | $SH \ 2,3$ |
+> |5)   | $s'$ | $MP \ 1, 4$ |
 
 ---
 
@@ -73,20 +75,19 @@ Existem 4 tecnicas dedutivas
 
 > [!TIP]
 > Encontre r. Usando $p' \to r, r' \to q, (p*q)'$
->
-> ## Tip
+> | tipo | argumentos | regra de inferencia ou equivalencia notavel |
+> | ---- | -----------| --------------------------------------------|
+> |1) | $p' \to r$ | $p$ |
+> |2) | $r' \to q$ | $p$ |
+> |3) | $(p*q)'$ | $p$ |
+> |4) | $r'$ | $pp$ |
+> |5) | $q$ | $MP \ 2, 4$ |
+> |6) | $p'+q'$ | $DM \ 3$ |
+> |7) | $(q')'$ | $DN \ 5$ |
+> |8) | $p'$ | $SD \ 6,7$ |
+> |9) | $r$ | $MP \ 1,8$ |
+> |10) | $r*r'$ | $U \ 4, 9$ |
+> |11) | $r$ | $PI \ 4, 10$ |
 
-> [!TIP]
-> Encontre $r \to q'$. Usando $r'+s', q \to s$
-> <pre>
->  1) $r' \to s'$              asdf
->  2) $q \to s$                asfas
->  3) $r$
->  4) $q$
->  5) $s'$
->  6) $s$
->  7) $s'*s$
->  8) $r \to q'$
->  </pre>
 
 
