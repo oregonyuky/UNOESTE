@@ -147,9 +147,10 @@ $e \implies x=2$
 |6) | $a \to e$ | $condicional \ 2$
 |7) | $a \to b$ | $SH \ 6,5$  
 ---
-11) Provar $t'$ dadas as premissas:
+11) Provar $t'$ dadas as premissas:  
 
 | tipos | argumento | regra de inferencia ou equivalencia | 
+|:----:|:-----:|:-----:|
 |1) | $t \to s'$ | $p$
 |2) | $f \to t'$ | $p$
 |3) | $s+f$ | $p$
@@ -299,13 +300,13 @@ $e \implies x=2$
 ---
 21) Provar $2x = 12 \to y = 4$ dadas as premissas:
 
-$a \implies $2x + 3y = 24$
+$a \implies 2x + 3y = 24$
 
-$b \implies $x=6$
+$b \implies x=6$
 
-$c \implies $y=4$
+$c \implies y=4$
 
-$d \implies $2x=12$
+$d \implies 2x=12$
 
 | tipos | argumentos | regra de inferencia ou equivalencia | 
 |:-----:|:----------:|:-----------------------------------:|

@@ -17,26 +17,26 @@
 > | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1
 > | 0 | 1 | 0 | 1 | 0 | 0 | 0 | 1
 > | 0 | 1 | 1 | 1 | 0 | 1 | 0 | 1
-> | 1 | 0 | 0 | 0 | 1 | 1 | 1 | `0`
-> | 1 | 0 | 1 | 0 | 1 | 1 | 1 | `0`
+> | 1 | 0 | 0 | 0 | 1 | 1 | 1 | `0` &#x1F534;|
+> | 1 | 0 | 1 | 0 | 1 | 1 | 1 | `0` &#x1F534;|
 > | 1 | 1 | 0 | 1 | 0 | 1 | 0 | 1
 > | 1 | 1 | 1 | 1 | 0 | 1 | 0 | 1
 
 ## Ex 2 d apagina 58
 > [!TIP]
-> Qual deles torna o seguinte argumetno valido ?
-> \
-> | $p$ | $q$ | premissa: A,B,C ou D | premnissa | conclusao | 
-> | ---|-----|:-----:|------|------|
+> Qual deles torna o seguinte argumetno valido ?  
+> 
+> | $p$ | $q$ | $premissa: A,B,C ou D$ | $premissa$ | $conclusao$ | 
+> | ---|-----|:-----:|:------:|:------:|
 > | 0 | 0 | 1ou0 | 1 | 1 |
 > | 0 | 1 | 1ou0 | 0 | 1 |
 > | 1 | 0 | 1ou0 | 1 | 1 |
 > | 1 | 1 | 1ou0 | 0 | 0 |
 > ---
-> qual dos conjuntos de valores lógicos abaixo torna esse argumento válido?
-> \
-> | $p$ | $q$ | premissa | premissa | conclusao: C|
-> |----|----|-----|-----|------|
+> Qual dos conjuntos de valores lógicos abaixo torna esse argumento válido?  
+> 
+> | $p$ | $q$ | $premissa$ | $premissa$ | $conclusao: C$ |
+> |----|:----:|:-----:|:-----:|:------:|
 > | 0 | 0 | 0 | 0 | 1|
 > | 0 | 1 | 1 | 1 | 1|
 > | 1 | 0 | 1 | 1 | 1|
@@ -46,25 +46,25 @@
 > [!TIP]
 > Mediante o uso de tabelas-verdade, testar a validade dos argumento
 > \
-> a) $q \to p',\ (p')',\ q$ \ `O argumento e invalido`
-> \ 
+> a) $q \to p',\ (p')',\ q$  `O argumento e invalido`  
+> 
 > | $p$ | $q$ | $p'$ | $q \to p'$ | $(p')'$ | $(q \to p') * (p')'$ | $((q \to p') * (p')') \to q$ |
 > |---|---|---|---|---|---|---|
 > | 0 | 0 | 1 | 1 | 0 | 0 | 1 | 
 > | 0 | 1 | 1 | 1 | 0 | 0 | 1 |
-> | 1 | 0 | 0 | 1 | 1 | 1 | `0` |
+> | 1 | 0 | 0 | 1 | 1 | 1 | `0` &#x1F534;|
 > | 1 | 1 | 0 | 0 | 1 | 0 | 1 |
 > ---
-> b) $p \to q'$,\ $p+q$,\ $p \biconditional q'$ \ `O argumento e valido`
-> \
-> | p | q | q' | $p \to q'$ | $p+q$ | $(p \to q') * (p+q)$ | $p \biconditional q'$ | $(p \to q') * (p+q) \to (p \biconditional q')$ |
+> b) $p \to q'$,\ $p+q$,\ $p \longleftrightarrow q'$  `O argumento e valido`  
+> 
+> | p | q | q' | $p \to q'$ | $p+q$ | $(p \to q') * (p+q)$ | $p \longleftrightarrow q'$ | $(p \to q') * (p+q) \to (p \longleftrightarrow q')$ |
 > |---|---|----|:----:|:----:|:----:|:-----:|:----:|
 > | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 0 | 1 | 
 > | 0 | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 1 |
 > | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 > | 1 | 1 | 0 | 0 | 1 | 0 | 0 | 0 | 1 |
 > ---
-> c) $r' \to p',\ (p'+q)',\ q'$ \ `O argumento e valido`
+> c) $r' \to p',\ (p'+q)',\ q'$  `O argumento e valido`
 > | $r$ | $p$ | $q$ | $r'$ | $p'$ | $r' \to p'$ | $p'+q$ | $(p'+q)'$ | $(r' \to p') * (p'+q)'$ | $q'$ | $(r' \to p') * (p'+q)' \to q'$ |
 > |---|---|---|:----:|:-----:|:-----:|:------:|:-------:|:----:|:----:|:----:|
 > | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 1 |
@@ -76,7 +76,7 @@
 > | 1 | 1 | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
 > | 1 | 1 | 1 | 0 | 0 | 1 | 1 | 0 | 0 | 0 | 1 |
 > ---
-> d) $a \to (b+c),\ b \to a',\ a'$ \ `O argumetno e invalido`
+> d) $a \to (b+c),\ b \to a',\ a'$  `O argumento e invalido`
 > | $a$ | $b$ | $c$ | $a'$ | $b+c$ | $a \to (b+c)$ | $b \to a'$ | $(a \to (b+c)) * (b \to a')$ | $(a \to (b+c)) * (b \to a') \to a'$ |
 > |----|------|-----|------|:---:|:----:|:-----:|:-----:|:-----:|
 > | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 |
@@ -84,14 +84,14 @@
 > | 0 | 1 | 0 | 1 | 1 | 1 | 1 | 1 | 1 |
 > | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
 > | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 1 |
-> | 1 | 0 | 1 | 0 | 1 | 1 | 1 | 1 | `0` |
+> | 1 | 0 | 1 | 0 | 1 | 1 | 1 | 1 | `0` &#x1F534;|
 > | 1 | 1 | 0 | 0 | 1 | 1 | 0 | 0 | 1 |
 > | 1 | 1 | 1 | 0 | 1 | 1 | 0 | 0 | 1 |
 > ---
-> e) $(p+q)',\ q \to r,\ p+(p \to q),\ q+r$
+> e) $(p+q)',\ q \to r,\ p+(p \to q),\ q+r$ `O argumento e invalido`
 > | r | p | q | $p \to q$ | $p+q$ | $(p+q)'$ | $q \to r$ | $p+(p \to q)$ | $(p+q)' * (q \to r) * (p+(p \to q))$ | $q+r$ | $(p+q)' * (q \to r) * (p+(p \to q))  \to (q+r)$ |
 > |---|---|---|:---:|:----:|:-----:|:------:|:-----:|:-----:|:-----:|:-----:|
-> | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 | 0 | `0` |
+> | 0 | 0 | 0 | 1 | 0 | 1 | 1 | 1 | 1 | 0 | `0` &#x1F534;|
 > | 0 | 0 | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 1
 > | 0 | 1 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 0 | 1
 > | 0 | 1 | 1 | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 1
@@ -100,7 +100,7 @@
 > | 1 | 1 | 0 | 0 | 1 | 0 | 1 | 1 | 0 | 1 | 1
 > | 1 | 1 | 1 | 1 | 1 | 0 | 1 | 1 | 0 | 1 | 1
 > ---
-> f) $p \to q', \ q \to r', \ p+r', \ q'+r'$
+> f) $p \to q', \ q \to r', \ p+r', \ q'+r'$ `O argumento e valido`
 > | r | p | q | $r'$ | $q'$ | $p \to q'$ | $q \to r'$ | $p+r'$ | $(p \to q') * (q \to r') * (p+r')$ | $q'+r'$ | $(p \to q') * (q \to r') * (p+r') \to q'+r'$
 > |---|---|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 > | 0 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 
