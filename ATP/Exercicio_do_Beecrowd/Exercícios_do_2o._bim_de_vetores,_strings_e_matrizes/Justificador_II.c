@@ -1,50 +1,81 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
+#include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
+typedef struct{
 
-#define max 5
+	char palavra[51];
 
-int main() {
-    int array[15], par[max], impar[max];
-    int conta_par = 0, conta_impar = 0;
-    int i, j;
+} string;
+typedef struct{
 
-    for (i = 0; i < 15; i++) {
-        scanf("%d", &array[i]);
-        
-        if (array[i] % 2 == 0) {
-            par[conta_par] = array[i];
-            conta_par++;
-            
-            // Se o vetor par estiver cheio, imprime e reinicia
-            if (conta_par == max) {
-                for (j = 0; j < max; j++) {
-                    printf("par[%d] = %d\n", j, par[j]);
-                }
-                conta_par = 0;
-            }
-        } else {
-            impar[conta_impar] = array[i];
-            conta_impar++;
-            
-            // Se o vetor impar estiver cheio, imprime e reinicia
-            if (conta_impar == max) {
-                for (j = 0; j < max; j++) {
-                    printf("impar[%d] = %d\n", j, impar[j]);
-                }
-                conta_impar = 0;
-            }
-        }
-    }
+	char saida[51];
 
-    // Imprime o restante dos valores nos vetores
-    for (i = 0; i < conta_impar; i++) {
-        printf("impar[%d] = %d\n", i, impar[i]);
-    }
+} saida;
+int main()
+{
 
-    for (i = 0; i < conta_par; i++) {
-        printf("par[%d] = %d\n", i, par[i]);
-    }
+	unsigned short casos, aux, tam;
+	unsigned short maior, atual, i, j, k;
 
-    return 0;
+	scanf("%hu", &casos);
+	while (true)
+	{	
+
+		if (casos == 0)
+			break;
+		aux = casos;
+		string palavra[aux];
+		saida textoSaida[aux];
+
+		i = 0;
+		while (casos--)
+			scanf(" %[^\n]", palavra[i++].palavra);
+
+		i = 0;
+		tam = aux;
+		while (aux--)
+		{
+			j = 0;
+			k = 0;
+			while (true)
+			{
+				while (isalpha(palavra[i].palavra[j]))	
+					textoSaida[i].saida[k++] = palavra[i].palavra[j++];
+				if (palavra[i].palavra[j] == '\0')
+					break;
+				while (!isalpha(palavra[i].palavra[j]))
+				{	
+					j++;
+					if (palavra[i].palavra[j] == '\0')
+						break;
+				}
+				if (palavra[i].palavra[j] == '\0')
+					break;
+				textoSaida[i].saida[k++] = ' ';
+
+			}
+				textoSaida[i].saida[k] = '\0';
+				i++;
+
+				
+		}	
+
+				maior = 0;
+				for(i = 0; i < tam; i++)
+				{
+					atual = strlen(textoSaida[i].saida);
+					if (atual > maior)
+						maior = atual;
+
+				}
+		for (i = 0; i < tam; i++)
+			printf("%*s\n", maior, textoSaida[i].saida);
+
+		scanf("%hu", &casos);
+
+		if(casos != 0)
+			printf("\n");
+		
+	}
 }
