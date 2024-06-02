@@ -268,8 +268,8 @@ $e \implies x=2$
 |1) | $p+q$ | $p$
 |2) | $r'+q'$ | $p$
 |3) | $p'$ | $pp$
-|4) | $q$ | $SD | $MT \ 1,3$ 
-|5) | $r'$ | $SD | $MT \ 2,4$
+|4) | $q$ | $SD \ 1,3$ 
+|5) | $r'$ | $SD \ 2,4$
 |6) | $p' \to r'$ | $PC \ 3 \ a \ 5$
 ---
 19) provar $s'$ dadas as premissas:
