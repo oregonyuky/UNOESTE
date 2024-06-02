@@ -296,10 +296,10 @@ $e \implies x=2$
 |3) | $r$ | $p$
 |4) | $(q * r)' + r$ | $A \ 3$
 |5) | $(q * r) \to r$ | $Condicional \ 4$
-|6) | $p \to r$ | $SD \ 2,5$
+|6) | $p \to r$ | $SH \ 2,5$
 |7) | $(r * s \to t)' + (p \to r)$ | $A \ 6$
 |8) | $(r * s \to t) \to (p \to r)$ | $Condicional \ 7$
-|9) | $(p \to q) \to (p \to r)$ | $SD \ 1,8$
+|9) | $(p \to q) \to (p \to r)$ | $SH \ 1,8$
 |10) | $(p' + q)' + (p' + r)$ | $Condicional \ 9$
 |11) | $p * q' + p * r'$ | $DM \ 10$
 |12) | $p * (q'+r')$ | $Distributiva \ 11$
