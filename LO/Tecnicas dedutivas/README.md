@@ -95,7 +95,12 @@ $d \implies x+y=5$
 |4) | $a$ | $pp$ 
 |5) | $a+f$ | $A$
 |6) | $g$ | $MP$
-|7) |
+|7) | $g' * h'$ | $MP \ 2,3$
+|8) | $g'$ | $S \ 7$
+|9) | $g+h$ | $A \ 6$
+|10) | $g'+h$ | $A \ 9$
+|11) | $h$ | $S+ \ 9,10$
+|12) | $a \to h$ | $PC 4 \ a \ 11$
 ---
 8) Provar $t+s' \to r$ dadas as premissas:
 
@@ -204,7 +209,14 @@ $e \implies x=2$
 |3) | $s+(t * u)$ | $p$
 |4) | $p$ | $pp$
 |5) | $q'$ | $pp$
-|6) | 
+|6) | $(s+t) * (s+u)$ | $Distributiva \ 3$
+|7) | $s+t$ | $S \ 6$
+|8) | $r'$ | $MP \ 2,7$ 
+|9) | $p \to q$ | $SD \ 1,8$
+|10) | $p' + q$ | $Condicional \ 9$
+|11) | $p'$ | $SD \ 10,5$
+|12) | $p * p'$ | $U 4,11$
+|13) | $p \to q$ | $PIC 4 \ a \ 12$
 ---
 15) Provar $p \to q$ dadas as premissas:
 
@@ -332,7 +344,7 @@ a)
 |6) | $q$ | `MP 1,5` |
 |7) | $r$ | `MT 2,6` | 
 |8) | $s$ | `S 4` |
-|9) | $r * s$ `U 7,8` | 
+|9) | $r * s$ | `U 7,8` | 
 ---
 b)  
 | tipos | argumento | regra de inferencia ou equivalencia | 
