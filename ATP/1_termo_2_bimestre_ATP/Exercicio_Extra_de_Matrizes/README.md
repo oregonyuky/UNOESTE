@@ -122,6 +122,7 @@ int main(){
 #define LINHAS 5
 #define COLUNAS 7
 int main() {
+    int l=0;
     int matriz[LINHAS][COLUNAS] = {
         {1, 2, 3, 4, 5, 6, 7},
         {2, 3, 4, 5, 6, 7, 8},
@@ -144,17 +145,23 @@ int main() {
             int elemento = matriz[i][j];
             int menor_na_linha = 1;
             int maior_na_coluna = 1;
-            for (k = 0; k < COLUNAS; k++) {
-                if (matriz[i][k] < elemento) {
+            l=0;
+            k=0;
+            while(k<COLUNAS && l==0){
+                if(matriz[i][k] < elemento){
                     menor_na_linha = 0;
-                    break;
+                    l=1;
                 }
+                k++;
             }
-            for (k = 0; k < LINHAS; k++) {
-                if (matriz[k][j] > elemento) {
+            k=0;
+            l=0;
+            while(k<LINHAS && l==0){
+                if(matriz[k][j] > elemento){
                     maior_na_coluna = 0;
-                    break;
+                    l=1;
                 }
+                k++;
             }
             if (menor_na_linha && maior_na_coluna) {
                 printf("Ponto de sela encontrado em (%d, %d): %d\n", i, j, elemento);
@@ -167,6 +174,7 @@ int main() {
     }
     return 0;
 }
+
 ```
 ## Ex 4
 ```c
