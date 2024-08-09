@@ -1,3 +1,4 @@
+# Binaries for programs and plugins
 *.exe
 *.exe~
 *.dll
@@ -25,5 +26,5 @@
 /leetcode/main_todo.go
 *.txt
 *.bat
+*.md
 *.jpg
-*.png
