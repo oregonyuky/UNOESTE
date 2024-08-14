@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="computer.ico" type="image/x-icon">
+    <title>HTML5 e CSS3</title>
+    <style>
+        body{
+            background-color: #c5b6b6;
+    
+        }
+        mark{
+            background-color: rgb(94, 255, 0);
+        }
+        
+    </style>
+</head>
+<body>
+    <h1><p>Estudos HTML e CSS</p></h1>
+    <h2>Introdução</h2>
+    <hr>
+    <h1><p><mark style="background-color: rgb(243, 132, 5);">Comandos</mark></p></h1>
+    <p>&lt;mark&gt;<mark> Marcação</mark></p>
+    <p>&lt;ins&gt;<ins> Texto sublinhado</ins></p>
+    <p>&lt;del&gt;<del> Texto riscado</del></p>
+    <p>&lt;sup&gt; x<sup>2</sup>+3 = 0</p>
+    <p>&lt;sub&gt; H<sub>2</sub>0</p>
+    <p>&lt;code&gt; ler com o mesmo espaçamento entre as letras: <code>getElementById('Teste')</code></p>
+    <p>&lt;strong&gt;<strong> Negrito</strong><!--negrito semântica--> ipsum dolor sit amet consectetur adipisicing elit. Laudantium deleniti porro magnam aliquid, ad quia aliquam aspernatur pariatur explicabo, temporibus facere obcaecati earum iste amet sequi blanditiis, iusto velit quibusdam.</p>
+    <p>&lt;em&gt;<em> Itálico</em><!--itálico semântica--> ipsum dolor sit amet consectetur adipisicing elit. Dicta sequi vel, ad consectetur, libero maiores, sunt doloremque totam dolor perspiciatis harum accusantium! Commodi suscipit quaerat aliquam porro repudiandae ipsam non?</p>
+    <p>&lt;pre&gt; Tag Pré-formatação (quebra de linha)
+        <pre>
+            <code>
+        n = int(input("Digite um num: "))
+        if n % 2 == 0:
+            print(f"O num {n} e par")
+        else:
+            print(f"O num {n} e impar")
+        print("Fim do programa")
+            </code>
+        </pre></p>
+    <h2><p><mark style="background-color: rgb(243, 132, 5);">Citações</mark></p></h2>
+    <h3>Citação simples</h3>
+    <p>&lt;q&gt; <q>o computador é um burro muito rápido</q></p>
+    <h3>Citação completa</h3>
+    <p>Segundo Jeff Noble: </p><blockquote cite="https://www.amazon.com.br/Html-Xhtml-css-Para-Leigos/dp/8576086972">
+        &lt;blockquote cite="https://www.amazon.com.br/Html-Xhtml-css-Para-Leigos/dp/8576086972"&gt; <br>
+        Este livro trata de versões antigas de HTML e CSS (4.01 e 2.1) e de XHTML, que foram substituídas a partir de 2014 pelas versões atuais (HTML5 e CSS3). Portanto é material defasado, a menos que o seu objetivo seja o de lidar ou conhecer essas versões mais antigas.
+    </blockquote>
+    <h2><p><mark style="background-color: rgb(243, 132, 5);">Abreviações</mark></p></h2>
+    <p>&lt;abbr tittle ='HyperText Markup Language'&gt;<abbr title="HyperText Markup Language"> HTML</abbr> e <abbr title="Cascading Style Sheets">CSS</abbr>.</p>
+
+    <h1><p><mark style="background-color: rgb(243, 132, 5);">Listas</mark></p></h1>
+    <h2>Listas Ordenadas</h2>
+    <h3>&lt;ol&gt; criar ordered list // &lt;li&gt; criar list item</h3>
+    <ol type="I"> <!--1 A a I i-->
+        <li>Acordar</li>
+        <li>Escovar os dentes</li>
+        <li>Ligar para o João</li>
+        <li>Comer</li>
+        <li>Estudar</li>
+    </ol>
+    <h2>Listas não Ordenadas</h2>
+    <h3>&lt;ul&gt; criar unordered list // &lt;li&gt; criar list item</h3>
+    <ul type="disc"> <!--circle, square ou disc-->
+        <li>Cozinhar</li>
+        <li>Rir</li>
+        <li>Brincar</li>
+        <li>Jogar</li>
+        <li>Estudar</li>
+    </ul>
+    <h2>Juntando listas</h2>
+    <ol>
+        <li>Antigas</li>
+        <ol type="A">
+            <li>Clipper</li>
+            <ol type="I">
+                <li>Dados</li>
+                <li>Code</li>
+            </ol>
+            <li>Visual basic</li>
+            <li>Fortran</li>
+            <li>Delphi</li>
+            <br>
+        </ol>
+        <li>Novas</li>
+        <ol type="A">
+            <li>Python</li>
+            <ol type="I">
+                <li>Análise</li>
+                <li>Alto nível</li>
+            </ol>
+            <li>JavaScript</li>
+            <li>PHP</li>
+            <li>Kotlin</li>
+        </ol>
+    </ol>
+    <h2>Listas de Definições</h2>
+    <dl>
+        <dt>HTML</dt>
+        <dd>Linguagem de marcação para a criação do conteúdo de um site.</dd><br>
+        <dt>CSS</dt>
+        <dd>Linguagem de marcação para a criação do design de um site.</dd><br>
+        <dt>JavaScript</dt>
+        <dd>Linguagem de programação para a criação da interatividade de um site.</dd>
+    </dl>
+    <h1><p><mark style="background-color: rgb(243, 132, 5);">Usando Links externos</mark></p></h1>
+    <p>&lt;a href="link completo" target="_blank"&gt;<a href="https://github.com/GabrielRozendoPontes" target="_blank" rel="external"> GitHub</a></p>
+    <p>&lt;a href="link completo" target="_blank" rel="next"&gt;<a href="teste.html" rel="next"> Página 2 de estudos</a></p>
+    <h2>Links Downloads</h2>
+    <ul>
+        <li><p><a href="aulas.zip" type="application/zip" download="aulas.zip">Download Aula 1</a></p></li>
+        <li><p><a href="Exercicio_com_vetor_de_String.pdf" target="_blank" type="application/pdf" download="Exercicio_com_vetor_de_String.pdf">Exercício Vetor String em pdf</a></p></li>
+    </ul>
+
+    <h1>Imagens</h1>
+    <p>&lt;img src="html5.png" alt="HTML"&gt; <mark style="background-color: rgb(179, 255, 0);">Inserir Imagem</mark></p>
+    <img src="html5.png" alt="HTML"><br>
+    <hr>
+    <img src="css3.png" alt="CSS"><br>
+    
+
+</body>
+</html>
