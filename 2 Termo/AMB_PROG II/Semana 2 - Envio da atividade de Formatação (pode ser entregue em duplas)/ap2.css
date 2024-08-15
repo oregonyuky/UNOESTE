@@ -1,0 +1,44 @@
+/* Regra seletor universal */
+*{font-family: Arial;
+text-align: justify;
+margin-top: 12px;
+margin-bottom: 12px;
+margin-left: 100px;
+margin-right: 100px;
+font-size: 16px;}
+
+/* Regras classes não associadas */
+.centraliza{text-align: center;}
+.justificado{text-align: justify;}
+.esquerda{text-align: left;}
+.sublinhado{text-decoration: underline;}
+.linha-acima{text-decoration: overline;}
+.riscado{text-decoration: line-through;}
+.maiusculo{text-transform: uppercase;}
+.minusculo{text-transform: lowercase;}
+.primeira-maiuscula{text-transform: capitalize;}
+.espaco-letras{letter-spacing: 0.5em;}
+.recuo{text-indent: 5cm;}
+.sombra{text-shadow: -1px -2px 10px rgb(0, 38, 255);}
+.negrito{font-weight: bold;}
+.italico{font-style: italic;}
+.letra-maior{font-size: 23px;}
+.sombra-extra{text-shadow: -1px -2px 10px rgb(12, 0, 10);}
+.paragrafo-recuo{text-indent:-60px ;}
+
+
+/* Regra descendente */
+h4 em{color: rgb(5, 5, 5);
+background-color: rgb(36, 172, 161);
+padding-left: 7.5px ;
+padding-right: 7.5px ;
+padding-top: 5px ;
+padding-bottom: 5px;
+border-radius:20px ;}
+
+h4{text-align: justify;
+text-decoration: underline;}
+ 
+ul{
+    margin-left:0px;
+}
