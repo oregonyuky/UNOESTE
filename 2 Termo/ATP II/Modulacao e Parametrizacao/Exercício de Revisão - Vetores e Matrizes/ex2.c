@@ -249,21 +249,21 @@ int main(void)
 				cadastroCliente(vCliente, TLC);
 				break;
 			case 'B':
-        listaCliente(vCliente, TLC);
+        			listaCliente(vCliente, TLC);
 				break;
 			case 'C':
-        cadastroProduto(vProduto,vPreco,vEstoque,TLP);
+        			cadastroProduto(vProduto,vPreco,vEstoque,TLP);
 				break;
 			case 'D':
-        listaProduto(vProduto,vPreco,vEstoque,TLP);
+        			listaProduto(vProduto,vPreco,vEstoque,TLP);
 				break;
 			case 'E':
-        vendaProduto(vCliente,vProduto,vPreco,vEstoque,mVenda,TLC,TLP,TLV);
+        			vendaProduto(vCliente,vProduto,vPreco,vEstoque,mVenda,TLC,TLP,TLV);
 				break;	
 				
 			case 'F':
-        vendaRealizada(vCliente,vProduto,vPreco,vEstoque,mVenda,TLC,TLP,TLV);
-        break;
+        			vendaRealizada(vCliente,vProduto,vPreco,vEstoque,mVenda,TLC,TLP,TLV);
+        			break;
 				
 		}
 		
