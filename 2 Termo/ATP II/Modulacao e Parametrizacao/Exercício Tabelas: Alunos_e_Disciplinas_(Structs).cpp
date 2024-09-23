@@ -5,6 +5,8 @@
 #include <conio.h>
 #include <ctype.h>
 
+// Isso é um request de teste, pode recusar
+
 #define TF 10
 struct Aluno {
     char ra[30], nome[30];
