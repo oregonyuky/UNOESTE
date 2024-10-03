@@ -1,422 +1,725 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
-#include <conio.h>
 #include <ctype.h>
-
+#include <conio.h>
+#include <stdlib.h>
 #define TF 10
-struct Aluno {
+struct tpAluno{
     char ra[30], nome[30];
 };
-struct Disciplina {
+struct tpDisciplina{
+    char disciplina[30];
     int codDis;
-    char nome[30];
 };
-struct AlunoDisciplina {
+struct tpAlunoDisciplina{
     char ra[30];
     int codDis;
     float nota;
 };
-struct Reprovados {
-    char ra[30], nome[30];
-};
-struct Media {
-    char ra[30];
-};
-int buscaExaustiva(Aluno vetAgenda[TF], int TL, char reg[30]) {
-    int pos = 0;
-    while (pos < TL && strcmp(vetAgenda[pos].ra, reg) != 0)
+void OrdenarAluno(tpAluno Aluno[TF], int TL){
+    tpAluno aux;
+    for(int i=TL-1;i>=1;i--){
+        if(strcmp(Aluno[i-1].nome, Aluno[i].nome)>0){
+            aux = Aluno[i];
+            Aluno[i] = Aluno[i-1];
+            Aluno[i-1] = aux;
+        }
+    }
+}
+void OrdenarCodigoDisciplina(tpDisciplina Disciplina[TF], int TP){
+    tpDisciplina aux;
+    for(int i=TP-1;i>=1;i--){
+        if(Disciplina[i-1].codDis>Disciplina[i].codDis){
+            aux = Disciplina[i];
+            Disciplina[i] = Disciplina[i-1];
+            Disciplina[i-1] = aux;
+        }
+    }
+}
+void OrdenarAlunoDisciplina(tpAlunoDisciplina AlunoDisciplina[TF], int TQ){
+    tpAlunoDisciplina aux;
+    for(int i=TQ-1;i>=1;i--){
+        if(strcmp(AlunoDisciplina[i-1].ra, AlunoDisciplina[i].ra)>0){
+            aux = AlunoDisciplina[i];
+            AlunoDisciplina[i] = AlunoDisciplina[i-1];
+            AlunoDisciplina[i-1] = aux;
+        }
+    }
+}
+int BuscaExaustivaAluno(tpAluno Aluno[TF], char ra[30], int TL){
+    int pos=0;
+    while(pos<TL && strcmp(Aluno[pos].ra, ra)!=0)
         pos++;
-    if (pos < TL)
+    if(pos<TL)
         return pos;
     return -1;
 }
-void bubblesort(Aluno vetAgenda[TF], int TL) {
-    Aluno aux;
-    int flag = 1, i=0;
-    while (TL>1 && flag) {
-        flag = 0;
-        for (i = 0; i < TL - 1; i++) {
-            if (strcmp(vetAgenda[i].nome, vetAgenda[i + 1].nome) > 0) {
-                aux = vetAgenda[i];
-                vetAgenda[i] = vetAgenda[i + 1];
-                vetAgenda[i + 1] = aux;
-                flag = 1;
-            }
-        }
-        TL--;
-    }
+int BuscaExaustivaDisciplinaNum(tpDisciplina Disciplina[TF], int cod, int TP){
+    int pos=0;
+    while(pos<TP && cod!=Disciplina[pos].codDis)
+        pos++;
+    if(pos<TP)
+        return pos;
+    return -1;
 }
-char menu() {
+int BuscaExaustivaDisciplina(tpDisciplina Disciplina[TF], char disciplina[30], int TP){
+    int pos=0;
+    while(pos<TP && strcmp(Disciplina[pos].disciplina, disciplina)!=0)
+        pos++;
+    if(pos<TP)
+        return pos;
+    return -1;
+}
+int BuscaExaustivaAlunoDisciplina(tpAlunoDisciplina AlunoDisciplina[TF], char ra[30], int cod, int TQ){
+    int pos=0;
+    while(pos<TQ && (strcmp(ra, AlunoDisciplina[pos].ra)!=0 || cod!=AlunoDisciplina[pos].codDis))
+        pos++;
+    if(pos<TQ)
+        return pos;
+    return -1;
+}
+int BuscaExaustivaAlunoDisciplinaRA(tpAlunoDisciplina AlunoDisciplina[TF], char ra[30], int TQ){
+    int pos=0;
+    while(pos<TQ && strcmp(ra, AlunoDisciplina[pos].ra)!=0)
+        pos++;
+    if(pos<TQ)
+        return pos;
+    return -1;
+}
+int BuscaExaustivaAlunoDisciplinaCOD(tpAlunoDisciplina AlunoDisciplina[TF], int cod, int TQ){
+    int pos=0;
+    while(pos<TQ && cod!=AlunoDisciplina[pos].codDis)
+        pos++;
+    if(pos<TQ)
+        return pos;
+    return -1;
+}
+int BuscaExaustivaExluir1(tpAlunoDisciplina AlunoDisciplina[TF], char ra[30], int TQ){
+    int pos=0;
+    while(pos<TQ && strcmp(ra, AlunoDisciplina[pos].ra)!=0)
+        pos++;
+    if(pos<TQ)
+        return pos;
+    return -1;
+}
+int BuscaExaustivaExcluir2(tpAlunoDisciplina AlunoDisciplina[TF], int pos, int TQ){
+    while(pos<TQ && strcmp(AlunoDisciplina[pos].ra, AlunoDisciplina[pos+1].ra)==0)
+        pos++;
+    if(pos<TQ)
+        return pos;
+    return -1;  
+}
+int BuscaExaustivaPrimeiroNome(tpAluno Aluno[TF], char nome[30], int TL, int i){
+    int pos=0;
+    while(pos<strlen(nome) && pos<strlen(Aluno[i].nome) && Aluno[i].nome[pos] == nome[pos])
+        pos++;
+    if(pos==strlen(nome) && (Aluno[i].nome[pos]==' ' || Aluno[i].nome[pos]=='\0'))
+        return pos;
+    return -1;
+}
+int BuscaExaustivaSobrenome(tpAluno Aluno[TF], char sobrenome[30], int TL, int i){
+    int pos=strlen(Aluno[i].nome)-1;
+    while(pos>=0 && Aluno[i].nome[pos]!=' ')
+        pos--;
+    if(pos>=0){
+        int pos1=0; pos++;
+        while(pos1<strlen(sobrenome) && pos<strlen(Aluno[i].nome) && Aluno[i].nome[pos]==sobrenome[pos1]){
+            pos1++;pos++;
+        }
+        if(pos1==strlen(sobrenome))
+            return i;
+    }
+    return -1;
+}
+int BuscaExaustivaPrimeiroDisciplina(tpDisciplina Disciplina[TF], char disciplina[30], int TP, int i){
+    int pos=0;
+    while(pos<strlen(disciplina) && pos<strlen(Disciplina[i].disciplina) && disciplina[pos]==Disciplina[i].disciplina[pos])
+        pos++;
+    if(pos==strlen(disciplina) && (Disciplina[i].disciplina[pos]==' ' || Disciplina[i].disciplina[pos]=='\0'))
+        return pos;
+    return -1;
+}
+char menu(){
     system("cls");
     printf("[A] Cadastrar\n");
-    printf("[B] Excluir\n");
-    printf("[C] Exibir\n");
-    return toupper(_getch());
+    printf("[B] Exibir\n");
+    printf("[C] Excluir\n");
+    printf("[D] Buscar\n");
+    printf("[E] Alternar\n");
+    return toupper(getch());
 }
-char Cadastrar() {
+char Cadastrar(){
     system("cls");
-    printf("[A] Cadastrar nome e RA:\n");
-    printf("[B] Cadastrar o codigo e a disciplina:\n");
-    printf("[C] Cadastrar nota:\n");
-    return toupper(_getch());
+    printf("[A] Cadastrar aluno\n");
+    printf("[B] Cadastrar disciplina\n");
+    printf("[C] Cadastrar nota\n");
+    return toupper(getch());
 }
-char Excluir() {
+char Exibir(){
     system("cls");
-    printf("[A] Excluir cadastro de nome e RA\n");
-    printf("[B] Excluir cadastro de codigo e disciplina\n");
-    printf("[C] Excluir cadastro de nota\n");
-    return toupper(_getch());
+    printf("[A] Exibir aluno\n");
+    printf("[B] Exibir disciplina\n");
+    printf("[C] Exibir nota\n");
+    printf("[D] Exibir relatorio\n");
+    printf("[E] Exibir Reprovados\n");
+    printf("[F] Exibir Media abaixo de 6.0\n");
+    return toupper(getch());
 }
-char Exibir() {
+char Exluir(){
     system("cls");
-    printf("[A] Exibir nome e RA\n");
-    printf("[B] Exibir codigo e disciplina\n");
-    printf("[C] Exibir relatorio\n");
-    printf("[D] Exibir alunos reprovados\n");
-    printf("[E] Exibir alunos que comecam come essa letra\n");
-    printf("[F] Exibir alunos com media abaixo de 6\n");
-    return toupper(_getch());
+    printf("[A] Excluir aluno\n");
+    printf("[B] Excluir disciplina\n");
+    printf("[C] Excluir nota\n");
+    return toupper(getch());
 }
-void CadastroNome(Aluno vetAgenda[TF], int& TL) {
+char Buscar(){
     system("cls");
-    Aluno aux;
+    printf("[A] Buscar todos os RA com primeiro nome\n");
+    printf("[B] Buscar todos os RA com sobrenome\n");
+    printf("[C] Buscar disciplina\n");
+    printf("[D] Buscar nome pela primeira letra\n");
+    return toupper(getch());
+}
+char Alternar(){
+    system("cls");
+    printf("[A] Alternar o nome\n");
+    printf("[B] Alternar o disciplina\n");
+    printf("[C] Alternar a nota\n");
+    return toupper(getch());
+}
+void CadastroNome(tpAluno Aluno[TF], int &TL){
+    system("cls");
+    tpAluno aux;
     int pos;
-    printf("Digite o seu ra:\n");
-    gets_s(aux.ra);
-    while (TL < TF && strcmp(aux.ra, "\0") != 0) {
-        pos = buscaExaustiva(vetAgenda, TL, aux.ra);
-        if (pos == -1) {
-            printf("Digite o seu nome:\n");
-            gets_s(aux.nome);
-            vetAgenda[TL++] = aux;
-        }
-        else {
-            printf("Ja esta cadastrado\n");
-        }
-        if (TL < TF) {
-            printf("\nDigite o seu RA:\n");
-            gets_s(aux.ra);
+    if(TL<TF){
+        printf("Digite o RA:\n");
+        gets(aux.ra);
+        while(TL<TF && strcmp(aux.ra, "\0")!=0){
+            pos = BuscaExaustivaAluno(Aluno, aux.ra, TL);
+            if(pos==-1){
+                printf("Digite o nome:\n");
+                gets(aux.nome);
+                Aluno[TL++] = aux;
+                OrdenarAluno(Aluno, TL);
+            }
+            else
+                printf("Ja esta cadastrado\n");
+            if(TL<TF){
+                printf("Digite o RA:\n");
+                gets(aux.ra);
+            }
         }
     }
-    if (TL == TF) {
+    else
         printf("Nao tem mais espaco\n");
-    }
-    bubblesort(vetAgenda, TL);
-    //_getch();
+    getch();
 }
-int buscaExaustivaNum(Disciplina vetAgenda1[TF], int TP, int n) {
-    int pos = 0;
-    while (pos < TP && vetAgenda1[pos].codDis != n)
-        pos++;
-    if (pos < TP)
-        return pos;
-    return -1;
-}
-void CodigoDisciplina(Disciplina vetAgenda1[TF], int& TP) {
+void CadastroDisciplina(tpDisciplina Disciplina[TF], int &TP){
     system("cls");
-    Disciplina disc;
+    tpDisciplina aux;
     int pos;
-    printf("Digite o codigo:(pressione 0 para sair)\n");
-    scanf("%d", &disc.codDis);
-    while (TP < TF && disc.codDis != 0) {
-        pos = buscaExaustivaNum(vetAgenda1, TP, disc.codDis);
-        if (pos == -1) {
-            printf("Digite a disciplina:\n");
-            getchar();
-            gets_s(disc.nome);
-            vetAgenda1[TP++] = disc;
-        }
-        else {
-            printf("ja esta cadastrado\n");
-        }
-        if (TP < TF) {
-            printf("\nDigite o codigo:(pressione 0 para sair)\n");
-            scanf("%d", &disc.codDis);
+    if(TP<TF){
+        printf("Digite o codigo\n");
+        fflush(stdin);
+        scanf("%d", &aux.codDis);
+        while(TP<TF && aux.codDis>0){
+            pos = BuscaExaustivaDisciplinaNum(Disciplina, aux.codDis, TP);
+            if(pos==-1){
+                printf("Digite o nome da disciplina:\n");
+                fflush(stdin);
+                gets(aux.disciplina);
+                pos = BuscaExaustivaDisciplina(Disciplina, aux.disciplina, TP);
+                if(pos==-1){
+                    Disciplina[TP++] = aux;
+                    OrdenarCodigoDisciplina(Disciplina, TP);
+                }
+                else
+                    printf("ja exite esse nome na disciplina");
+            }
+            else
+                printf("Este codigo ja foi cadastrado");
+            if(TP<TF){
+                printf("Digite o codigo:\n");
+                fflush(stdin);
+                scanf("%d", &aux.codDis);
+            }
         }
     }
-    if (TP == TF)
-        printf("Ja nao tem mais espaco\n");
-    _getch();
+    else
+        printf("Nao tem mais espaco");
+    getch();
 }
-void CadastroNota(Aluno vetAgenda[TF], Disciplina vetAgenda1[TF], AlunoDisciplina vetAgenda2[TF], int TL, int TP, int& TQ) {
+void CadastroAlunoDisciplina(tpAluno Aluno[TF], tpDisciplina Disciplina[TF], tpAlunoDisciplina AlunoDisciplina[TF], int TL, int TP, int &TQ){
     system("cls");
-    Aluno aux;
-    Disciplina aux1;
-    AlunoDisciplina aux2;
+    tpAlunoDisciplina aux;
     int pos;
-    printf("Digite o RA:\n");
-    getchar();
-    gets_s(aux.ra);
-    while (TQ < TF && strcmp(aux.ra, "\0") != 0) {
-        pos = buscaExaustiva(vetAgenda, TL, aux.ra);
-        if (pos != -1) {
-            printf("Digite o codigo da disciplina:\n");
-            scanf("%d", &aux1.codDis);
-            pos = buscaExaustivaNum(vetAgenda1, TP, aux1.codDis);
-            if (pos != -1) {
-                strcpy(vetAgenda2[TQ].ra, aux.ra);
-                vetAgenda2[TQ].codDis = aux1.codDis;
-                pos = 0;
-                while (pos < TQ && (strcmp(vetAgenda2[pos].ra, vetAgenda2[TQ].ra) != 0 || vetAgenda2[pos].codDis != vetAgenda2[TQ].codDis)) {
-                    pos++;
+    if(TQ<TF){
+        printf("Digite o RA:\n");
+        gets(aux.ra);
+        while(TQ<TF && strcmp(aux.ra, "\0")!=0){
+            pos = BuscaExaustivaAluno(Aluno, aux.ra, TL);
+            if(pos!=-1){
+                printf("Digite o codigo da disciplina:\n");
+                scanf("%d", &aux.codDis);
+                pos = BuscaExaustivaDisciplinaNum(Disciplina, aux.codDis, TP);
+                if(pos!=-1){
+                    pos = BuscaExaustivaAlunoDisciplina(AlunoDisciplina, aux.ra, aux.codDis, TQ);
+                    if(pos==-1){
+                        printf("Digite a nota:\n");
+                        scanf("%f", &aux.nota);
+                        AlunoDisciplina[TQ++] = aux;
+                        OrdenarAlunoDisciplina(AlunoDisciplina, TQ);
+                    }
+                    else
+                        printf("Nao pode colocar o mesmo RA e mesmo disciplina\n");
                 }
-                if (pos < TQ) {
-                    printf("Nao pode cadastrar novamente\n");
-                }
-                else {
-                    printf("Digite a nota:\n");
-                    scanf("%f", &aux2.nota);
-                    vetAgenda2[TQ++].nota = aux2.nota;
-                }
+                else
+                    printf("Nao foi encontrado o codigo da disciplina\n");
             }
-            else {
-                printf("Disciplina nao encontrada\n");
-            }
-        }
-        else {
-            printf("Aluno nao encontrado\n");
-        }
-        if (TQ < TF) {
-            printf("\nDigite o RA:\n");
-            getchar();
-            gets_s(aux.ra);
-        }
-    }
-    if (TQ == TF) {
-        printf("Nao ha mais espaco\n");
-    }
-    _getch();
-}
-
-void ExibirCadastro(Aluno vetAgenda[TF], int TL) {
-    system("cls");
-    for (int i = 0; i < TL; i++) {
-        printf("Nome: %s\n", vetAgenda[i].nome);
-        printf("Ra: %s\n\n", vetAgenda[i].ra);
-    }
-    _getch();
-}
-void ExibirCDisc(Disciplina vetAgenda1[TF], int TP) {
-    system("cls");
-    for (int i = 0; i < TP; i++) {
-        printf("Codigo: %d\n", vetAgenda1[i].codDis);
-        printf("Disciplina: %s\n\n", vetAgenda1[i].nome);
-    }
-    _getch();
-}
-void ExibirRelatorio(Aluno vetAgenda[TF], Disciplina vetAgenda1[TF], AlunoDisciplina vetAgenda2[TF], int TL, int TP, int TQ) {
-    system("cls");
-    char cod[30] = "", aux[30];
-    int reprovado = 0, qtd = 0;
-    float total_nota = 0;
-    for (int i = 0; i < TQ; i++) {
-        if (strcmp(cod, vetAgenda2[i].ra) != 0) {
-            strcpy(cod, vetAgenda2[i].ra);
-            printf("\nRA: %s \t", vetAgenda2[i].ra);
-            for (int j = 0; j < TL; j++) {
-                if (strcmp(vetAgenda2[i].ra, vetAgenda[j].ra) == 0) {
-                    strcpy(aux, vetAgenda[j].nome);
-                    printf("Nome: %s\n", vetAgenda[j].nome);
-                }
-            }
-        }
-        printf("Disciplina: %d - ", vetAgenda2[i].codDis);
-        for (int j = 0; j < TP; j++) {
-            if (vetAgenda2[i].codDis == vetAgenda1[j].codDis)
-                printf("%s \t", vetAgenda1[j].nome);
-        }
-        printf("Nota: %.1f \t Situacao: %s\n", vetAgenda2[i].nota, (vetAgenda2[i].nota >= 6.0 ? "aprovado" : "reprovado"));
-    }
-    _getch();
-}
-void DeterminadaLetra(Aluno vetAgenda[TF], int TL) {
-    system("cls");
-    char letra;
-    printf("Digite a letra para exibir todos os nomes que comecam com essa letra:\n");
-    letra = toupper(_getch());
-    for (int i = 0; i < TL; i++) {
-        if (toupper(vetAgenda[i].nome[0]) == letra) {
-            printf("Nome: %s\n", vetAgenda[i].nome);
-        }
-    }
-    _getch();
-}
-void ExibirReprovado(Aluno vetAgenda[TF], AlunoDisciplina vetAgenda2[TF], Reprovados vetReprovado[TF], int TL, int TM, int TQ, int& TG) {
-    system("cls");
-    int reprovado = 0;
-    for (int i = 0; i < TQ; i++) {
-        if (vetAgenda2[i].nota < 6.0)
-            reprovado++;
-        if (i == TQ - 1 || strcmp(vetAgenda2[i + 1].ra, vetAgenda2[i].ra) != 0) {
-            if (reprovado >= 2) {
-                strcpy(vetReprovado[TG++].ra, vetAgenda2[i].ra);
-            }
-            reprovado = 0;
-        }
-    }
-    for (int i = 0; i < TG; i++) {
-        for (int j = 0; j < TL; j++) {
-            if (strcmp(vetAgenda[j].ra, vetReprovado[i].ra) == 0) {
-                printf("Nome: %s\n", vetAgenda[j].nome);
-                strcpy(vetReprovado[i].ra, "");
+            else
+                printf("Nao foi encontrado o RA\n");
+            if(TQ<TF){
+                printf("Digite o RA:\n");
+                fflush(stdin);
+                gets(aux.ra);
             }
         }
     }
-    _getch();
+    else
+        printf("Nao tem mais espaco\n");
+    getch();
 }
-void ExibirMedia(Aluno vetAgenda[TF], AlunoDisciplina vetAgenda2[TF], Media vetMedia6[TF], int TQ, int& TM, int TL) {
+void ExibirCadastroNome(tpAluno Aluno[TF], int TL){
     system("cls");
-    char cod[30] = "";
-    int total_nota = 0, qtd = 0;
-    for (int i = 0; i < TQ; i++) {
-        total_nota += vetAgenda2[i].nota;
-        qtd++;
-        if (i == TQ - 1 || strcmp(vetAgenda2[i + 1].ra, vetAgenda2[i].ra) != 0) {
-            if (total_nota / qtd < 6)
-                strcpy(vetMedia6[TM++].ra, vetAgenda2[i].ra);
-            total_nota = 0;
-            qtd = 0;
+    if(TL>0){
+        for(int i=0;i<TL;i++){
+            printf("RA: %s\n", Aluno[i].ra);
+            printf("Nome: %s\n", Aluno[i].nome);
         }
     }
-    for (int i = 0; i < TM; i++) {
-        for (int j = 0; j < TL; j++) {
-            if (strcmp(vetAgenda[j].ra, vetMedia6[i].ra) == 0) {
-                printf("Nome: %s\n", vetAgenda[j].nome);
-                strcpy(vetMedia6[i].ra, "");
+    else
+        printf("Sem dados\n");
+    getch();
+}
+void ExibirCadastroDisciplina(tpDisciplina Disciplina[TF], int TP){
+    system("cls");
+    if(TP>0){
+        for(int i=0;i<TP;i++){
+            printf("Codigo: %d\n", Disciplina[i].codDis);
+            printf("Disciplina: %s\n", Disciplina[i].disciplina);
+        }
+    }
+    else
+        printf("Sem dados\n");
+    getch();
+}
+void ExibirCadastroNota(tpAlunoDisciplina AlunoDisciplina[TF], int TQ){
+    system("cls");
+    if(TQ>0){
+        for(int i=0;i<TQ;i++){
+            printf("RA: %s \t Codigo: %d \t Nota: %f\n", AlunoDisciplina[i].ra, AlunoDisciplina[i].codDis, AlunoDisciplina[i].nota);
+        }
+    }
+    else
+        printf("Sem dados\n");
+    getch();
+}
+void ExibirRelatorio(tpAluno Aluno[TF], tpDisciplina Disciplina[TF], tpAlunoDisciplina AlunoDisciplina[TF], int TL, int TP, int TQ){
+    system("cls");
+    char cod[30] = " ";
+    float total_nota=0;int qtd=0;
+    if(TQ>0){
+        for(int i=0;i<TQ;i++){
+            if(strcmp(cod, AlunoDisciplina[i].ra)!=0){
+                for(int j=0;j<TL;j++)
+                    if(strcmp(AlunoDisciplina[i].ra, Aluno[j].ra)==0)
+                        printf("RA: %s\tNome:%s\n", Aluno[j].ra, Aluno[j].nome);
+                strcpy(cod, AlunoDisciplina[i].ra);
+            }
+            total_nota += AlunoDisciplina[i].nota;qtd++;
+            printf("Disciplina: %d - %s \t Nota: %.1f \t Situacao: %s\n", AlunoDisciplina[i].codDis, Disciplina[BuscaExaustivaDisciplinaNum(Disciplina, AlunoDisciplina[i].codDis, TP)].disciplina, AlunoDisciplina[i].nota, (AlunoDisciplina[i].nota>=6.0 ? "Aprovado" : "Reprovado"));
+            if(i==TQ-1 || strcmp(AlunoDisciplina[i].ra, AlunoDisciplina[i+1].ra)!=0){
+                printf("Media: %.1f\n\n", total_nota/qtd);
+                total_nota=0, qtd=0;
             }
         }
     }
-
-    _getch();
+    else
+        printf("Sem dados\n");
+    getch();
 }
-void ExcluirCadastroNome(Aluno vetAgenda[TF], int& TL) {
+void ExibirAlunosReprovados(tpAluno Aluno[TF], tpAlunoDisciplina AlunoDisciplina[TF], int TL, int TQ){
     system("cls");
-    Aluno aux;
-    char tecla;
-    int pos;
-    if (TL != 0) {
-        do {
-            printf("Digite o Ra para exluir:\n");
-            fflush(stdin);
-            gets_s(aux.ra);
-            pos = buscaExaustiva(vetAgenda, TL, aux.ra);
-            if (pos != -1) {
-                for (int i = pos; i < TL - 1; i++) {
-                    vetAgenda[i] = vetAgenda[i + 1];
+    int reprovados;
+    for(int i=0;i<TQ;i++){
+        if(AlunoDisciplina[i].nota<6.0)
+            reprovados++;
+        if(i==TQ-1 || strcmp(AlunoDisciplina[i].ra, AlunoDisciplina[i+1].ra)!=0){
+            if(reprovados>=2)
+                printf("Nome: %s\tRA: %s\n", Aluno[BuscaExaustivaAluno(Aluno, AlunoDisciplina[i].ra, TL)].nome, AlunoDisciplina[i].ra);
+            reprovados=0;
+        }
+    }
+    getch();
+}
+void ExibirDisciplinaMediaAbaixo(tpDisciplina Disciplina[TF], tpAlunoDisciplina AlunoDisciplina[TF], int TP, int TQ){
+    system("cls");
+    for(int i=0;i<TP;i++){
+        float total_nota=0;
+        int qtd=0;
+        for(int j=0;j<TQ;j++){
+            if(Disciplina[i].codDis == AlunoDisciplina[j].codDis){
+                total_nota += AlunoDisciplina[j].nota;
+                qtd++;
+            }
+        }
+        if(qtd>0){
+            float media = total_nota/qtd;
+            if(media<6.0)
+                printf("Disciplina: %s\tCodigo: %d\t Media: %.1f\n", Disciplina[i].disciplina, Disciplina[i].codDis, media);
+        }
+    }
+    getch();
+}
+void ExcluirCadastroNome(tpAluno Aluno[TF], tpAlunoDisciplina AlunoDisciplina[TF], int &TL, int &TQ){
+    system("cls");
+    tpAluno aux;
+    int pos, pos1;
+    if(TL>0){
+        printf("Digite o RA do aluno que queira remover:\n");
+        gets(aux.ra);
+        while(TL>0 && strcmp(aux.ra, "\0")!=0){
+            pos = BuscaExaustivaAluno(Aluno, aux.ra, TL);
+            if(pos!=-1){
+                for(int i=pos;i<TL-1;i++){
+                    Aluno[i] = Aluno[i+1];
                 }
                 TL--;
             }
-            else {
-                printf("Nao existe esse Ra que voce digitou\n");
+            else{
+                printf("Nao ha esse RA\n");
             }
-            printf("Deseja continuar? <s/n>\n");
-            fflush(stdin);
-            tecla = toupper(_getch());
-        } while (tecla == 'S' && TL > 0);
+            pos = BuscaExaustivaExluir1(AlunoDisciplina, aux.ra, TQ);
+            if(pos!=-1){
+                pos1 = BuscaExaustivaExcluir2(AlunoDisciplina, pos, TQ);
+                int largura = pos1-pos;
+                if(pos1!=-1){
+                    for(int i=pos;i<TQ-largura;i++)
+                        AlunoDisciplina[i] = AlunoDisciplina[i+largura+1];
+                }
+                TQ -= largura+1;
+            }
+            if(TL>0){
+                printf("Digite o RA do aluno que queira remover:\n");
+                gets(aux.ra);
+            }
+        }
     }
     else
-        printf("Nao tem RA para exluir\n");
-    _getch();
+        printf("Nao tem aluno para voce exluir\n");
+    getch();
 }
-void ExcluirCodigoDisciplina(Disciplina vetAgenda1[TF], int& TP) {
+void ExcluirCadastroDisciplina(tpDisciplina Disciplina[TF], tpAlunoDisciplina AlunoDisciplina[TF], int &TP, int &TQ){
     system("cls");
-    Disciplina aux;
-    char tecla;
+    tpDisciplina aux;
     int pos;
-    if (TP != 0) {
-        do {
-            printf("Digite o codigo da disciplina para excluir:\n");
-            scanf("%d", &aux.codDis);
-            pos = buscaExaustivaNum(vetAgenda1, TP, aux.codDis);
-            if (pos == -1) {
-                for (int i = pos; i < TP - 1; i++) {
-                    vetAgenda1[i] = vetAgenda1[i + 1];
-                }
+    if(TP>0){
+        printf("Digite o codigo da materia que voce queira excluir:\n");
+        scanf("%d", &aux.codDis);
+        while(TP>0 && aux.codDis>0){
+            pos = BuscaExaustivaDisciplinaNum(Disciplina, aux.codDis, TP);
+            if(pos!=-1){
+                for(int i=pos;i<TP-1;i++)
+                    Disciplina[i] = Disciplina[i+1];
                 TP--;
             }
-            printf("Deseja continuar? <s/n>");
-            fflush(stdin);
-            tecla = toupper(_getch());
-        } while (tecla == 'S' && TP > 0);
-    }
-    else
-        printf("Nao tem codigo da disciplina para excluir:\n");
-    _getch();
-}
-void ExcluirCadastroNota(Aluno vetAgenda[TF], Disciplina vetAgenda1[TF], AlunoDisciplina vetAgenda2[TF], int TL, int TP, int& TQ) {
-    system("cls");
-    Aluno aux;
-    Disciplina aux1;
-    AlunoDisciplina aux2;
-    char tecla;
-    int pos;
-    if (TQ > 0) {
-        do {
-            printf("Digite o RA para excluir:\n");
-            fflush(stdin);
-            gets_s(aux.ra);
-            pos = buscaExaustiva(vetAgenda, TL, aux.ra);
-            if (pos == -1) {
-                printf("Digite o codigo para excluir:\n");
-                scanf("%d", &aux1.codDis);
-                pos = buscaExaustivaNum(vetAgenda1, TP, aux1.codDis);
-                if (pos != -1) {
-                    for (int i = pos; i < TQ - 1; i++) {
-                        vetAgenda2[i] = vetAgenda2[i + 1];
+            for(int i=0;i<TQ;i++){
+                while(pos<TQ && AlunoDisciplina[pos].codDis!=aux.codDis)
+                    pos++;
+                if(pos<TQ){
+                    for(int j=pos;j<TQ-1;j++){
+                        AlunoDisciplina[j] = AlunoDisciplina[j+1];
                     }
                     TQ--;
                 }
             }
-            printf("Deseja continuar? <s/n>\n");
-            fflush(stdin);
-            tecla = toupper(_getch());
-        } while (tecla == 'S' && TQ > 0);
+            if(TP>0){
+                printf("Digite o codigo da materia que voce queira excluir:\n");
+                scanf("%d", &aux.codDis);
+            }
+        }
     }
     else
-        printf("Nao tem ra, codigo e nota para exluir\n");
-    _getch();
+        printf("Nao tem codigo de disciplina para voce excluir\n");
+    getch();
 }
-int main() {
-    char tecla, tecla1;
-    AlunoDisciplina vetAgenda2[TF];
-    Disciplina vetAgenda1[TF];
-    Aluno vetAgenda[TF];
-    Reprovados vetReprovados[TF];
-    Media vetMedia6[TF];
-    int TL = 0, TP = 0, TQ = 0, TG = 0, TM = 0;
-    do {
+void ExcluirCadastroNota(tpAlunoDisciplina AlunoDisciplina[TF], int &TQ){
+    system("cls");
+    tpAlunoDisciplina aux;
+    int pos;
+    if(TQ>0){
+        printf("Digite o RA primeiro:\n");
+        fflush(stdin);
+        gets(aux.ra);
+        while(TQ>0 && strcmp(aux.ra, "\0")!=0){
+            pos = BuscaExaustivaAlunoDisciplinaRA(AlunoDisciplina, aux.ra, TQ);
+            if(pos!=-1){
+                printf("Digite agora o codigo da disciplina para excluir:\n");
+                fflush(stdin);
+                scanf("%d", &aux.codDis);
+                pos = BuscaExaustivaAlunoDisciplina(AlunoDisciplina, aux.ra, aux.codDis, TQ);
+                if(pos!=-1){
+                    for(int i=pos;i<TQ-1;i++)
+                        AlunoDisciplina[i] = AlunoDisciplina[i+1];
+                    TQ--;
+                }
+                else
+                    printf("Esse codigo nao esta cadastrado no relatorio\n");
+            }
+            else
+                printf("Este RA nao esta cadastrado no relatorio\n");
+            if(TQ>0){
+                printf("Digite o RA primeiro:\n");
+                fflush(stdin);
+                gets(aux.ra);
+            }
+        }
+    }
+    else
+        printf("Nao tem ra e nem cod para excluir\n");
+    getch();
+}
+void BuscarNome(tpAluno Aluno[TF], int TL){
+    system("cls");
+    char nome[30], tecla;
+    int pos;
+    if(TL>0){
+        do{
+            printf("Digite o nome da pessoa:\n");
+            fflush(stdin);
+            gets(nome);
+            for(int i=0;i<TL;i++){
+                pos = BuscaExaustivaPrimeiroNome(Aluno, nome, TL, i);
+                if(pos!=-1)
+                    printf("Nome: %s\t\tRA: %s\n", Aluno[i].nome, Aluno[i].ra);
+            }
+            printf("Deseja continuar? <s/n>\n");
+            tecla = toupper(getch());
+        }while(tecla=='S');
+    }
+    else
+        printf("Nao tem nenhuma informacao\n");
+    getch();
+}
+void BuscarSobrenomeNome(tpAluno Aluno[TF], int TL) {
+    system("cls");
+    char sobrenome[30], tecla;
+    int pos;
+    if(TL>0){
+        do{
+            printf("Digite o sobrenome da pessoa:\n");
+            fflush(stdin);
+            gets(sobrenome);
+            /*
+            for(int i = 0; i < TL; i++){
+                int pos = 0, j=0;
+                while(Aluno[i].nome[j] != '\0' && Aluno[i].nome[j] != ' ')
+                    j++;
+                if(Aluno[i].nome[j] == ' ')
+                    j++;
+                while(pos < strlen(sobrenome) && Aluno[i].nome[j + pos] == sobrenome[pos])
+                    pos++;
+                if(pos == strlen(sobrenome) && (Aluno[i].nome[j + pos] == ' ' || Aluno[i].nome[j + pos] == '\0'))
+                    printf("Nome: %s\t\tRA: %s\n", Aluno[i].nome, Aluno[i].ra);
+                else
+                    printf("Nao tem nenhuma pessoa com esse sobrenome\n");
+            }
+            */
+            for(int i=0;i<TL;i++){
+                pos = BuscaExaustivaSobrenome(Aluno, sobrenome, TL, i);
+                if(pos!=-1){
+                    printf("Nome: %s\tRA:%s\n", Aluno[pos].nome, Aluno[pos].ra);
+                }
+            }
+            printf("Deseja continuar? <s/n>\n");
+            tecla = toupper(getch());
+        }while(tecla=='S');
+    }else
+        printf("Sem dados\n");
+    getch();
+}
+void BuscarDisciplina(tpDisciplina Disciplina[TF], int TP){
+    system("cls");
+    char disciplina[30], tecla;
+    int pos;
+    if(TP>0){
+        do{
+            printf("Digite primeiro nome da disciplina:\n");
+            fflush(stdin);
+            gets(disciplina);
+            for(int i=0;i<TP;i++){
+                pos = BuscaExaustivaPrimeiroDisciplina(Disciplina, disciplina, TP, i);
+                if(pos!=-1)
+                    printf("Disciplina: %s\t\tCodigo: %d\n",Disciplina[i].disciplina, Disciplina[i].codDis);
+            }
+            printf("Deseja continuar? <s/n>\n");
+            tecla = toupper(getch());
+        }while(tecla=='S');
+    }
+    else
+        printf("Nao tem nenhuma informacao\n");
+    getch();
+}
+void BuscarPrimeiraLetra(tpAluno Aluno[TF], int TL){
+    system("cls");
+    char letra, tecla;
+    if(TL>0){
+        do{
+            printf("Digite uma letra:\n");
+            letra = toupper(getch());
+            for(int i=0;i<TL;i++){
+                if(toupper(Aluno[i].nome[0])==letra)
+                    printf("Nome: %s\tRA: %s\n", Aluno[i].nome, Aluno[i].ra);
+            }
+            printf("Deseja continuar? <s/n>\n");
+            tecla = toupper(getch());
+        }while(tecla=='S');
+    }
+    else
+        printf("Sem dados\n");
+    getch();
+}
+void AlternarNome(tpAluno Aluno[TF], int TL){
+    system("cls");
+    char ra[30], nome[30], tecla;
+    int pos;
+    if(TL>0){
+        do{
+            printf("Digite o RA do aluno:\n");
+            gets(ra);
+            pos = BuscaExaustivaAluno(Aluno, ra, TL);
+            if(pos!=-1){
+                printf("Digite o nome para alterar:\n");
+                gets(nome);
+                strcpy(Aluno[pos].nome, nome);
+            }
+            printf("Deseja continuar? <s/n>\n");
+            tecla = toupper(getch());
+        }while(tecla=='S');
+    }
+    else
+        printf("Nao tem nenhuma informacao\n");
+    getch();
+}
+void AlterarDisciplina(tpDisciplina Disciplina[TF], int TP){
+    system("cls");
+    int codDis, pos;
+    char disciplina[30], tecla;
+    if(TP>0){
+        do{
+            printf("Digite o codigo da disciplina:\n");
+            scanf("%d", &codDis);
+            pos = BuscaExaustivaDisciplinaNum(Disciplina, codDis, TP);
+            if(pos!=-1){
+                printf("Digite o nome da disciplina para substituir:\n");
+                fflush(stdin);
+                gets(disciplina);
+                strcpy(Disciplina[pos].disciplina, disciplina);
+            }
+            printf("Deseja continuar? <s/n>\n");
+            tecla = toupper(getch());
+        }while(tecla=='S');
+    }
+    else
+        printf("Nao tem nenhuma informacao\n");
+    getch();
+}
+void AlterarNota(tpAlunoDisciplina AlunoDisciplina[TF], int TQ){
+    system("cls");
+    char tecla, ra[30], pos;
+    int codDis;
+    float nota;
+    if(TQ>0){
+        do{
+            printf("Digite o RA:\n");
+            fflush(stdin);
+            gets(ra);
+            pos = BuscaExaustivaAlunoDisciplinaRA(AlunoDisciplina, ra, TQ);
+            if(pos!=-1){
+                printf("Digite o codigo da materia:\n");
+                scanf("%d", &codDis);
+                pos = BuscaExaustivaAlunoDisciplina(AlunoDisciplina, ra, codDis, TQ);
+                if(pos!=-1){
+                    printf("Digite a nota para substituir:\n");
+                    scanf("%f", &nota);
+                    AlunoDisciplina[pos].nota = nota;
+                }
+                else
+                    printf("Nao tem esse codigo\n");
+            }
+            else
+                printf("Nao existe esse RA\n");
+            printf("Deseja continuar? <s/n>\n");
+            tecla = toupper(getch());
+        }while(tecla=='S');
+    }
+    else
+        printf("Nao tem nenhuma informacao\n");
+    getch();
+}
+int main(){
+    tpAluno Aluno[TF];
+    tpDisciplina Disciplina[TF];
+    tpAlunoDisciplina AlunoDisciplina[TF];
+    int TL=0, TP=0, TQ=0;
+    char tecla;
+    do{
         tecla = menu();
-        if (tecla == 'A') {
-            tecla1 = Cadastrar();
-            switch (tecla1) {
-            case 'A':CadastroNome(vetAgenda, TL); break;
-            case 'B':CodigoDisciplina(vetAgenda1, TP); break;
-            case 'C':CadastroNota(vetAgenda, vetAgenda1, vetAgenda2, TL, TP, TQ); break;
-            }
-            _getch();
+        switch(tecla){
+            case 'A':
+                tecla = Cadastrar();
+                switch(tecla){
+                    case 'A':CadastroNome(Aluno, TL);break;
+                    case 'B':CadastroDisciplina(Disciplina, TP);break;
+                    case 'C':CadastroAlunoDisciplina(Aluno, Disciplina, AlunoDisciplina, TL, TP, TQ);break;
+                }
+                break;
+            case 'B':
+                tecla = Exibir();
+                switch(tecla){
+                    case 'A':ExibirCadastroNome(Aluno, TL);break;
+                    case 'B':ExibirCadastroDisciplina(Disciplina, TP);break;
+                    case 'C':ExibirCadastroNota(AlunoDisciplina, TQ);break;
+                    case 'D':ExibirRelatorio(Aluno, Disciplina, AlunoDisciplina, TL, TP, TQ);break;
+                    case 'E':ExibirAlunosReprovados(Aluno, AlunoDisciplina, TL, TQ);break;
+                    case 'F':ExibirDisciplinaMediaAbaixo(Disciplina, AlunoDisciplina, TP, TQ);break;
+                }
+                break;
+            case 'C':
+                tecla = Exluir();
+                switch(tecla){
+                    case 'A':ExcluirCadastroNome(Aluno, AlunoDisciplina, TL, TQ);break;
+                    case 'B':ExcluirCadastroDisciplina(Disciplina, AlunoDisciplina, TP, TQ);break;
+                    case 'C':ExcluirCadastroNota(AlunoDisciplina, TQ);break;
+                }
+                break;
+            case 'D':
+                tecla = Buscar();
+                switch(tecla){
+                    case 'A':BuscarNome(Aluno, TL);break;
+                    case 'B':BuscarSobrenomeNome(Aluno, TL);break;
+                    case 'C':BuscarDisciplina(Disciplina, TP);break;
+                    case 'D':BuscarPrimeiraLetra(Aluno, TL);break;
+                }
+                break;
+            case 'E':
+                tecla = Alternar();
+                switch(tecla){
+                    case 'A':AlternarNome(Aluno, TL);break;
+                    case 'B':AlterarDisciplina(Disciplina, TP);break;
+                    case 'C':AlterarNota(AlunoDisciplina, TQ);break;
+                }
+                break;
         }
-        else if (tecla == 'B') {
-            tecla1 = Excluir();
-            switch (tecla1) {
-            case 'A':ExcluirCadastroNome(vetAgenda, TL); break;
-            case 'B':ExcluirCodigoDisciplina(vetAgenda1, TP); break;
-            case 'C':ExcluirCadastroNota(vetAgenda, vetAgenda1, vetAgenda2, TL, TP, TQ); break;
-            }
-            _getch();
-        }
-        else {
-            tecla1 = Exibir();
-            switch (tecla1) {
-            case 'A':ExibirCadastro(vetAgenda, TL); break;
-            case 'B':ExibirCDisc(vetAgenda1, TP); break;
-            case 'C':ExibirRelatorio(vetAgenda, vetAgenda1, vetAgenda2, TL, TP, TQ); break;
-            case 'D':ExibirReprovado(vetAgenda, vetAgenda2, vetReprovados, TL, TM, TQ, TG); break;
-            case 'E':DeterminadaLetra(vetAgenda, TL); break;
-            case 'F':ExibirMedia(vetAgenda, vetAgenda2, vetMedia6, TQ, TM, TL); break;
-            }
-            _getch();
-        }
-    } while (tecla != 27);
+    }while(tecla!=27);
 }
