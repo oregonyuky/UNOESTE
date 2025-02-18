@@ -9,3 +9,6 @@
 
 Clock sinal periodico e com caracteristica conhecida frequencia media em Hertiz(hz), indica a quantidade de ciclos por
 segundo que ocorre no sinal
+
+### Taxa de transferencia
+- Medida de desempenho de sistemas em que ocorre uma comunicacao de dados
