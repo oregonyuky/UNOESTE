@@ -3,6 +3,9 @@
 - Paralelo e Serie
 ### Tipos de comunicacao serie
 |Simplex|A sempre transmite e o B sempre recebe     |
-|----|------|
+|:----:|:------:|
 |Half-Duplex|A pode transmitir ao B e vice-versa, mas nao simultaneamente    (unidirecional)|
 |Duplex|A pode transmitir ao B e vice-versa simultaneamente
+
+Clock sinal periodico e com caracteristica conhecida frequencia media em Hertiz(hz), indica a quantidade de ciclos por
+segundo que ocorre no sinal
