@@ -15,4 +15,4 @@ segundo que ocorre no sinal
 ### Taxa de transferencia
 - Medida de desempenho de sistemas em que ocorre uma comunicacao de dados
 > [!NOTE]
-> $Taxa de transf = Clock * Quantidade dados manipulados(bits ou Bytes)$
+> Taxa de transf = Clock * Quantidade dados manipulados(bits ou Bytes)
