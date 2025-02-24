@@ -16,7 +16,7 @@ void Quntidade_de_letras_espacos_linhas(char inFile[30], char outFile[30]){
     while(!feof(entrada)){
         c = fgetc(entrada);
         if(!feof(entrada)){
-
+                       
         }
 
     }
