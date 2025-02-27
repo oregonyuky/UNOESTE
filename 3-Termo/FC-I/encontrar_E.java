@@ -33,18 +33,24 @@ public class encontrar_E {
 
         String str, str1;
         int size = str.length(), i=0, index=0, sum=0;
-        while(size--){
+      
+        String str = leitor.nextLine();
+        String str1 = leitor.nextLine();
+
+        int size = str.length(), i=0, index=0, sum=0;
+        while(size-- > 0){
             if(str.charAt(i)==str1.charAt(index)){
                 index++;
                 if(str1.length()==index){
                     int tam = i-str1.length()+1;
                     System.out.println("index: " + tam);
                     sum++;
+                    index = 0;
                 }
             }
             else
                 index=0;
-            i++;
+            if(i < str.length()-1) i++;
         }
         System.out.println("Quantidade: " + sum);
         
