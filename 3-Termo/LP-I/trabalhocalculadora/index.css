@@ -1,0 +1,92 @@
+ * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 20px; 
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px; 
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .calculadora {
+            width: 300px;
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .tela {
+            width: 100%;
+            height: 60px;
+            text-align: right;
+            font-size: 2rem;
+            padding: 10px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            width: 100%;
+            height: 60px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #444;
+            color: white;
+        }
+
+        button:hover {
+            background: #666;
+        }
+
+        .operador {
+            background: #ff9500;
+        }
+
+        .operador:hover {
+            background: #ffad42;
+        }
+
+        .igual {
+            background: #00cc66;
+            grid-column: span 1;
+        }
+
+        .igual:hover {
+            background: #00e673;
+        }
+
+        .limpar {
+            background: #ff3b30;
+            grid-column: span 1;
+        }
+
+        .limpar:hover {
+            background: #ff5c5c;
+        }
