@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class VerificaBlocos {
+public class ex3{
     public static boolean verificaBlocos(String nomeArquivo) {
         int contador = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo))) {
@@ -26,4 +26,3 @@ public class VerificaBlocos {
         System.out.println(verificaBlocos(nomeArquivo) ? "Blocos corretos" : "Blocos incorretos");
     }
 }
-

@@ -1,26 +1,39 @@
 import java.io.*;
+public class ex5{
+    public static void main(String[] args) {
+        BufferedReader leitor = null;
+        BufferedWriter escritor = null;
 
-public class EnumeraArquivo {
-    public static void enumeraArquivo(String nomeArquivo) {
-        String nomeArquivoEnum = nomeArquivo + ".enum";
-        try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo));
-             BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivoEnum))) {
+        try {
+            System.out.print("Digite o nome do arquivo Java (sem extensão .java): ");
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+            String nomeArquivo = inputReader.readLine();
+            String caminhoArquivoFonte = nomeArquivo + ".java";
+            String caminhoArquivoEnum = nomeArquivo + ".java.enum";
+
+            leitor = new BufferedReader(new FileReader(caminhoArquivoFonte));
+            escritor = new BufferedWriter(new FileWriter(caminhoArquivoEnum));
+
             String linha;
             int numeroLinha = 1;
-            while ((linha = br.readLine()) != null) {
-                bw.write(numeroLinha + ": " + linha);
-                bw.newLine();
+
+            while ((linha = leitor.readLine()) != null) {
+                escritor.write(numeroLinha + " " + linha);
+                escritor.newLine();
                 numeroLinha++;
             }
-            System.out.println("Arquivo enumerado salvo como: " + nomeArquivoEnum);
+
+            System.out.println("Arquivo " + caminhoArquivoEnum + " criado com sucesso!");
         } catch (IOException e) {
-            System.out.println("Erro ao processar o arquivo: " + e.getMessage());
+            System.err.println("Erro ao processar o arquivo: " + e.getMessage());
+        } finally {
+            try {
+                if (leitor != null) leitor.close();
+                if (escritor != null) escritor.close();
+            } catch (IOException e) {
+                System.err.println("Erro ao fechar arquivos: " + e.getMessage());
+            }
         }
-    }
-    
-    public static void main(String[] args) {
-        String nomeArquivo = "codigo.java";
-        enumeraArquivo(nomeArquivo);
     }
 }
 

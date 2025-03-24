@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Bingo {
+public class ex2{
     
     public static int[][] geraCartela() {
         Random rand = new Random();
@@ -112,32 +112,28 @@ public class Bingo {
         for (int i = 0; i < 5; i++) {
             cartelas[i] = geraCartela();
         }
-        
         boolean jogoAtivo = true;
+        int a, b, c;
+        a = b = c =0;
         while (jogoAtivo) {
             sorteiaNumero(sorteados, qtdSorteados);
             qtdSorteados++;
             mostraSorteados(sorteados, qtdSorteados);
-            
             for (int i = 0; i < 5; i++) {
                 System.out.println("Cartela " + (i + 1) + ":");
                 mostraCartela(cartelas[i]);
-                
                 if (verificaCartelaCheia(cartelas[i], sorteados, qtdSorteados)) {
                     System.out.println("Cartela " + (i + 1) + " venceu com cartela cheia!");
                     jogoAtivo = false;
                     break;
-                } else if (verificaHorizontal(cartelas[i], sorteados, qtdSorteados)) {
-                    System.out.println("Cartela " + (i + 1) + " venceu com linha completa!");
-                    jogoAtivo = false;
+                } else if (verificaHorizontal(cartelas[i], sorteados, qtdSorteados) && a < 2){
+                    System.out.println("Cartela " + (i + 1) + " venceu com linha completa!"); a++;
                     break;
-                } else if (verificaVertical(cartelas[i], sorteados, qtdSorteados)) {
-                    System.out.println("Cartela " + (i + 1) + " venceu com coluna completa!");
-                    jogoAtivo = false;
+                } else if (verificaVertical(cartelas[i], sorteados, qtdSorteados) && b < 2){
+                    System.out.println("Cartela " + (i + 1) + " venceu com coluna completa!"); b++;
                     break;
-                } else if (verificaDiagonal(cartelas[i], sorteados, qtdSorteados)) {
-                    System.out.println("Cartela " + (i + 1) + " venceu com diagonal completa!");
-                    jogoAtivo = false;
+                } else if (verificaDiagonal(cartelas[i], sorteados, qtdSorteados) && c < 2){
+                    System.out.println("Cartela " + (i + 1) + " venceu com diagonal completa!"); c++;
                     break;
                 }
             }

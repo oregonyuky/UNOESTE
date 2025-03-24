@@ -1,5 +1,6 @@
 import java.util.Random;
-public class MatrizMajoritaria {
+import java.util.Scanner;
+public class ex1{
     public static int[][] gerarMatriz(int linhas, int colunas, int minimo, int maximo) {
         Random rand = new Random();
         int[][] matriz = new int[linhas][colunas];
@@ -32,11 +33,18 @@ public class MatrizMajoritaria {
         }
     }
     public static void main(String[] args) {
-        int linhas = 4, colunas = 5, minimo = 1, maximo = 3;
+        Scanner leitura = new Scanner(System.in);
+        System.out.println("Digite a qtd de linhas: ");
+        int linhas = leitura.nextInt();
+        System.out.println("Digite a qtd de colunas: ");
+        int colunas = leitura.nextInt();
+        System.out.println("Digite a qtd de minimo: ");
+        int minimo = leitura.nextInt();
+        System.out.println("Digite a qtd de maximo: ");
+        int maximo = leitura.nextInt();
         int[][] matriz = gerarMatriz(linhas, colunas, minimo, maximo);
         System.out.println("Matriz Gerada:");
         imprimirMatriz(matriz);
         System.out.println(matrizMajoritaria(matriz) ? "A matriz é majoritária." : "A matriz não é majoritária.");
     }
 }
-c

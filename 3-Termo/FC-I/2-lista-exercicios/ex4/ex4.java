@@ -1,7 +1,7 @@
 import java.io.*;
 import java.awt.Desktop;
 
-public class ConverterCidadesHtml {
+public class ex4{
     public static void converterCidades(String nomeArquivo) {
         String nomeArquivoHtml = "cidades.html";
         try (BufferedReader br = new BufferedReader(new FileReader(nomeArquivo));
