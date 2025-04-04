@@ -1,0 +1,4 @@
+1 compilar 2 5
+2 backup 1 3
+3 atualizar 3 2
+4 scan 2 4

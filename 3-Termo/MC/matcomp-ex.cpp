@@ -93,6 +93,7 @@ int main() {
     c = 0;
     while(ABS(f2(r0)) > e2) {
         r0 = nr2(r0);
+        printf("%.4lf\n", r0);
         c++;
     }
     printf("NR2 x%d: %.4lf\n", c, r0);

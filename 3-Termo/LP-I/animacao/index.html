@@ -4,11 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cenário</title>
+    <style>
+        body {
+            background-image: url("./img/image.png");
+            background-size: cover;
+            margin: 0;
+            overflow: hidden;
+        }
+        #gameArea {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #tela {
+            position: absolute;
+            width: 121px;
+            height: 127px;
+        }
+        .inimigo, .trofeu {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+        }
+    </style>
 </head>
-<body background="./img/image.png">
-    <div id="tela">
-
+<body>
+    <div id="gameArea">
+        <div id="tela"></div>
+    </div>
+    <div id="hud">
+        <p id="vida">Vida: 3</p>
+        <p id="pontuacao">Pontuação: 0</p>
     </div>
 </body>
 <script src="./scripts/script.js"></script>
 </html>
+
