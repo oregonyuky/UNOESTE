@@ -71,7 +71,7 @@ void Exibir(TpDescritor &Desc){
     printf("Nome do fim: %s\n", Desc.Fim->Nome);
 }
 void Excluir(TpDescritor &Desc){
-    char nome;
+    char nome[20];
     printf("Digite o nome para excluir:\n");
     fgets(nome, sizeof(nome), stdin);
     nome[strcspn(nome, "\n")]='\0';
@@ -81,12 +81,66 @@ void Excluir(TpDescritor &Desc){
             ant = P;
             P = P->prox;
         }
+        if(P==NULL){
+            printf("Nome \"%s\" nao encontrado na lista\n", nome);
+            return;
+        }
+        if(P==Desc.Inicio){
+            Desc.Inicio = P->prox;
+            if(Desc.Inicio==NULL)
+                Desc.Fim = NULL;
+        }else{
+            ant->prox = P->prox;
+            if(P==Desc.Fim)
+                Desc.Fim = ant;
+        }
+        delete P;
+        Desc.Qtde--;
+        printf("Nome \"%s\" removido com sucesso\n", nome);
+        printf("Digite o nome para excluir:\n");
+        fgets(nome, sizeof(nome), stdin);
+        nome[strcspn(nome, "\n")]='\0';
     }
+}
+void ExibirContrarioREC(TpDescritor Desc, TpPont *P) {
+    if (P==NULL)return;
+    printf("- %s\n", P->Nome);
+    ExibirContrarioREC(Desc, P->prox);
+}
+void LiberarListaTODAIterativo(TpDescritor &Desc){
+    TpPont *P = Desc.Inicio;
+    TpPont *aux;
+    while(P != NULL){
+        aux = P;
+        P = P->prox;
+        delete aux;
+    }
+    Desc.Inicio = Desc.Fim = NULL;
+    Desc.Qtde = 0;
+    printf("\nLista liberada com sucesso\n");
+}
+void LiberarListaTODARecursiva(TpPont *P){
+    if(P==NULL)return;
+    LiberarListaTODARecursiva(P->prox);
+    delete P;
 }
 int main(){
     TpDescritor lista;
     Inicializar(lista);
     InsOrdenado(lista);
+    Exibir(lista);
+    Excluir(lista);
+    Exibir(lista);
+    printf("\n**Lista de Nomes usando recursao**\n");
+    ExibirContrarioREC(lista, lista.Inicio);
+    LiberarListaTODAIterativo(lista);
+    Exibir(lista);
+    Inicializar(lista);
+    InsOrdenado(lista);
+    Exibir(lista);
+    LiberarListaTODARecursiva(lista.Inicio);
+    lista.Inicio = lista.Fim = NULL;
+    lista.Qtde=0;
     Exibir(lista);
     return 0;
 }
