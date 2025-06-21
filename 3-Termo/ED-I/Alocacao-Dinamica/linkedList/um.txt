@@ -1,0 +1,17 @@
+1119		A Fila de Desempregados		Favorite	3.284	4
+1167		Acampamento de Férias		Favorite	2.711	5
+1211		Lista Telefônica Econômica		Favorite	4.470	5
+1451		Teclado Quebrado		Favorite	2.969	6
+1463		Árvore Binária de Expressão		Favorite	380	7
+1466		Percurso em Árvore por Nível		Favorite	3.999	3
+1856		A Lista da Morte de Arya		Favorite	233	10
+2037		A Lista		Favorite	150	9
+2136		Amigos do Habay		Favorite	4.031	4
+2381		Lista de Chamada		Favorite	7.001	1
+2479		Ordenando a Lista de Crianças do Papai Noel		Favorite	5.768	1
+2729		Lista de Compras		Favorite	5.696	4
+3126		Lista de Treinamento		Favorite	2.336	1
+3135		Lista de Nomes		Favorite	946	5
+3160		Amigos		Favorite	1.592	3
+3231		Horror List		Favorite	71	5
+3435		Listando Caminhos Tediosos		Favorite	6	5
