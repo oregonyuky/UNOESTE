@@ -8,12 +8,11 @@ struct TpPont{
     TpPont *ant, *prox;
 };
 TpPont *ExcluirInicio(TpPont *lis){
-     if(!lis) return NULL;         // Se a lista está vazia, retorna NULL imediatamente.
-    TpPont *aux = lis;            // Guarda o ponteiro para o primeiro nó (que será excluído).
-    lis = lis->prox;              // Avança o ponteiro da lista para o próximo nó.
-    if (lis)                     // Se a lista não ficou vazia após o avanço,
-        lis->ant = NULL;          // ajusta o ponteiro 'ant' do novo primeiro nó para NULL.
-    delete aux;                  // Deleta o nó antigo (primeiro da lista).
+     if(!lis) return NULL;        
+    TpPont *aux = lis;          
+    lis = lis->prox;              
+    if (lis)lis->ant = NULL;        
+    delete aux;                  
     return lis;
 }
 TpPont *novaCaixa(int v){
@@ -72,16 +71,17 @@ TpPont *ExcluirV(TpPont *lis, int v){
     }
     return lis;
 }
-int Recursao(TpPont *lis, int n){ 
+int Recursao(TpPont *lis, int n, int a){ 
     if(!lis) return -1;
     TpPont *aux = CopiarLis(lis);
     if(n==0){
         return aux->v;
     }
     if(aux){
+        if(aux->v==a)return -1;
         aux = InserirFim(aux, aux->v);
         aux = ExcluirInicio(aux);
-        return Recursao(aux, n-1);
+        return Recursao(aux, n-1, a);
     }
 }
 TpPont *R(TpPont *lis, int n){ 
@@ -105,49 +105,38 @@ TpPont *Inverter(TpPont *lis){
     }
     return l;
 }
-int Busca(TpPont *lis, int v){
-    TpPont *aux = CopiarLis(lis);
-    while(aux){
-        if(aux->v == v)return 1;
-        aux = aux->prox;
-    }
-    return 0;
-}
 void teste(){
     TpPont *lis = NULL, *b=NULL;
     int n, k, m;
-    scanf("%d %d %d", &n, &k, &m);k--, m--;
-    for(int i=1;i<=n;i++){
-        lis = InserirFim(lis, i);
+
+    while(scanf("%d %d %d", &n, &k, &m) && (n || k || m)){k--, m--;
+        for(int i=1;i<=n;i++){
+            lis = InserirFim(lis, i);
+        }
+        b = Inverter(CopiarLis(lis));
+        int va, vb, nn=n>>1;
+        while(lis){
+            nn--;
+            //Exibir(lis);
+            //Exibir(b);
+            va = Recursao(lis, k, -1);
+            //printf("%d", v);
+            lis = R(lis, k);
+            lis = ExcluirV(lis, va);
+            if(Recursao(b, m, va)!=-1)
+                b = ExcluirV(b, va);
+            if(!lis) break;
+            vb = Recursao(b, m, -1);
+            //printf("  %d%c", v, (nn>=0 ? ',' : '\n'));
+            b = R(b, m);
+            lis = ExcluirV(lis, vb);
+            b = ExcluirV(b, vb);
+            b = ExcluirV(b, va);
+            if(va!=vb)printf("  %d  %d,", va, vb);
+            else printf(" %d", va);
+        }
+        puts("");
     }
-    b = Inverter(CopiarLis(lis));
-    int v;
-    while(lis){
-        Exibir(lis);
-        Exibir(b);
-         v = Recursao(lis, k);
-        printf("%d\n", v);
-        lis = R(lis, k);
-        lis = ExcluirV(lis, v);
-        if(Busca(b, v))
-            b = ExcluirV(b, v);
-        if(!lis) break;
-        v = Recursao(b, m);
-        printf("%d\n", v);
-        b = R(b, m);
-        lis = ExcluirV(lis, v);
-        b = ExcluirV(b, v);
-    }
-}
-void teste1(){
-    TpPont *lis = NULL;
-    lis = InserirFim(lis, 0);
-    lis = InserirFim(lis, 1);
-    lis = InserirFim(lis, 2);
-    lis = InserirFim(lis, 3);
-    Exibir(lis);
-    lis = R(lis, 2);
-    Exibir(lis);
 }
 int main(){
     teste();
