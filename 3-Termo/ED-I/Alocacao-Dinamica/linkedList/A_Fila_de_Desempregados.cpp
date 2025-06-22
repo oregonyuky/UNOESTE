@@ -120,20 +120,17 @@ void teste(){
             //Exibir(lis);
             //Exibir(b);
             va = Recursao(lis, k, -1);
-            //printf("%d", v);
-            lis = R(lis, k);
-            lis = ExcluirV(lis, va);
-            if(Recursao(b, m, va)!=-1)
-                b = ExcluirV(b, va);
-            if(!lis) break;
             vb = Recursao(b, m, -1);
-            //printf("  %d%c", v, (nn>=0 ? ',' : '\n'));
-            b = R(b, m);
-            lis = ExcluirV(lis, vb);
-            b = ExcluirV(b, vb);
-            b = ExcluirV(b, va);
-            if(va!=vb)printf("  %d  %d,", va, vb);
-            else printf(" %d", va);
+            if(va!=vb){
+                printf("  %d  %d,", va, vb)
+                lis = ExcluirV(lis, vb);
+                b = ExcluirV(b, va);
+            };
+            else{
+                printf(" %d", va);
+            }
+            lis = ExcluirV(lis, va);
+            b = ExcluirV(b, vb
         }
         puts("");
     }
