@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
+#include <cmath>
 using namespace std;
 struct TpPont{
     int v;
@@ -105,11 +106,21 @@ TpPont *Inverter(TpPont *lis){
     }
     return l;
 }
+int digitos(int n){
+    if(n == 0) return 1;
+    return floor(log10(abs(n))) + 1;
+}
+const char* espacamento(int n){
+    int d = digitos(n);
+    if(d == 2 || d == 3) return " ";
+    return "  ";
+}
 void teste(){
     TpPont *lis = NULL, *b=NULL;
     int n, k, m;
 
-    while(scanf("%d %d %d", &n, &k, &m) && (n || k || m)){k--, m--;
+    while(scanf("%d %d %d", &n, &k, &m) && (n || k || m)){
+        k--, m--;
         for(int i=1;i<=n;i++){
             lis = InserirFim(lis, i);
         }
@@ -121,20 +132,29 @@ void teste(){
             //Exibir(b);
             va = Recursao(lis, k, -1);
             vb = Recursao(b, m, -1);
+            lis = R(lis, k);
+            b = R(b, m);
+            const char* ch = espacamento(va);
+            const char* chb = espacamento(vb);
             if(va!=vb){
-                printf("  %d  %d,", va, vb)
+                printf("%s%d%s%d%c", ch, va, chb, vb, (!lis->prox->prox ? '\n' : ','));
                 lis = ExcluirV(lis, vb);
                 b = ExcluirV(b, va);
-            };
+            }
             else{
-                printf(" %d", va);
+                printf("%s%d%c", ch, va, (lis->prox ? ',' : '\n'));
             }
             lis = ExcluirV(lis, va);
-            b = ExcluirV(b, vb
+            b = ExcluirV(b, vb);
         }
-        puts("");
     }
+}
+void teste2(){
+    cout << digitos(123) << endl;
+    cout << digitos(123345) << endl;
+    cout << digitos(1233) << endl;
 }
 int main(){
     teste();
 }
+
