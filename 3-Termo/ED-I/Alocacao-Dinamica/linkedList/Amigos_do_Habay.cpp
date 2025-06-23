@@ -24,12 +24,13 @@ TpPont *InserirFim(TpPont *lis, char nome[30], char b[30]){
     return lis;
 }
 TpPont *InserirOrdenada(TpPont *lis, char nome[30], char b[30]){
-    TpPont *nc = novaCaixa(nome, b), *aux = lis, *busca = lis;
-    if(!lis)return nc;
+    TpPont *aux = lis, *busca = lis;
     while(busca){
         if(strcmp(busca->nome, nome) == 0)return lis;
         busca = busca->prox;
     }
+    TpPont *nc = novaCaixa(nome, b);
+    if(!lis)return nc;
     while(aux && strcmp(aux->nome, nome) < 0)aux = aux->prox;
     if(!aux){
         TpPont *fim = lis;
@@ -59,20 +60,17 @@ void Exibir(TpPont *lis){
 const char *Vencedor(TpPont *lis){
     TpPont *aux = lis, *aux1 = NULL;
     int maior = -1;
+    const char *vencedor = NULL;
     while(aux){
-        if(maior < (int)strlen(aux->nome) && !strcmp(aux->b, "YES")){
-            maior = (int)strlen(aux->nome);
+        if(!strcmp(aux->b, "YES")){
+            if(maior < (int)strlen(aux->nome)){
+                maior = (int)strlen(aux->nome);
+                vencedor = aux->nome;
+            }
         }
         aux = aux->prox;
     }
-    aux = lis;
-    while(aux){
-        if(strlen(aux->nome)==maior){
-            return aux->nome;
-        }
-        aux = aux->prox;
-    }
-    return "Ninguem";
+    return vencedor;
 }
 int main(){
     freopen("input.txt", "r", stdin);
@@ -90,7 +88,8 @@ int main(){
             temp[1] = '\0';
             if(j==0){
                 if(str[i]==' ')
-                    j=1; else strcat(nome, temp); 
+                    j=1;
+                else strcat(nome, temp); 
             }else{ 
                 strcat(b, temp); 
             } 
