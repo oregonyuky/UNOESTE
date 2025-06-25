@@ -1,0 +1,18 @@
+2024		Empilhando Presentes		Favorite	115	8
+3136		Arquitetura de Pilha		Favorite	182	5
+3005		Pilhas de Paralelepípedos		Favorite	404	2
+1683		Maior Retângulo em um Histograma		Favorite	511	7
+1438		Desempilhando Caixas		Favorite	521	8
+1312		Empilhamento de Bolas		Favorite	890	6
+1522		Jogo das Pilhas		Favorite	912	8
+1083		LEXSIM - Avaliador Lexico e Sintático		Favorite	1.240	7
+1242		Ácido Ribonucleico Alienígena		Favorite	2.017	4
+2929		Menor da Pilha		Favorite	2.289	8
+1944		BRINDE FACE 2015		Favorite	2.817	4
+1523		Estacionamento Linear		Favorite	3.198	5
+1063		Trilhos Novamente... Traçando Movimentos		Favorite	4.137	4
+1077		Infixa para Posfixa		Favorite	5.260	5
+1340		Eu Posso Adivinhar a Estrutura de Dados!		Favorite	6.486	2
+1062		Trilhos		Favorite	8.668	5
+1069		Diamantes e Areia		Favorite	22.752	3
+1068		Balanço de Parênteses I		Favorite	24.137	5
