@@ -20,6 +20,7 @@ struct TpDescAtend{
 };
 void Inicializar(TpDescAtend &Desc){
 	Desc.Inicio = Desc.Fim = NULL;
+	Desc.qtd=0;
 }
 char FilaVazia(TpDescAtend Desc){
 	return Desc.qtd == 0;
@@ -69,7 +70,8 @@ int main(){
 	TpAtendente *p = NULL;
 	TpDescAtend desc;
 	Inicializar(desc);
-	InserirID(desc, "gabriel");
+	char bu[40] = "gabriel";
+	InserirID(desc, bu);
 	puts("a");
 	Exibir(desc);
 }
