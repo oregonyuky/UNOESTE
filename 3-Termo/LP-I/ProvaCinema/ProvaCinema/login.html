@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./publico/css/estilo.css">
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+    <form action="/login" method="POST" style="text-align: center">
+        <h1>Informe o usuario e a senha para ver o relatorio de vendas</h1>
+        <label>Usuário
+            <input type="text" name="usuario" required>
+        </label>
+        <label>Senha
+            <input type="password" name="senha" required>
+        </label>
+        <button type="submit">Entrar</button>
+    </form>
+    </div>
+</body>
+</html>

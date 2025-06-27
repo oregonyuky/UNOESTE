@@ -1,0 +1,142 @@
+{
+  "salas": [
+    {
+      "id": "1",
+      "sessoes": [
+        "Seg: 20h00",
+        "Qua: 20h00",
+        "Sex: 21h00",
+        "Sab: 16h00",
+        "Sab: 21h00",
+        "Dom: 16h00",
+        "Dom: 21h00"
+      ],
+      "filme": "O Incrível Homem Aranha",
+      "imagem": "https://www.sonypictures.com.br/sites/brazil/files/2022-03/KEY%20ART_ESPETACULAR%20HOMEM-ARANHA.JPG",
+      "assentosVendidos": [
+        "A1",
+        "C5",
+        "E2"
+      ]
+    },
+    {
+      "id": "2",
+      "sessoes": [
+        "Seg: 20h00",
+        "Qua: 20h00",
+        "Sex: 21h00",
+        "Sab: 16h00",
+        "Sab: 21h00",
+        "Dom: 16h00",
+        "Dom: 21h00"
+      ],
+      "filme": "Batman: O Cavaleiro das Trevas",
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/d/d1/The_Dark_Knight.jpg",
+      "assentosVendidos": [
+        "A3",
+        "B5",
+        "E3"
+      ]
+    },
+    {
+      "id": "3",
+      "sessoes": [
+        "Ter: 18h00",
+        "Qui: 18h00",
+        "Sab: 14h00",
+        "Sab: 18h00",
+        "Dom: 14h00",
+        "Dom: 18h00"
+      ],
+      "filme": "Avatar: O Caminho da Água",
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/5/54/Avatar_The_Way_of_Water_poster.jpg",
+      "assentosVendidos": [
+        "A1",
+        "A2",
+        "A3",
+        "B1",
+        "B3",
+        "B5",
+        "C1",
+        "D2",
+        "E3",
+        "E4"
+      ]
+    },
+    {
+      "id": "4",
+      "sessoes": [
+        "Qua: 17h00",
+        "Sex: 19h00",
+        "Sab: 17h00",
+        "Sab: 20h00",
+        "Dom: 17h00",
+        "Dom: 20h00"
+      ],
+      "filme": "Interestelar",
+      "imagem": "https://upload.wikimedia.org/wikipedia/pt/3/3a/Interstellar_Filme.png",
+      "assentosVendidos": [
+        "A2",
+        "A5",
+        "B2",
+        "B3",
+        "C3",
+        "C4",
+        "D2",
+        "E3",
+        "E4"
+      ]
+    }
+  ],
+  "vendas": [
+    {
+      "id": "1",
+      "RA": "12335648",
+      "filme_id": 1,
+      "sessao": "Seg: 20h00",
+      "assento": "A1"
+    },
+    {
+      "id": 1750078216561,
+      "RA": "234234",
+      "filme_id": 1,
+      "sessao": "Seg: 20h00",
+      "assento": "A3"
+    },
+    {
+      "id": 1750078428015,
+      "RA": "102455",
+      "filme_id": 1,
+      "sessao": "Seg: 20h00",
+      "assento": "A2"
+    },
+    {
+      "id": 1750079537870,
+      "RA": "234",
+      "filme_id": 1,
+      "sessao": "Seg: 20h00",
+      "assento": "A2"
+    },
+    {
+      "id": 1750080156276,
+      "RA": "asdf",
+      "filme_id": 1,
+      "sessao": "Seg: 20h00",
+      "assento": "D3"
+    },
+    {
+      "id": 1750081521346,
+      "RA": "1",
+      "filme_id": 2,
+      "sessao": "Seg: 20h00",
+      "assento": "C4"
+    },
+    {
+      "id": 1750081714665,
+      "RA": "24",
+      "filme_id": 1,
+      "sessao": "Seg: 20h00",
+      "assento": "A3"
+    }
+  ]
+}
