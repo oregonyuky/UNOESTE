@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vitrine de Títulos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #filtroCategoria { margin-bottom: 20px; padding: 8px; font-size: 16px; }
+        .livro-card {
+            border: 1px solid #ccc; 
+            padding: 10px; 
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            gap: 15px;
+        }
+        .livro-capa {
+            width: 100px;
+            height: 140px;
+            object-fit: cover;
+            border: 1px solid #aaa;
+        }
+        .livro-info {
+            flex-grow: 1;
+        }
+        .btn {
+            padding: 6px 12px;
+            margin-right: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Vitrine de Títulos</h1>
+
+<label for="filtroCategoria">Filtrar por Categoria:</label>
+<select id="filtroCategoria">
+    <option value="">Todas</option>
+    <option value="Lógica e Programação">Lógica e Programação</option>
+    <option value="Banco de Dados">Banco de Dados</option>
+    <option value="Redes">Redes</option>
+    <option value="Sistemas Operacionais">Sistemas Operacionais</option>
+</select>
+
+<div id="vitrine"></div>
+
+<script src="../js/vitrine.js"></script>
+
+</body>
+</html>

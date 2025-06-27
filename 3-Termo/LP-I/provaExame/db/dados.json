@@ -1,0 +1,84 @@
+{
+  "livros": [
+    {
+      "id": "1",
+      "titulo": "Sistemas Operacionais Modernos",
+      "autor": "Andrew S. Tanenbaum e Herbert Bos",
+      "edicao": "4ª edição",
+      "categoria": "Sistemas Operacionais",
+      "descricao": "A 4ª edição de Sistemas operacionais modernos foi extensamente revisada.",
+      "contador_gostei": 1,
+      "contador_naogostei": 0
+    },
+    {
+      "id": "72f4",
+      "titulo": "a",
+      "autor": "b",
+      "edicao": "v",
+      "categoria": "Lógica e Programação",
+      "descricao": "d",
+      "contador_gostei": 0,
+      "contador_naogostei": 1
+    },
+    {
+      "id": "ffb4",
+      "titulo": "a",
+      "autor": "b",
+      "edicao": "c",
+      "categoria": "Banco de Dados",
+      "descricao": "d",
+      "contador_gostei": 2,
+      "contador_naogostei": 1
+    },
+    {
+      "id": "1b4e",
+      "titulo": "a",
+      "autor": "b",
+      "edicao": "c",
+      "categoria": "Banco de Dados",
+      "descricao": "d",
+      "contador_gostei": 1,
+      "contador_naogostei": 1
+    },
+    {
+      "id": "d2e3",
+      "titulo": "v",
+      "autor": "v",
+      "edicao": "v",
+      "categoria": "Lógica e Programação",
+      "descricao": "d",
+      "contador_gostei": 1,
+      "contador_naogostei": 1
+    },
+    {
+      "id": "58fd",
+      "titulo": "a",
+      "autor": "a",
+      "edicao": "c",
+      "categoria": "Banco de Dados",
+      "descricao": "c",
+      "contador_gostei": 2,
+      "contador_naogostei": 0
+    },
+    {
+      "id": "3aab",
+      "titulo": "c",
+      "autor": "c",
+      "edicao": "d",
+      "categoria": "Redes",
+      "descricao": "d",
+      "contador_gostei": 2,
+      "contador_naogostei": 0
+    },
+    {
+      "id": "a8ff",
+      "titulo": "v",
+      "autor": "v",
+      "edicao": "v",
+      "categoria": "Lógica e Programação",
+      "descricao": "d",
+      "contador_gostei": 1,
+      "contador_naogostei": 1
+    }
+  ]
+}

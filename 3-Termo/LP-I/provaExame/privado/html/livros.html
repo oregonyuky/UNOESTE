@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h1 style="text-align: center; margin-top: 20px;">Cadastro de Livros</h1>
+        </div>
+        <div style="text-align: center; margin: 20px;">
+        <a href="vitrine.html">
+            <button type="button">Ver Vitrine de Títulos</button>
+        </a>
+        </div>
+        <form id="formCadLivros" action="/livros" method="POST" style="border: 1px solid gray; margin: 5px; padding: 10px;" novalidate>
+            <div>
+                <label for="titulo">Nome</label><br>
+                <input type="text" id="titulo" name="titulo" required><br>
+            </div><br>
+            <div>
+                <label for="autor">Autor</label><br>
+                <input type="text" id="autor" name="autor" required><br>
+            </div><br>
+            <div>
+                <label for="edicao">Edicao</label><br>
+                <input type="text" id="edicao" name="edicao" required><br>
+            </div><br>
+            <div>
+                <label for="categoria">Categoria</label><br>
+                <select id="categoria" required>
+                    <option selected disabled value="">Escolha...</option>
+                    <option value="Logica e Programacao">Logdica e Programacao</option>
+                    <option value="Banco de Dados">Banco de dados</option>
+                    <option value="Redes">Redes</option>
+                    <option value="Sistemas Operacionais">Sistemas Operacionais</option>
+                </select><br>
+            </div><br>
+            <div id="descricao">
+                <label for="descricao">Descricao</label><br>
+                <input type="text" id="descricao" name="descricao" required><br>
+            </div><br>
+            <div style="text-align: center;">
+                <button type="submit">Cadastrar</button>
+                <a href="/index.html"><button type="button">Voltar</button></a>
+            </div>
+        </form>
+        <div id="tabelaL"></div>
+    </div>
+</body>
+<script src="/privado/js/livros.js"></script>
+</html>
