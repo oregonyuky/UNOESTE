@@ -1,6 +1,8 @@
 #include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <locale.h>
 
 struct TpRegistro 
 {
@@ -156,17 +158,49 @@ void Exibir(TpDesc d){
         aux = aux->prox;
     }
 }
-void funcao(TpDesc &d, TpRegistro R, char frase[100]){
+/*
+void trim(char *str) { // Remove espaços no início
+    while (isspace((unsigned char)*str)) str++;
+
+    // Remove espaços no fim
+    if (*str) {
+        char *end = str + strlen(str) - 1;
+        while (end > str && (isspace((unsigned char)*end) || *end == '\n' || *end == '\r'))
+            end--;
+        *(end + 1) = '\0';
+    }
+
+    // Remove vírgula no final
+    int len = strlen(str);
+    if (len > 0 && str[len - 1] == ',') str[len - 1] = '\0';
+}
+
+void funcao(TpDesc &d, TpRegistro R) {
+    char autoresCopia[200];
+    strcpy(autoresCopia, R.autores);
+
     char *ptr1, *ptr2;
-    char *token = strtok_r(frase, ";", &ptr2);
-    while(token){
+    char *token = strtok_r(autoresCopia, ";", &ptr2);
+    while (token) {
+        trim(token);
+        if (strlen(token) == 0) {
+            token = strtok_r(NULL, ";", &ptr2);
+            continue;
+        }
+
         char sobrenome[30] = "", nome[30] = "";
         char *seg = strtok_r(token, ",", &ptr1);
         if (seg) {
             strcpy(sobrenome, seg);
+            trim(sobrenome);
             seg = strtok_r(NULL, ",", &ptr1);
-            if (seg) strcpy(nome, seg);
+            if (seg) {
+                strcpy(nome, seg);
+                trim(nome);
+            }
         }
+
+        printf("sobrenome: [%s] nome: [%s]\n", sobrenome, nome);
 
         TpEditora *ed = BuscarEditora(d, R.editora);
         TpLivros *lv = BuscarAutor(ed, R.titulo_livro);
@@ -175,9 +209,89 @@ void funcao(TpDesc &d, TpRegistro R, char frase[100]){
         token = strtok_r(NULL, ";", &ptr2);
     }
 }
+*/
+void trim(char str[]) {
+    if (str == NULL) return;
+
+    int len = strlen(str);
+    int start = 0;
+    int end = len - 1;
+
+    // Avança enquanto for espaço no início
+    while (start < len && isspace((unsigned char)str[start])) {
+        start++;
+    }
+
+    // Regride enquanto for espaço no final
+    while (end >= start && isspace((unsigned char)str[end])) {
+        end--;
+    }
+
+    // Remove vírgula final, se tiver
+    if (end >= start && str[end] == ',') {
+        end--;
+    }
+
+    // Cria nova string: copia apenas a parte útil
+    int j = 0;
+    for (int i = start; i <= end; i++) {
+        str[j++] = str[i];
+    }
+    str[j] = '\0';
+}
+
+void funcao(TpDesc &d, TpRegistro R) {
+    char str[200];
+    strcpy(str, R.autores);
+
+    char sobrenome[30] = "";
+    char nome[30] = "";
+    char nov[100] = "";
+    int fase = 0; // 0 = sobrenome, 1 = nome
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] == ',') {
+            strcpy(sobrenome, nov);
+            trim(sobrenome);
+            strcpy(nov, "");
+            fase = 1;
+        } else if (str[i] == ';') {
+            strcpy(nome, nov);
+            trim(nome);
+            strcpy(nov, "");
+
+            InserirAutor(BuscarAutor(BuscarEditora(d, R.editora), R.titulo_livro),
+                         sobrenome, nome);
+
+            sobrenome[0] = '\0';
+            nome[0] = '\0';
+            fase = 0;
+        } else {
+            char tmp[2] = { str[i], '\0' };
+            strcat(nov, tmp);
+        }
+    }
+
+    // ⚡ FIX: Se faltar ';' no final
+    if (strlen(nov) > 0) {
+        if (fase == 0) {
+            strcpy(sobrenome, nov);
+            trim(sobrenome);
+            nome[0] = '\0';
+        } else {
+            strcpy(nome, nov);
+            trim(nome);
+        }
+
+        InserirAutor(BuscarAutor(BuscarEditora(d, R.editora), R.titulo_livro),
+                     sobrenome, nome);
+    }
+}
+
 
 int main(void)
 {
+    setlocale(LC_ALL, "");
 	gera_arq_bin();
 	//imprime();
     FILE *arq = fopen("livros.dat", "rb");
@@ -185,9 +299,17 @@ int main(void)
     TpDesc d;
     Inicializar(d);
     while(fread(&R, sizeof(TpRegistro), 1, arq)==1){
-        InserirEditora(d, R.editora);
-        InserirLivros(BuscarEditora(d, R.editora), R.titulo_livro, R.ano, R.paginas);
-        funcao(d, R, R.autores);
+          TpEditora *ed = BuscarEditora(d, R.editora);
+            if (!ed) { 
+                InserirEditora(d, R.editora);
+                ed = BuscarEditora(d, R.editora);
+            }
+
+            TpLivros *lv = BuscarAutor(ed, R.titulo_livro);
+            if (!lv) {
+                InserirLivros(ed, R.titulo_livro, R.ano, R.paginas);
+            }
+        funcao(d, R);
         //InserirAutor(BuscarAutor(BuscarEditora(d, R.editora), R.titulo_livro), sobrenome, nome);
     }
     Exibir(d);
