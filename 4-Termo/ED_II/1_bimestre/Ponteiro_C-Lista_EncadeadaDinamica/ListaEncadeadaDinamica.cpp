@@ -41,14 +41,10 @@ struct TpAutor{
     char nome[30];
     TpAutor *prox;
 };
-struct TpListaAutor{
-    TpAutor *InicioA, *FimA;
-    TpListaAutor *prox;
-};
 struct TpLivros{
     char titulo[30];
     int ano, paginas;
-    TpListaAutor *InicioLi, *FimLi;
+    TpAutor *InicioA, *FimA;
     TpLivros *ant, *prox;
 };
 struct TpEditora{
@@ -73,12 +69,6 @@ TpLivros *novaCaixaL(char titulo[30], int ano, int paginas){
     L->paginas = paginas;
     L->ano = ano;
     L->ant = L->prox = NULL;
-    L->InicioLi = L->FimLi = NULL;
-    return L;
-}
-TpListaAutor *novaCaixaLi(void){
-    TpListaAutor *L = (TpListaAutor *)malloc(sizeof(TpListaAutor));
-    L->prox = NULL; 
     L->InicioA = L->FimA = NULL;
     return L;
 }
@@ -89,8 +79,24 @@ TpAutor *novaCaixaA(char sobrenome[30], char nome[30]){
     A->prox = NULL;
     return A;
 }
-void Inicializar(TpDesc &d){
-    d.Inicio = d.Fim = NULL;
+TpEditora *BuscarEditora(TpDesc &d, char editora[30]){
+    TpEditora *aux = d.Inicio;
+    while(aux){
+        if(!strcmp(aux->editora, editora))return aux;
+        aux = aux->prox;
+    }
+    return NULL; 
+} 
+TpLivros *BuscarAutor(TpEditora *d, char titulo[30]){
+    TpLivros *aux = d->InicioL;
+    while(aux){
+        if(!strcmp(aux->titulo, titulo))return aux;
+        aux = aux->prox;
+    }
+    return NULL;
+}
+void Inicializar(TpDesc &d){ 
+    d.Inicio = d.Fim = NULL; 
     d.qtd=0;
 }
 void InserirEditora(TpDesc &d, char editora[30]){
@@ -114,22 +120,62 @@ void InserirEditora(TpDesc &d, char editora[30]){
     }
     d.qtd++;
 }
-void InserirLivros(TpEditora *l, char titulo[30], int ano, int paginas){
-    TpLivros *aux = l->InicioL, *nc = novaCaixaL(titulo, ano, paginas);
-    if(!aux)aux = nc;
+void InserirLivros(TpEditora *d, char titulo[30], int ano, int paginas){
+    TpLivros *aux = d->InicioL, *nc = novaCaixaL(titulo, ano, paginas);
+    if(!aux)d->InicioL = d->FimL = nc;
     else{
-        l->FimL->prox = nc;
-        nc->ant = l->FimL;
-        l->FimL = nc;
+        d->FimL->prox = nc;
+        d->FimL = nc;
+    }
+}
+void InserirAutor(TpLivros *d, char sobrenome[30], char nome[30]){
+    TpAutor *aux = d->InicioA, *nc = novaCaixaA(sobrenome, nome);
+    if(!aux)d->InicioA = d->FimA = nc;
+    else{
+        d->FimA->prox = nc;
+        d->FimA = nc;
     }
 }
 void Exibir(TpDesc d){
     TpEditora *aux = d.Inicio;
     while(aux){
+        //printf("Editoras:\n");
         printf("%s\n", aux->editora);
+        TpLivros *aux1 = aux->InicioL;
+        //printf("Livros:\n");
+        while(aux1){
+            printf("    %s %d %d\n", aux1->titulo, aux1->ano, aux1->paginas);
+            TpAutor *aux2 = aux1->InicioA;
+            //printf("Autores:\n");
+            while(aux2){
+                printf("        %s %s\n", aux2->sobrenome, aux2->nome);
+                aux2 = aux2->prox;
+            }
+            aux1 = aux1->prox;
+        }
         aux = aux->prox;
     }
 }
+void funcao(TpDesc &d, TpRegistro R, char frase[100]){
+    char *ptr1, *ptr2;
+    char *token = strtok_r(frase, ";", &ptr2);
+    while(token){
+        char sobrenome[30] = "", nome[30] = "";
+        char *seg = strtok_r(token, ",", &ptr1);
+        if (seg) {
+            strcpy(sobrenome, seg);
+            seg = strtok_r(NULL, ",", &ptr1);
+            if (seg) strcpy(nome, seg);
+        }
+
+        TpEditora *ed = BuscarEditora(d, R.editora);
+        TpLivros *lv = BuscarAutor(ed, R.titulo_livro);
+        if (ed && lv) InserirAutor(lv, sobrenome, nome);
+
+        token = strtok_r(NULL, ";", &ptr2);
+    }
+}
+
 int main(void)
 {
 	gera_arq_bin();
@@ -140,6 +186,9 @@ int main(void)
     Inicializar(d);
     while(fread(&R, sizeof(TpRegistro), 1, arq)==1){
         InserirEditora(d, R.editora);
+        InserirLivros(BuscarEditora(d, R.editora), R.titulo_livro, R.ano, R.paginas);
+        funcao(d, R, R.autores);
+        //InserirAutor(BuscarAutor(BuscarEditora(d, R.editora), R.titulo_livro), sobrenome, nome);
     }
     Exibir(d);
 	return 0;
