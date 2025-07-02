@@ -217,6 +217,45 @@ void funcao(TpDesc &d, TpRegistro R) {
         token = strtok_r(NULL, ";", &ptr2);
     }
 }
+void LiberarAutor(TpLivros *L){
+    while(L->InicioA){
+        TpAutor *tmp = L->InicioA;
+        L->InicioA = L->InicioA->prox;
+        free(tmp);
+    }
+    L->InicioA = L->FimA = NULL;
+}
+TpLivros *BuscarTitulo(TpDesc D, char titulo[100]){
+    TpEditora *E = D.Inicio;
+    while(E){
+        TpLivros *L = E->InicioL;
+        while(L){
+            if(!strcmp(L->titulo, titulo))return L;
+            L = L->prox;
+        }
+        E = E->prox;
+    }
+    return NULL;
+}
+void ExcluirLivro(TpDesc &D, char titulo[100]){
+    TpEditora *E = D.Inicio;
+    while(E){
+        TpLivros *L = E->InicioL, *ant = NULL;
+        while(L){
+            if(!strcmp(L->titulo, titulo)){
+                if(ant) ant->prox = L->prox;
+                else E->InicioL = L->prox;
+                if(E->FimL == L) E->FimL = ant;
+                LiberarAutor(L);
+                free(L);
+                return;
+            }
+            ant = L;
+            L = L->prox;
+        }
+        E = E->prox;
+    }
+}
 int main(void)
 {
     setlocale(LC_ALL, "");
@@ -244,6 +283,11 @@ int main(void)
         funcao(d, R);
     }
     Exibir(d);
+    char titulo[100] = "Algoritmos e estruturas de dados";
+    ExcluirLivro(d,titulo);
+    printf("\n--- Exclusao do livro \"Algoritmos e estruturas de dados\"---\n");
+    Exibir(d);
+    fclose(arq);
 	return 0;
 }
 
