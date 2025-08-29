@@ -1,0 +1,56 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .blue{
+            color: blue;
+        }
+        .red{
+            color: red;
+        } */
+         div{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            border-radius: 10px;
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+<head>
+<body onload="carregarPagina()">
+
+    <div id="testeDom">
+        <h1 class="titulo">Teste div 2</h1>
+    </div>
+    <p name="nomeTag">P para testar metodos do getElementByName Dom</p>
+    <span>Tag span 1</span>
+    <span>Tag span 2</span>
+
+    <p class="classHTML">
+        P na class 'classHTML'
+    </p>
+    <span class="classHTML">Span na class 'classHTML'</span>
+    <h5 class="classHTML">H5 na class 'classHTML'</h5>
+    <p id="conteudoP">teste conteudo P</p>
+    <p id="textP" class="textoPclass">alterar cor utilizando classList</p>
+    <div id="idDiv"></div>
+    <img src="./logo.png" alt="Logo do JS img" width="150" id="logo">
+    <button onclick="saudacao()">Botao 1</button>
+    <button onclick="mostrarcaixa()">Botao 2</button>
+    <div id="caixa"></div>
+    <p onmouseover="trocarTexto()">Passe o mouse aqui</p>
+    <form onsubmit="enviar()">
+        <label>Qual e a subtracao de 10-5</label>
+        <input type="number" placeholder="18" id="sub">
+        <br><br>
+        <button type="submit">Enviar</button>
+    </form>
+
+
+</body>
+<script src="script.js"></script>
+</html>

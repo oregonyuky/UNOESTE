@@ -1,0 +1,2 @@
+texto arquivo para leitura via Nodejs
+asdfasdf
