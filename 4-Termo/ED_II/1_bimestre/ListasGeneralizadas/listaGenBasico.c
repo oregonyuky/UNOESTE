@@ -16,31 +16,31 @@ struct listagen
 	char terminal;
 	union info_lista no;
 };
-struct pilha{
-	ListaGen *l;
-	struct Pilha *prox;
-}
-typedef struct pilha Pilha;
 typedef struct listagen ListaGen;
+struct pilha{
+	ListaGen *li;
+	struct pilha *prox;
+};
+typedef struct pilha Pilha;
 void init(Pilha **p){
 	*p == NULL;
 }
 void push(Pilha **p, ListaGen *l){
 	Pilha *aux = (Pilha*)malloc(sizeof(Pilha));
-	aux->l = l;
+	aux->li = l;
 	aux->prox = *p;
 	*p = aux;
 }
-void pop(Pilha **p, ListaGen *l){
+char isEmpty(Pilha *p){
+    return p==NULL;
+}
+void pop(Pilha **p, ListaGen **l){
 	Pilha *aux;
 	if(!isEmpty(*p)){
-        *l = (*p)->l;
+        *l = (*p)->li;
         aux = *p;
         *p = aux->prox;
         free(aux);
-    }
-    else{
-        *l = -1;
     }
 }
 
@@ -133,35 +133,37 @@ void Destruir(ListaGen **l){
 			free(*l);
 		}
 		else{
-			destruir(Head(&(*l)->no.lista.cabeca));
-			destruir(Tail(&(*l)->no.lista.cauda));
+			Destruir(&(*l)->no.lista.cabeca);
+			Destruir(&(*l)->no.lista.cauda);
 			free(*l);
 			*l = NULL;
 		}
 	}
 }
 void DestruirI(ListaGen **l){
-	Pilha *p;
+	Pilha *p; ListaGen *aux;
 	init(&p);
 	push(&p, *l);
-	while(!isEmpty(p)){
-		if(!Nula(*l)){
+	while(!isEmpty(p))
+	{
+		if(!Nula(*l))
+		{
 			pop(&p, &*l);
 			while(!Nula(*l) && !Atomo(*l)){
 				push(&p, *l);
 				*l = Head(*l);
 			}
-			if(Atomo(*l)){
+			if(Atomo(*l))
 				free(*l);
-			}
 		}
-		pop(&p, &l);
+		pop(&p, &*l);
 		aux = *l;
 		*l = Tail(*l);
 		free(aux);
 		if(!Nula(*l))
 			push(&p, *l);
 	}
+	*l = NULL;
 }
 int main(){
 	//[a, [b, c]]
@@ -169,5 +171,8 @@ int main(){
 	L = Cons(CriaT("a"), Cons(Cons(CriaT("b"), Cons(CriaT("c"), NULL)), NULL));
 	Exibir(L); puts("");
 	ExibirAtomo(L); puts("");
-	ExibirAtomoI(L);
+	ExibirAtomoI(L); puts("");
+	puts("liberar toda lista");
+	DestruirI(&L);
+	Exibir(L);
 }
