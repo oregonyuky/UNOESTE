@@ -23,7 +23,7 @@ struct pilha{
 };
 typedef struct pilha Pilha;
 void init(Pilha **p){
-	*p == NULL;
+	*p = NULL;
 }
 void push(Pilha **p, ListaGen *l){
 	Pilha *aux = (Pilha*)malloc(sizeof(Pilha));
@@ -148,7 +148,7 @@ void DestruirI(ListaGen **l){
 	{
 		if(!Nula(*l))
 		{
-			pop(&p, &*l);
+			pop(&p, l);
 			while(!Nula(*l) && !Atomo(*l)){
 				push(&p, *l);
 				*l = Head(*l);
@@ -156,7 +156,7 @@ void DestruirI(ListaGen **l){
 			if(Atomo(*l))
 				free(*l);
 		}
-		pop(&p, &*l);
+		pop(&p, l);
 		aux = *l;
 		*l = Tail(*l);
 		free(aux);
@@ -165,6 +165,28 @@ void DestruirI(ListaGen **l){
 	}
 	*l = NULL;
 }
+
+void DestruirI2(ListaGen **l){
+	Pilha *p; ListaGen *aux;
+	init(&p);
+	push(&p, *l);
+	while(!isEmpty(p))
+	{
+		pop(&p, l);
+		if(Tail(*l) && !(*l)->terminal) {
+			push(&p, Tail(*l));
+		}
+		if(!(*l)->terminal) {
+			push(&p, Head(*l));
+		}
+		else {
+			printf("%s ", (*l)->no.info);
+			free(*l);
+		}
+	}
+	*l = NULL;
+}
+
 int main(){
 	//[a, [b, c]]
 	ListaGen *L;
@@ -173,6 +195,10 @@ int main(){
 	ExibirAtomo(L); puts("");
 	ExibirAtomoI(L); puts("");
 	puts("liberar toda lista");
-	DestruirI(&L);
+	DestruirI(&L); puts("");
+	Exibir(L);	puts("");
+	L = Cons(CriaT("a"), Cons(Cons(CriaT("b"), Cons(CriaT("c"), NULL)), NULL));
+	DestruirI2(&L); puts("");
 	Exibir(L);
+	
 }
