@@ -186,7 +186,43 @@ void DestruirI2(ListaGen **l){
 	}
 	*l = NULL;
 }
+ListaGen *dup(ListaGen *l){
+	if(Nula(l)) return NULL;
+	if (Atomo(l)) return CriaT(l->no.info);
+	return Cons(dup(Head(l)), dup(Tail(l)));
+}
 
+char iguais(ListaGen *l, ListaGen *l2){
+	if(Nula(l) && Nula(l2))
+		return 1;
+	if(Nula(l) || Nula(l2))
+		return 0;
+	if(Atomo(l) && Atomo(l2))
+	{
+		if(strcmp(l->no.info, l2->no.info)==0)
+			return 1;
+		return 0;
+	}
+	if(Atomo(l) || Atomo(l2))
+		return 0;
+	return iguais(Head(l), Head(l2)) && iguais(Tail(l), Tail(l2));
+}
+
+void calc_deph(ListaGen *l, int n, int *maior){
+	if(!Nula(l) && !Atomo(l))
+	{
+		if(n>*maior)
+			*maior = n;
+		calc_deph(Head(l), n+1, &*maior);
+		calc_deph(Tail(l), n, &*maior);
+	}
+}
+   
+int deph(ListaGen *l){
+	int maior=0;
+	calc_deph(l, 1, &maior);
+	return maior;
+}
 int main(){
 	//[a, [b, c]]
 	ListaGen *L;
