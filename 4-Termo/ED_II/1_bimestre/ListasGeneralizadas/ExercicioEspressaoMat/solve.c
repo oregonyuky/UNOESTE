@@ -47,7 +47,13 @@ Termo *separa(char equacao[100]){
 }
 ListaGen *CriaNo(char str[30]){
     ListaGen *aux = (ListaGen*)malloc(sizeof(ListaGen));
-    if()
+    if(!strcmp(str, "(")){
+        aux->terminal = 0;
+        aux->no.valor = 0;
+    }else if(str[0]-'0' >= 0 && str[0]-'0' <= 9){
+        aux->terminal = 1;
+        aux->no.valor = atof(str);
+    }else if()
     aux->terminal = 1;
     strcpy(aux->no.valor, str);
     aux->cabeca = NULL;
