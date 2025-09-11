@@ -52,6 +52,3 @@ void insereLG(ListaGen **l, char info[8]){
             ant->no.lista.cauda = Cons(CriaT(info), aux);
     }
 }
-int main(){
-
-}
