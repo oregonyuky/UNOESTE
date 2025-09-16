@@ -44,7 +44,6 @@ void insere(MatEsp *vetLin[], MatEsp *vetCol[], int lin, int col, int valor){
             nova->col = col;
             nova->valor = valor;
             nova->pl = nova->pc = NULL;
-            //ligação horizontal
             MatEsp *plinha = vetLin[lin], *ant=NULL;
             while(plinha && col > plinha->col){
                 ant = plinha;
@@ -53,13 +52,12 @@ void insere(MatEsp *vetLin[], MatEsp *vetCol[], int lin, int col, int valor){
             if(!ant)vetLin[lin] = nova;
             else ant->pl = nova;
             nova->pl = plinha;
-            //ligação vertical
             MatEsp *pColuna = vetCol[col];
             while(pColuna && lin > pColuna->lin){
                 ant = pColuna;
                 pColuna = pColuna->pc;
             }
-            if(!ant)vetLin[col] = nova;
+            if(!ant)vetCol[col] = nova;
             else ant->pc = nova;
             nova->pc = pColuna;
         }
