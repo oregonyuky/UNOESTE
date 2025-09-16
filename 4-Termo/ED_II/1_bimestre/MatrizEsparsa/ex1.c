@@ -80,6 +80,32 @@ void soma(MatEsp *vetLinA[], MatEsp *vetLinB[], MatEsp *vetLinC[], MatEsp *vetCo
         }
     }
 }
+void multiplicacao(MatEsp *vetLinA[], MatEsp *vetLinB[], MatEsp *vetLinC[], MatEsp*vetColC[]){
+    MatEsp *aux, *aux1;
+    for(int i=0;i<nl;i++){
+        for(int j=0;j<nc;j++){
+            int soma=0;
+            for(int k=0;k<nc;k++){
+                verificaOcupado(vetLinA[i], k, &aux);
+                verificaOcupado(vetLinB[k], j, &aux1);
+                soma += aux->valor * aux1->valor;
+            }
+            insere(vetLinC, vetLinC, i, j, soma);
+        }
+    }
+}
+void del(MatEsp *vetLin){
+    if(!vetLin)return;
+    del(vetLin->pl);
+    free(vetLin);
+}
+void deletar(MatEsp *vetLin[], MatEsp *vetCol[]){
+    for(int i=0;i<nl;i++){
+        del(vetLin[i]);a
+        vetLin[i] = NULL;
+        vetCol[i] = NULL;
+    }
+}
 int main(){
     MatEsp *vetLinA[3], *vetColA[3], *vetLinB[3], *vetColB[3], *vetLinC[3], *vetColC[3];
     inicializar(vetLinA, vetColA);
@@ -93,10 +119,20 @@ int main(){
             insere(vetLinB, vetColB, i, j, opB[i][j]);
         }
     }
+    puts("Matriz A");
     exibir(vetLinA);
     puts("");
+    puts("Matriz B");
     exibir(vetLinB);
     puts("");
     soma(vetLinA, vetLinB, vetLinC, vetColC);
+    puts("Soma(A, B):");
+    exibir(vetLinC); puts("");
+    inicializar(vetLinC, vetColC);
+    puts("Multiplicacao(A, B):");
+    multiplicacao(vetLinA, vetLinB, vetLinC, vetColC);
+    exibir(vetLinC); puts("");
+    deletar(vetLinC, vetColC);
+    puts("Liberar toda Matriz:");
     exibir(vetLinC);
 }
