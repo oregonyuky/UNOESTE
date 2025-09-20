@@ -174,6 +174,7 @@ function atualizarHistorico(nomeLead, historico){
     console.log(chalk.green('Historico do atualizado com sucesso'))
     menu()
 }
+
 function getLead(nomeLead){
     const leadJson = fs.readFileSync(`leads/${nomeLead}.json`, {
         //utf-8 para pegar caracteres especiais
