@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="painel" prefHeight="544.0" prefWidth="771.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.paintfx.PrincipalController">
+
+    <top>
+        <VBox prefHeight="72.0" prefWidth="771.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar>
+                    <menus>
+                        <!-- Menu Arquivo -->
+                        <Menu text="_ARQUIVO">
+                            <items>
+                                <MenuItem fx:id="menuItemAbrir" onAction="#onAbrir" text="_ABRIR..." />
+                                <SeparatorMenuItem />
+                                <MenuItem fx:id="menuItemSalvar" onAction="#onSalvar" text="_SALVAR" />
+                                <MenuItem fx:id="menuItemSalvarComo" onAction="#onSalvarComo" text="Salvar _Como..." />
+                                <SeparatorMenuItem />
+                                <MenuItem fx:id="menuItemFechar" onAction="#onFechar" text="_FECHAR" />
+                            </items>
+                        </Menu>
+
+                        <!-- Menu Conversores -->
+                        <Menu text="_CONVERSORES">
+                            <items>
+                                <MenuItem fx:id="menuItemEditarTonsCinza" onAction="#onTonsCinza" text="_Tons de Cinza" />
+                                <SeparatorMenuItem />
+                                <MenuItem fx:id="menuItemEditarPretoBranco" onAction="#onPretoBranco" text="_Preto e Branco" />
+                                <SeparatorMenuItem />
+                                <MenuItem fx:id="menuItemEditarInverter" onAction="#onInverterCores" text="Inverter Cores" />
+                                <SeparatorMenuItem />
+                                <MenuItem fx:id="menuItemEspelharH" onAction="#onEspelharHorizontal" text="Espelhar Horizontal" />
+                                <SeparatorMenuItem />
+                                <MenuItem fx:id="menuItemEspelharV" onAction="#onEspelharVertical" text="Espelhar Vertical" />
+                            </items>
+                        </Menu>
+
+                        <!-- Menu com filtros extra via ImageJ -->
+                        <Menu text="_IMAGEJ">
+                            <items>
+                                <MenuItem fx:id="menuItemGaussian" onAction="#onGaussianBlur" text="Gaussian Blur" />
+                                <MenuItem fx:id="menuItemSharpen" onAction="#onSharpen" text="Sharpen" />
+                                <MenuItem fx:id="menuItemEdgeDetect" onAction="#onEdgeDetect" text="Detecção de Bordas" />
+                                <MenuItem fx:id="menuItemEqualize" onAction="#onEqualizeHistogram" text="Equalizar Histograma" />
+                                <MenuItem fx:id="menuItemNoise" onAction="#onNoise" text="_NOISE..." />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+              <!-- Toolbar com botões de atalho -->
+              <ToolBar prefHeight="43.0" prefWidth="771.0">
+                  <items>
+                      <Button onAction="#onAbrir" prefHeight="30.0" prefWidth="49.0" style="-fx-background-image: url('abrir.png'); -fx-background-position: center center; -fx-background-repeat: no-repeat; -fx-background-color: transparent;">
+                     <font>
+                        <Font size="13.0" />
+                     </font></Button>
+                      <Button onAction="#onSalvar" prefHeight="30.0" prefWidth="46.0" style="-fx-background-image: url('salvar.png'); -fx-background-color: transparent; -fx-background-position: center center; -fx-background-repeat: no-repeat;" />
+                  <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="3.0" />
+                      <Button onAction="#onInformacoes" prefHeight="30.0" prefWidth="42.0" style="-fx-background-image: url('informacao.png'); -fx-background-repeat: no-repeat; -fx-background-position: center center; -fx-background-color: transparent;">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets></Button>
+                      <Button onAction="#onEspelharHorizontal" prefHeight="30.0" prefWidth="42.0" style="-fx-background-image: url('EspelharHorizontal.png'); -fx-background-position: center center; -fx-background-color: transparent; -fx-background-repeat: no-repeat;" />
+                      <Button onAction="#onEspelharVertical" prefHeight="30.0" prefWidth="42.0" style="-fx-background-image: url('EspelharVertical.png'); -fx-background-color: transparent; -fx-background-position: center center; -fx-background-repeat: no-repeat;" />
+                  <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="0.0" />
+                  <ToggleButton fx:id="tbFormas" mnemonicParsing="false" onAction="#onPainelFormas" text="Desenho">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </ToggleButton>
+                  <Button layoutX="293.0" layoutY="11.0" onAction="#onReload" prefHeight="30.0" prefWidth="42.0" style="-fx-background-image: url('reload.png'); -fx-background-color: transparent; -fx-background-position: center center; -fx-background-repeat: no-repeat;" />
+                  </items>
+              </ToolBar>
+            </children>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fx:id="scrollPane" fitToHeight="false" fitToWidth="false">
+            <content>
+                <StackPane fx:id="stackPane" alignment="TOP_LEFT">
+               <ImageView fx:id="imageView" fitHeight="0" fitWidth="0" pickOnBounds="true" preserveRatio="true" />
+                    <Canvas fx:id="canvas" height="397.0" nodeOrientation="RIGHT_TO_LEFT" width="769.0" />
+                </StackPane>
+            </content>
+        </ScrollPane>
+    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="67.0" prefWidth="771.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="lbFileImage" alignment="CENTER" prefHeight="33.0" prefWidth="155.0" text="comprimento" />
+            <Separator orientation="VERTICAL" prefHeight="48.0" prefWidth="7.0" />
+            <Slider fx:id="slZoom" prefHeight="33.0" prefWidth="229.0" showTickLabels="true">
+            </Slider>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

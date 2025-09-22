@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="395.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.paintfx.NoiseController">
+   <children>
+      <Slider fx:id="slNoise" layoutX="80.0" layoutY="191.0" showTickLabels="true" />
+      <Button fx:id="btConfirmar" layoutX="113.0" layoutY="268.0" mnemonicParsing="false" onAction="#onConfirmar" prefHeight="24.0" prefWidth="75.0" text="Confirmar" />
+   </children>
+</AnchorPane>
