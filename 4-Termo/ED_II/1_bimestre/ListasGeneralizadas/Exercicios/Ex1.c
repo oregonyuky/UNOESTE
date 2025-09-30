@@ -2,23 +2,42 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../tadListaGen.h"
+// devolve uma string para comparar nós (átomos e sublistas)
+char* chave(ListaGen *l) {
+    static char buffer[100]; // cuidado: sobrescrito a cada chamada
+    if (Atomo(l)) {
+        return l->no.info;
+    } else {
+        ListaGen *h = Head(l);
+        if (h && Atomo(h))
+            return h->no.info;
+        else
+            return "~"; // sublista vazia ou sem átomo -> joga pro fim
+    }
+}
+
 void selecao_direta(ListaGen *l){
-    for(ListaGen *i = l; i->no.lista.cauda; i = i->no.lista.cauda){
-		if(!Atomo(i))continue;
+    for (ListaGen *i = l; i->no.lista.cauda; i = i->no.lista.cauda) {
         ListaGen *aux = i;
-        for(ListaGen *j = i->no.lista.cauda; j; j = j->no.lista.cauda){
-			if(!Atomo(j))continue;
-            if(strcmp(j->no.info, aux->no.info)<0)
+        for (ListaGen *j = i->no.lista.cauda; j; j = j->no.lista.cauda) {
+            if (strcmp(chave(j), chave(aux)) < 0)
                 aux = j;
         }
-        if(aux != i){
-            char str[100];
-        	strcpy(str, aux->no.info);
-            strcpy(aux->no.info, i->no.info);
-            strcpy(i->no.info, str);
+        if (aux != i) {
+            // troca profunda de nós (átomo ou sublista)
+            ListaGen temp = *i;
+            *i = *aux;
+            *aux = temp;
+
+            // mas repara: as trocas também trocam os encadeamentos,
+            // então precisamos restaurar os ponteiros "cauda"
+            ListaGen *tmp = i->no.lista.cauda;
+            i->no.lista.cauda = aux->no.lista.cauda;
+            aux->no.lista.cauda = tmp;
         }
     }
 }
+
 void OrdenaLG(ListaGen *l){
 	Fila *f1, *f2;
 	init(&f1); init(&f2);
@@ -42,7 +61,6 @@ void OrdenaLG(ListaGen *l){
 int main(){
     ListaGen *l, *ll;
 	l = Cons(CriaT("c"), Cons(Cons(CriaT("a"), Cons(CriaT("b"), NULL)), NULL));
-    //lll = Cons(CriaT("x"), Cons(CriaT("a"), Cons(Cons(CriaT("c"), Cons(CriaT("d"), NULL)), Cons(Cons(CriaT("e"), Cons(CriaT("a"), Cons(Cons(CriaT("f"), NULL)), Cons(CriaT("b", NULL)))), NULL))), NULL);
 	ll = Cons(
     CriaT("x"),
     Cons(
@@ -69,5 +87,5 @@ int main(){
     )
 );
 OrdenaLG(ll);
-    Exibir(ll); // deve mostrar: a b c
+Exibir(ll); 
 }
