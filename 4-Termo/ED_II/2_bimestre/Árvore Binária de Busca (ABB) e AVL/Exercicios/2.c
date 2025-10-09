@@ -4,14 +4,12 @@ typedef struct node{
     int info;
     struct node *esq, *dir;
 } Node;
-void retornarProfundidade(Node *head, int info, int n, int *nivel){
+void retornarPai(Node *head, int filho, Node **pai){
     if(head){
-        if(head->info == info)*nivel = n;
-        else{
-            retornarProfundidade(head->esq, info, n+1, &*nivel);
-            if(*nivel==0)
-                retornarProfundidade(head->dir, info, n+1, &*nivel);
-        }
+        if((head->esq && head->esq->info == filho) || (head->dir && head->dir->info == filho))*pai = head;
+        retornarPai(head->esq, filho, pai);
+        if(!*pai)
+            retornarPai(head->dir, filho, pai);
     }
 }
 Node *create(int data){
@@ -22,13 +20,13 @@ Node *create(int data){
     return nova;
 }
 int main(){
-    Node *node = create(0);
+    Node *node = create(0), *pai = NULL;
     node->esq = create(1);
     node->dir = create(2);
     node->esq->esq = create(3);
     node->esq->dir = create(4);
     node->esq->esq->esq = create(5);
-    int nivel = 0;
-    retornarProfundidade(node, 3, 0, &nivel);
-    printf("profundidade: %d\n", nivel);
+    int nivel = 0, filho = 3;
+    retornarPai(node, filho, &pai);
+    printf("pai: %d\n", pai->info);
 }
