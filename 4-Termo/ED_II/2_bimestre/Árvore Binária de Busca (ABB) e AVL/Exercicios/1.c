@@ -13,8 +13,21 @@ void retornarProfundidade(Node *head, int info, int n, int *nivel){
         }
     }
 }
-Node *create()
+Node *create(int data){
+    Node *nova = (Node*)malloc(sizeof(Node));
+    nova->esq = NULL;
+    nova->dir = NULL;
+    nova->data = data;
+    return nova;
+}
 int main(){
     Node *node = NULL;
-    node->esq = 
+    node->esq = create(1);
+    node->dir = create(2);
+    node->esq->esq = create(3);
+    node->esq->dir = create(4);
+    node->esq->esq->esq = create(5);
+    int nivel = 0;
+    retornarProfundidade(node, 4, 0, &nivel);
+    printf("profundidade: %d\n", nivel);
 }
