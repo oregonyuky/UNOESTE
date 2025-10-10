@@ -44,39 +44,51 @@ public class ProcedimentoDAL implements IDAL<Procedimento> {
     @Override
     public Procedimento get(int id) {
         Procedimento procedimento = null;
-        String sql = "SELECT * FROM procedimento WHERE pro_id="+id;
+        String sql = "SELECT * FROM procedimento WHERE pro_id=" + id;
         ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
         try {
-            if (resultSet.next()) {
-                procedimento = new Procedimento(resultSet.getInt("pro_id"),
+            if (resultSet != null && resultSet.next()) {
+                procedimento = new Procedimento(
+                        resultSet.getInt("pro_id"),
                         resultSet.getString("pro_desc"),
                         resultSet.getDouble("pro_tempo"),
-                        resultSet.getDouble("pro_valor"));
+                        resultSet.getDouble("pro_valor")
+                );
+            } else {
+                System.out.println("Consulta retornou nulo ou nenhum resultado.");
             }
-        }catch(Exception e){
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar procedimento por ID: " + e.getMessage(), e);
         }
         return procedimento;
     }
 
     @Override
     public List<Procedimento> get(String filtro) {
-        List <Procedimento> procedimentoList = new ArrayList<>();
+        List<Procedimento> procedimentoList = new ArrayList<>();
         String sql = "SELECT * FROM procedimento";
-        if(!filtro.isEmpty())
+        if (!filtro.isEmpty())
             sql += " WHERE " + filtro;
+
         ResultSet resultSet = SingletonDB.getConexao().consultar(sql);
         try {
-            while (resultSet.next()) {
-                Procedimento procedimento = new Procedimento(resultSet.getInt("pro_id"),
-                        resultSet.getString("pro_desc"),
-                        resultSet.getDouble("pro_tempo"),
-                        resultSet.getDouble("pro_valor"));
-                procedimentoList.add(procedimento);
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    Procedimento procedimento = new Procedimento(
+                            resultSet.getInt("pro_id"),
+                            resultSet.getString("pro_desc"),
+                            resultSet.getDouble("pro_tempo"),
+                            resultSet.getDouble("pro_valor")
+                    );
+                    procedimentoList.add(procedimento);
+                }
+            } else {
+                System.out.println("Erro: resultSet é null para consulta: " + sql);
             }
-        }catch(Exception e){
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar procedimentos: " + e.getMessage(), e);
         }
+
         return procedimentoList;
     }
 }
