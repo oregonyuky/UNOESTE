@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="$CONTROLLER_NAME$">
+<VBox minHeight="600.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="unoeste.fipp.sisdentalfx.ProcedimentoTableController">
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="36.0" style="-fx-background-color: darkgray;">
          <children>

@@ -7,5 +7,8 @@ module unoeste.fipp.sisdentalfx {
     opens unoeste.fipp.sisdentalfx.db.entities to javafx.fxml;
     opens unoeste.fipp.sisdentalfx to javafx.fxml;
     exports unoeste.fipp.sisdentalfx;
-    exports unoeste.fipp.sisdentalfx.db;
+
+    exports unoeste.fipp.sisdentalfx.db.entities;
+
+    exports unoeste.fipp.sisdentalfx.db.repositories;
 }
