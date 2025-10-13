@@ -3,6 +3,7 @@ module unoeste.fipp.sisdentalfx {
     requires javafx.fxml;
     requires java.sql;
     requires java.desktop;
+    requires javafx.graphics;
 
     opens unoeste.fipp.sisdentalfx.db.entities to javafx.fxml;
     opens unoeste.fipp.sisdentalfx to javafx.fxml;
