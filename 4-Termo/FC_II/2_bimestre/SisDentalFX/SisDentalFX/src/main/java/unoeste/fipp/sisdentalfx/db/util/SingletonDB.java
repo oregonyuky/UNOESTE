@@ -12,9 +12,23 @@ public class SingletonDB {
     }
     public static boolean conectar(){
         conexao=new Conexao();
-        return conexao.conectar("jdbc:postgresql://localhost/","sisdentaldb","postgres","postgres123");
+        return conexao.conectar("jdbc:postgresql://localhost:5432/","sisdentaldb","postgres","postgres123");
     }
     public static Conexao getConexao() {
+        if (conexao == null) {
+            conexao = new Conexao();
+            // ⚠️ CORRIGIR ESTA LINHA:
+            boolean conectado = conexao.conectar(
+                    "jdbc:postgresql://localhost:5432/", // local
+                    "sisdentaldb",                         // nome do banco
+                    "postgres",                           // usuário
+                    "postgres123"                              // senha (a sua senha real do PostgreSQL)
+            );
+
+            if (!conectado) {
+                System.out.println("Erro de conexão: " + conexao.getMensagemErro());
+            }
+        }
         return conexao;
     }
 

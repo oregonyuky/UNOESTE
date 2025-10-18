@@ -13,15 +13,20 @@ public class ProcedimentoDAL implements IDAL<Procedimento> {
     @Override
     public boolean gravar(Procedimento entidade) {
         String sql = """
-                INSERT INTO procedimento (pro_desc, pro_tempo, pro_valor)
-                VALUES ('#1', #2, #3);
-                """;
-        sql = sql.replace("#1", entidade.getDescr());
-        sql = sql.replace("#2", ""+entidade.getTempo());
-        sql = sql.replace("#3", String.format("%.2f", entidade.getValor()));
-        return SingletonDB.getConexao().manipular(sql);
+        INSERT INTO procedimento (pro_desc, pro_tempo, pro_valor)
+        VALUES ('#1', #2, #3);
+        """;
+        sql = sql.replace("#1", entidade.getDescr().replace("'", "''"));
+        sql = sql.replace("#2", "" + (int) entidade.getTempo());
+        sql = sql.replace("#3", String.format(Locale.US, "%.2f", entidade.getValor()));
 
+        System.out.println("SQL gerado (gravar): " + sql);
+
+        boolean ok = SingletonDB.getConexao().manipular(sql);
+        if (!ok) System.err.println("Falha ao executar SQL: " + sql);
+        return ok;
     }
+
 
     @Override
     public boolean alterar(Procedimento entidade) {
@@ -86,6 +91,8 @@ public class ProcedimentoDAL implements IDAL<Procedimento> {
                 System.out.println("Erro: resultSet é null para consulta: " + sql);
             }
         } catch (Exception e) {
+            e.printStackTrace();
+
             throw new RuntimeException("Erro ao buscar procedimentos: " + e.getMessage(), e);
         }
 

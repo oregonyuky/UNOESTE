@@ -44,7 +44,7 @@ public class Conexao
                 executou=true;
         }
         catch ( SQLException sqlex )
-        {  erro="Erro: "+sqlex.toString();
+        {  erro="Erro SQL em consultar "+sqlex.toString();
         }
         return executou;
     }
@@ -52,14 +52,17 @@ public class Conexao
     {   ResultSet rs=null;
         try {
            Statement statement = connect.createStatement();
-             //ResultSet.TYPE_SCROLL_INSENSITIVE,
+             //ResultSet.TYPE_SCROLL_INSENSITIVE;
              //ResultSet.CONCUR_READ_ONLY);
            rs = statement.executeQuery( sql );
            //statement.close();
         }
         catch ( SQLException sqlex )
-        { erro="Erro: "+sqlex.toString();
-          rs = null;
+        {
+            erro = "Erro: " + sqlex.toString();
+            System.out.println("⚠️ ERRO NA CONSULTA SQL: " + sql);
+            sqlex.printStackTrace(); // 👈 vai mostrar o erro real no console
+            rs = null;
         }
         return rs;
     }

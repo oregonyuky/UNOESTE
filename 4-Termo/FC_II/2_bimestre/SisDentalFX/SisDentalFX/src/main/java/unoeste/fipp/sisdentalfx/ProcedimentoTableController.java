@@ -63,7 +63,7 @@ public class ProcedimentoTableController implements Initializable {
 
     @FXML
     void onPesquisar(KeyEvent event) {
-        carregarTabela("pro_desc LIKE '%" + tfPesquisa.getText()+"%'");
+        carregarTabela(" upper(pro_desc) LIKE '%"+tfPesquisa.getText().toUpperCase()+"%'");
     }
         @Override
         public void initialize(URL url, ResourceBundle resourceBundle){
@@ -100,8 +100,10 @@ public class ProcedimentoTableController implements Initializable {
 
     @FXML
     void onApagar(ActionEvent event) {
-        if(tableView.getSelectionModel().getSelectedItem()!=null){
+        if (tableView.getSelectionModel().getSelectedItem() != null) {
             Procedimento procedimento = tableView.getSelectionModel().getSelectedItem();
+            new ProcedimentoDAL().apagar(procedimento);
         }
+        carregarTabela("");    
     }
 }

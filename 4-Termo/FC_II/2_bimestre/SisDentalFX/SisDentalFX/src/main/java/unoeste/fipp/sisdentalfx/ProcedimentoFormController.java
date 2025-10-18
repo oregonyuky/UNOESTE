@@ -53,17 +53,17 @@ public class ProcedimentoFormController implements Initializable {
         Procedimento procedimento = new Procedimento(tfDesc.getText(), tfTempo.getValue(), Double.parseDouble(tfPreco.getText().replace(",", ".")));
         ProcedimentoDAL dal = new ProcedimentoDAL();
         if(!tfID.getText().isEmpty()){
+            procedimento.setId(Integer.parseInt(tfID.getText()));
             if(!dal.alterar(procedimento)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                //alert.getContentText("Erro ao gravar o procedimento");
+                alert.setContentText("Erro ao gravar o procedimento");
                 alert.showAndWait();
             }
-            tfPreco.getScene().getWindow().hide();
         }
         else
             if(!dal.gravar(procedimento)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                //alert.getContentText("Erro ao gravar o procedimento");
+                alert.setContentText("Erro ao gravar o procedimento");
                 alert.showAndWait();
             }
             tfPreco.getScene().getWindow().hide();

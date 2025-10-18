@@ -8,16 +8,18 @@ public class Procedimento {
     private double tempo;
     private double valor;
 
-    public Procedimento(String a, double b, double c){
-        this.descr = a;
-        this.tempo = b;
-        this.valor = c;
+    public Procedimento(){
+        this(0,"",0,0);
     }
-    public Procedimento(int id, String a, double b, double c){
+
+    public Procedimento(int id, String a, double b, double c) {
         this.id = id;
         this.descr = a;
         this.tempo = b;
         this.valor = c;
+    }
+    public Procedimento(String descr, double tempo, double valor) {
+        this(0,descr,tempo,valor);
     }
     public double getValor() {
         return valor;

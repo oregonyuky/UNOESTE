@@ -12,8 +12,8 @@ public class MainTeste{
 
     public static void main(String[] args) {
 
-        SingletonDB.conectar();
-        ProcedimentoDAL dal = new ProcedimentoDAL();
+        //SingletonDB.conectar();
+        //ProcedimentoDAL dal = new ProcedimentoDAL();
         //List<Procedimento> procedimentoList;
         //procedimentoList = dal.get(1);
         //procedimentoList.forEach(p->System.out.println(p.getDescr()));
@@ -23,6 +23,12 @@ public class MainTeste{
 //        procedimento.setDescr(procedimento.getDescr().toUpperCase());
 //        dal.alterar(procedimento);
 
-        dal.apagar(new Procedimento(2, "", 0, 0));
+        //dal.apagar(new Procedimento(2, "", 0, 0));
+        var con = SingletonDB.getConexao();
+        if (con.getEstadoConexao()) {
+            System.out.println("✅ Conexão bem-sucedida!");
+        } else {
+            System.out.println("❌ Falha na conexão: " + con.getMensagemErro());
+        }
     }
 }

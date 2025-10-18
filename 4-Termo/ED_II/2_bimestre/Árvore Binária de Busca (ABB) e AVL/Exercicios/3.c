@@ -99,12 +99,14 @@ Node *create(int data) {
 }
 
 int main() {
-    Node *node = create(0), *pai = NULL;
-    node->esq = create(1);
-    node->dir = create(2);
-    node->esq->esq = create(3);
-    node->esq->dir = create(4);
-    node->esq->esq->esq = create(5);
+    Node *node = create(40), *pai = NULL;
+    node->esq = create(20);
+    node->dir = create(42);
+    node->esq->esq = create(10);
+    node->esq->dir = create(35);
+    node->esq->dir->esq = create(30);
+    node->dir->dir = create(52);
+    node->dir->dir->esq = create(50);
 
     printf("Pré-ordem: ");
     preOrdem(node);
