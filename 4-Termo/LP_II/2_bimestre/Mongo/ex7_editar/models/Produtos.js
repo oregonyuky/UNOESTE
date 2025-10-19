@@ -37,27 +37,33 @@ class Produto{
 
     //implementar o getProdutoByID
     //será async, pois ele deve esperar os produtos chegarem para trabalhar na view
-    static async getProdutoByID(id){
-        const produto = conn.db().collection('produtos').findOne({_id:new ObjectId(id)})
-        console.log('BANCO')
-        console.log(produto)
+        static async getProdutoByID(id){
+        // validar id antes de criar ObjectId
+        if (!ObjectId.isValid(id)) {
+            return null
+        }
+        const produto = await conn.db().collection('produtos').findOne({_id: new ObjectId(id)})
         return produto
     }
-
-
     //metodo para deletar produto do banco
     static async deletarProdutoById(id){
-
+        if (!ObjectId.isValid(id)) return
         await conn.db().collection('produtos').deleteOne({_id: new ObjectId(id)})
-
         return
-
     }
-
-    //metodo para atualizar a salvar os dados alterados
-    salvarProdutoBD(id){
-        //utilizar o operar $set
-        conn.db().collection('produtos').updateOne({_id: new ObjectId(id)}, {$set: this})
+    //método para atualizar a salvar os dados alterados
+    async salvarProdutoBD(id){
+        if (!ObjectId.isValid(id)) return
+        const dados = {
+            nome: this.nome,
+            preco: this.preco,
+            descricao: this.descricao,
+            imagem: this.imagem
+        }
+        // garantir retorno/await
+        return await conn.db()
+            .collection('produtos')
+            .updateOne({_id: new ObjectId(id)}, {$set: dados})
     }
 
 
