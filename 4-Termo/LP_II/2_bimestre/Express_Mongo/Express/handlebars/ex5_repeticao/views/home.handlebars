@@ -1,0 +1,20 @@
+<h1> Testando Handlebars </h1>
+<p> O nome do usuário é {{usuario.nome}} {{usuario.sobrenome}}</p>
+<p> Cliente da loja: {{loja}}</p>
+
+
+{{#if aprovado}}
+    <p>Usuário pode realizar a compra</p>
+    {{else}}
+    <p>Usuário não pode realizar a compra</p>
+{{/if}}
+
+
+{{#if auth}}
+
+    <p>
+        Usuário autenticado
+        <a href="/relatorio"> acessar relatório de usuários</a>
+    </p>
+
+{{/if}}
