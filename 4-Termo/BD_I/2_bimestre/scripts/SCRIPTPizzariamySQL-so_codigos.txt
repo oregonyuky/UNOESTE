@@ -1,0 +1,234 @@
+SELECT cli_nome
+FROM clientes c, pedidos as p, pedidos_itens pi
+WHERE pit_tamanho = ‘P’ AND
+p.cli_codigo = c.cli_codigo AND
+p.ped_numero = pi.ped_numero
+
+SELECT c1.cli_nome, c2.cli_nome
+FROM clientes c1, clientes c2
+WHERE c1.bai_codigo = c2.bai_codigo AND
+c1.cli_codigo < c2.cli_codigo
+
+SELECT EMP.NomeEmp, GER.NomeEmp
+FROM EMP, EMP as GER
+WHERE EMP.CodEmpGer=GER.CodEmp
+
+SELECT cli_codigo
+FROM clientes
+WHERE bai_codigo = 1
+UNION
+SELECT cli_codigo
+FROM pedidos p, funcionarios f
+WHERE p.fun_codigo = f.fun_codigo AND
+fun_nome = ‘Crispim’
+
+SELECT EMP.NomeEmp, GER.NomeEmp
+FROM EMP, EMP as GER
+WHERE EMP.CodEmpGer=GER.CodEmp
+UNION
+SELECT NomeEmp, NULL
+FROM EMP
+WHERE EMP.CodEmpGer IS NULL
+
+SELECT cli_codigo
+FROM pedidos, funcionarios
+WHERE fun_nome = ‘Jorge’ AND
+pedidos.fun_codigo = funcionarios.fun_codigo
+
+SELECT cli_codigo
+FROM pedidos
+WHERE fun_codigo IN
+(SELECT fun_codigo
+FROM funcionarios
+WHERE fun_nome = ‘Jorge')
+
+SELECT DISTINCT cli_nome
+FROM pedidos p, pedidos_itens pi, clientes c
+WHERE pit_tamanho = ‘P' AND
+p.ped_numero = pi.ped_numero AND
+p.cli_codigo = c.cli_codigo
+
+SELECT cli_nome FROM clientes
+WHERE cli_codigo IN
+(SELECT cli_codigo FROM pedidos
+WHERE ped_numero IN
+(SELECT ped_numero FROM pedidos_itens
+WHERE pit_tamanho=‘P'))
+
+SELECT ped_numero
+FROM pedidos_itens, pizza
+WHERE piz_nome = ‘calabresa' AND
+pedidos_itens.piz_numero = pizza.piz_numero
+
+SELECT ped_numero
+FROM pedidos_itens
+WHERE piz_numero IN
+(SELECT piz_numero
+FROM pizza
+WHERE piz_nome = ‘calabresa')
+
+SELECT ped_numero
+FROM pedidos_itens
+WHERE ‘calabresa' IN
+(SELECT piz_nome
+FROM pizza
+WHERE piz_numero=pedidos_itens.piz_numero)
+
+SELECT cli_nome
+FROM clientes
+WHERE EXISTS
+(SELECT *
+FROM pedidos
+WHERE pedidos.cli_codigo = clientes.cli_codigo)
+
+SELECT cli_nome
+FROM clientes
+WHERE NOT EXISTS
+(SELECT *
+FROM pedidos
+WHERE pedidos.cli_codigo = clientes.cli_codigo)
+
+SELECT piz_nome
+FROM pizza
+WHERE NOT EXISTS
+(SELECT distinct(pit_tamanho)
+FROM pizza_tamanho tamanhos
+WHERE
+NOT EXISTS
+(SELECT *
+FROM pizza_tamanho pt
+WHERE pt.piz_numero =pizza.piz_numero AND
+tamanhos.pit_tamanho=pt.pit_tamanho))
+
+SELECT fun_nome
+FROM funcionarios
+WHERE fun_celular IS NOT NULL
+
+Consulta 1:
+SELECT cli_nome
+FROM clientes
+WHERE cli_endereco = 'Av. da Saudade'
+ Consulta2:
+SELECT cli_nome
+FROM clientes
+WHERE cli_endereco <> 'Av. da Saudade'
+
+SELECT cli_nome
+FROM clientes
+WHERE cli_endereco <> 'Av. da Saudade' OR
+cli_endereco IS NULL
+
+SELECT cli_codigo, ped_numero
+FROM pedidos
+UNION
+SELECT c.cli_codigo, NULL AS ped_numero
+FROM clientes c
+WHERE cli_codigo NOT IN
+(SELECT cli_codigo FROM pedidos)
+
+SELECT c.cli_codigo, ped_numero
+FROM clientes c, pedidos p
+WHERE c.cli_codigo *= p.cli_codigo
+
+SELECT c.cli_codigo, ped_numero
+FROM clientes c, pedidos p
+WHERE c.cli_codigo = p.cli_codigo (+)
+
+SELECT c.cli_codigo, p.ped_numero
+FROM clientes c
+LEFT JOIN pedidos p
+ON c.cli_codigo = p.cli_codigo
+
+SELECT c.cli_codigo, ped_numero
+FROM clientes c
+LEFT JOIN Pedidos p
+ON c.cli_codigo = p.cli_codigo
+
+SELECT c.cli_codigo, ped_numero
+FROM clientes c
+LEFT JOIN pedidos USING (cli_codigo)
+
+SELECT c.cli_codigo, ped_numero
+FROM clientes c
+NATURAL JOIN pedidos
+
+SELECT [DISTINCT|ALL]<lista de colunas>
+FROM <lista de tabelas>
+[WHERE <critério>]
+[GROUP BY <lista de colunas>
+[HAVING <critério>]]
+[ORDER BY <lista de colunas>]
+
+1. É feito o produto cartesiano das tabelas envolvidas
+2. São selecionadas as linhas da tabela que obedecem ao critério da
+cláusula WHERE
+3. São criados grupos de linhas que contenham valores idênticos nas
+colunas GROUP BY
+4. São selecionados os grupos que obedecem ao critério da cláusula
+HAVING
+5. É feita a classificação do resultado pelos valores da cláusula
+ORDER BY
+6. É feita a projeção sobre as colunas que vão ao resultado
+
+média: AVG
+ mínimo: MIN
+ máximo: MAX
+ total: SUM
+ contagem: COUNT
+
+Obter a quantidade de clientes da base de dados
+SELECT COUNT(*)
+FROM clientes
+ Obter o número de endereços em que há clientes
+SELECT COUNT(DISTINCT cli_endereco)
+FROM clientes
+ Obter o número de clientes com endereço informado
+SELECT COUNT(cli_endereco)
+FROM clientes
+ Obter o tempo máximo de espera
+SELECT MAX(bai_temp_espera)
+FROM bairros
+
+SELECT cli_codigo,COUNT(*)
+FROM pedidos
+GROUP BY cli_codigo
+
+SELECT fun_codigo,COUNT(*)
+FROM pedidos
+GROUP BY fun_codigo
+
+SELECT p.cli_codigo,COUNT(*)
+FROM pedidos_itens pi, pedidos p
+WHERE ite_qtde > 3 AND
+p.ped_numero = pi.ped_numero
+GROUP BY p.cli_codigo
+
+SELECT cli_codigo, SUM(ite_qtde)
+FROM pedidos p, pedidos_itens pi
+WHERE p.ped_numero = pi.ped_numero AND
+pi.piz_numero IN
+(SELECT piz_numero
+FROM pizza
+WHERE piz_nome = ‘calabresa')
+GROUP BY cli_codigo
+
+SELECT p.piz_numero, piz_nome, SUM(ite_qtde)
+FROM pedidos_itens pi, pizza p
+WHERE p.piz_numero = pi.piz_numero
+GROUP BY p.piz_numero, piz_nome
+ORDER BY 3 DESC, Piz_nome ASC
+
+SELECT piz_numero, SUM(ite_qtde)
+FROM pedidos_itens
+GROUP BY piz_numero
+HAVING COUNT(*) > 3 AND SUM(ite_qtde) < 200
+
+SELECT p.cli_codigo, COUNT(*)
+FROM pedidos_itens pi, pedidos p
+WHERE p.ped_numero = pi.ped_numero AND
+piz_numero IN
+(SELECT piz_numero
+FROM pizza
+WHERE piz_nome = 'mussarela')
+GROUP BY cli_codigo
+HAVING SUM(ite_qtde) > 3
