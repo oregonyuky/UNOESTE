@@ -6,11 +6,6 @@
 
 #define TF 300
 
-/*
-262228475 - LARISSA VITORIA MACHADO OLIVEIRA
-262310236 - LIVIA GOMES DE SOUZA
-*/
-
 struct tree
 {
     char simb;

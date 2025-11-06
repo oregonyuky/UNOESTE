@@ -4,11 +4,6 @@
 #include <string.h>
 #include <ctype.h>
 
-/*
-262228475 - LARISSA VITORIA MACHADO OLIVEIRA
-262310236 - LIVIA GOMES DE SOUZA
-*/
-
 struct huffmantree
 {
     int freq;
@@ -86,7 +81,7 @@ Tabela* criaNoTabela(char palavra[], int freq) {
         return NULL;
     }
     strcpy(novo->palavra, palavra);
-    novo->codHuff[0] = '\0';  // Inicializa o código Huffman como vazio
+    novo->codHuff[0] = '\0';  // Inicializa o cï¿½digo Huffman como vazio
     novo->simbo = contadorSimbolos++;      
     novo->freq = freq;
     novo->prox = NULL;
@@ -141,7 +136,7 @@ void contarFrequenciaArquivo(char nomeArquivo[], Tabela **inicio) {
 	            if (i > 0) {
 	                palavra[i] = '\0';  
 	                inserirOuAtualizarTabela(&*inicio, palavra);
-	                i = 0;  // reseta o índice para a próxima palavra
+	                i = 0;  // reseta o ï¿½ndice para a prï¿½xima palavra
 	            }
 	            char espaco[] = " ";
 	            inserirOuAtualizarTabela(&*inicio, espaco);
@@ -168,7 +163,7 @@ void ordenarTabelaPorFrequencia(Tabela **inicio) {
 	        Tabela *noAtual = *inicio; 
 	        *inicio = (*inicio)->prox; 
 	
-	        // insere noAtual na lista ordenada na posição correta
+	        // insere noAtual na lista ordenada na posiï¿½ï¿½o correta
 	        if (ordenada == NULL || noAtual->freq < ordenada->freq) {
 	            noAtual->prox = ordenada;
 	            ordenada = noAtual;
@@ -204,7 +199,7 @@ void inserirOrdenadoCaixa(Caixa **inicio, HTree *arv) {
     }
 }
 
-// criar a lista de caixas a partir da tabela de frequências
+// criar a lista de caixas a partir da tabela de frequï¿½ncias
 void criarListaCaixa(Tabela *inicioTabela, Caixa **inicioCaixa) {
     Tabela *atual = inicioTabela;
     while (atual != NULL) {
@@ -240,7 +235,7 @@ void imprimirTabela(Tabela *inicio) {
 }
 
 
-//  inserir uma árvore na lista de caixas de forma ordenada
+//  inserir uma ï¿½rvore na lista de caixas de forma ordenada
 void inserirArvoreOrdenada(Caixa **inicio, HTree *novaArvore) {
     Caixa *novoCaixa = criaNoCaixa(novaArvore);
     if (*inicio == NULL || novaArvore->freq < (*inicio)->arv->freq) {
@@ -259,7 +254,7 @@ void inserirArvoreOrdenada(Caixa **inicio, HTree *novaArvore) {
 HTree* gerarArvoreHuffman(Caixa **inicioCaixa) {
     while (*inicioCaixa != NULL && (*inicioCaixa)->prox != NULL) {
         
-		// remove as duas caixas com menor frequência
+		// remove as duas caixas com menor frequï¿½ncia
         Caixa *primeira = *inicioCaixa;
         Caixa *segunda = primeira->prox;
         *inicioCaixa = segunda->prox; 
@@ -563,7 +558,7 @@ int main() {
     //exibeArv(arvoreHuffman);
 
     
-    // Gera os códigos de Huffman
+    // Gera os cï¿½digos de Huffman
     gerarCodigoHuffman(arvoreHuffman, codigo, 0, inicioTabela);
     
     printf("\nTabela de Huffman com os codigos:\n");
