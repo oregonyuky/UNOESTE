@@ -1,0 +1,132 @@
+CREATE TABLE Bairros (
+       BAI_Codigo           INTEGER NOT NULL,
+       BAI_Descricao        CHAR(40),
+       BAI_temp_espera      INTEGER,
+       CONSTRAINT PK_Bairros 
+              PRIMARY KEY (BAI_Codigo)
+) Engine=InnoDB;
+
+
+CREATE TABLE Clientes (
+       CLI_Codigo           INTEGER NOT NULL,
+       BAI_Codigo           INTEGER NOT NULL,
+       CLI_Nome             CHAR(50),
+       CLI_Fone             CHAR(15),
+       CLI_Endereco         CHAR(50),
+       CLI_CPF              CHAR(14),
+       CONSTRAINT PK_Clientes 
+              PRIMARY KEY (CLI_Codigo)
+) Engine=InnoDB;
+
+
+CREATE TABLE Entregas (
+       ENT_Num              INTEGER NOT NULL,
+       FUN_Codigo           INTEGER NOT NULL,
+       BAI_Codigo           INTEGER NOT NULL,
+       CONSTRAINT PK_Entregas 
+              PRIMARY KEY (ENT_Num)
+) Engine=InnoDB;
+
+
+CREATE TABLE Funcionarios (
+       FUN_Codigo           INTEGER NOT NULL,
+       FUN_Nome             CHAR(50),
+       FUN_entregador       CHAR(1),
+       FUN_Celular          CHAR(15),
+       CONSTRAINT PK_Funcionarios 
+              PRIMARY KEY (FUN_Codigo)
+) Engine=InnoDB;
+
+
+CREATE TABLE Pedidos (
+       PED_Numero           INTEGER NOT NULL,
+       ENT_Num              INTEGER,
+       FUN_Codigo           INTEGER NOT NULL,
+       CLI_Codigo           INTEGER NOT NULL,
+       PED_dtEmissao        TIMESTAMP,
+       CONSTRAINT PK_Pedidos 
+              PRIMARY KEY (PED_Numero)
+) Engine=InnoDB;
+
+
+CREATE TABLE Pedidos_Itens (
+       PED_Numero           INTEGER NOT NULL,
+       PIZ_Numero           INTEGER NOT NULL,
+       PIT_Tamanho          CHAR(1) NOT NULL,
+       ITE_Qtde             INTEGER,
+       ITE_Preco            DECIMAL(6,2),
+       CONSTRAINT PK_Pedidos_Itens 
+              PRIMARY KEY (PED_Numero, PIZ_Numero, PIT_Tamanho)
+) Engine=InnoDB;
+
+
+CREATE TABLE Pizza (
+       PIZ_Numero           INTEGER NOT NULL,
+       PIZ_Nome             CHAR(30),
+       PIZ_Ingredientes     CHAR(200),
+       CONSTRAINT PK_Pizza 
+              PRIMARY KEY (PIZ_Numero)
+) Engine=InnoDB;
+
+
+CREATE TABLE Pizza_Tamanho (
+       PIZ_Numero           INTEGER NOT NULL,
+       PIT_Tamanho          CHAR(1) NOT NULL,
+       PIT_Preco            DECIMAL(6,2),
+       CONSTRAINT PK_Pizza_Tam 
+              PRIMARY KEY (PIZ_Numero, PIT_Tamanho)
+) Engine=InnoDB;
+
+
+ALTER TABLE clientes
+       ADD CONSTRAINT fk_cli_bairros
+              FOREIGN KEY (BAI_Codigo)
+                             REFERENCES Bairros(BAI_Codigo);
+
+
+ALTER TABLE Entregas
+       ADD CONSTRAINT fk_entreg_func
+              FOREIGN KEY (FUN_Codigo)
+                             REFERENCES Funcionarios(FUN_Codigo);
+
+
+ALTER TABLE Entregas
+       ADD CONSTRAINT fk_entreg_bairros
+              FOREIGN KEY (BAI_Codigo)
+                             REFERENCES Bairros(BAI_Codigo);
+
+
+ALTER TABLE Pedidos
+       ADD CONSTRAINT fk_ped_entregas
+              FOREIGN KEY (ENT_Num)
+                             REFERENCES Entregas(ENT_Num);
+
+
+ALTER TABLE Pedidos
+       ADD CONSTRAINT fk_ped_func
+              FOREIGN KEY (FUN_Codigo)
+                             REFERENCES Funcionarios(FUN_Codigo);
+
+
+ALTER TABLE Pedidos
+       ADD CONSTRAINT fk_ped_clientes
+              FOREIGN KEY (CLI_Codigo)
+                             REFERENCES Clientes(CLI_Codigo);
+
+
+ALTER TABLE Pedidos_Itens
+       ADD CONSTRAINT fk_pedItens_piztam
+              FOREIGN KEY (PIZ_Numero, PIT_Tamanho)
+                             REFERENCES Pizza_Tamanho(PIZ_Numero, PIT_Tamanho);
+
+
+ALTER TABLE Pedidos_Itens
+       ADD CONSTRAINT fk_pedItens_ped
+              FOREIGN KEY (PED_Numero)
+                             REFERENCES Pedidos(PED_Numero);
+
+
+ALTER TABLE Pizza_Tamanho
+       ADD CONSTRAINT FK_PizzaTam_Ped
+              FOREIGN KEY (PIZ_Numero)
+                             REFERENCES Pizza(PIZ_Numero);
