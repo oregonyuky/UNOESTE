@@ -30,14 +30,19 @@ void ordena(int pontos[TF][K], int ini, int fim, int d){
 }
 void insereBalanceado(KdTree **raiz, int ini, int fim, int pontos[TF][K], int n){
     int d, meio;
-    if(ini <= fim){
-        d = n%K;
-        ordena(pontos, ini, fim, d);
-        meio = (ini+fim)/2;
-        *raiz = CriaNo(pontos[meio]);
-        insereBalanceado(&(*raiz)->esq, ini, meio-1, pontos, n+1);
-        insereBalanceado(&(*raiz)->dir, meio+1, fim, pontos, n+1);
-    }
+        if (ini <= fim)
+        {
+            d = n % K;
+            ordena(pontos, ini, fim, d);
+            for (int i = 0; i < TF; i++)
+                printf("(%d, %d) ", pontos[i][0], pontos[i][1]);
+            puts("");
+            meio = (ini + fim) / 2;
+            printf("Meio: %d\n", meio);
+            *raiz = CriaNo(pontos[meio]);
+            insereBalanceado(&(*raiz)->esq, ini, meio - 1, pontos, n + 1);
+            insereBalanceado(&(*raiz)->dir, meio + 1, fim, pontos, n + 1);
+        }
 }
 float distancia(int pontoA[K], int pontoB[K]){
     int i;

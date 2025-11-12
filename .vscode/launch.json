@@ -10,8 +10,8 @@
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "MIMode": "gdb",
-            "miDebuggerPath": "C:/Dev-Cpp/MinGW64/bin/gdb.exe", 
-            //"miDebuggerPath": "C:/MinGW/bin/gdb.exe", 
+            //"miDebuggerPath": "C:/Dev-Cpp/MinGW64/bin/gdb.exe", 
+            "miDebuggerPath": "C:/MinGW/bin/gdb.exe", 
             "externalConsole": true,
             "setupCommands": [
                 {

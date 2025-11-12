@@ -1,11 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio2.h>
+//#include <conio2.h>
 typedef struct Tree{
     int info;
     struct Tree *esq;
     struct Tree *dir;
 } Tree;
+typedef struct tabela{
+    int esq, info, dir;
+} Tabela;
+void inserirArvoreABB(Tree **raiz, Tabela tabela){
+    FILE *file = fopen("arquivo.bat", "rb");
+    if(!file)return;
+    fread(&tabela, sizeof(Tabela), 1, file);
+    
+}
 void exclusao(Tree *raiz, Tree *e, Tree*pai){
     if(!e->esq && !e->dir){
         if(pai->esq == e)
