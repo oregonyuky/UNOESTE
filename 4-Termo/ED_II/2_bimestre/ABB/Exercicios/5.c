@@ -49,6 +49,29 @@ void inserirArvoreABB(char arquivo[], int info){
         }
     }
 }
+void percorrerNivel(char arquivo[], int pos){
+    FILE *file = fopen(arquivo, "rb");
+    if(!file)return;
+    Fila *f;
+    init(&f);
+    enqueue(&f, pos);
+    while(!isEmpty(f)){
+        dequeue(&f, &pos);
+        fseek(file, pos*sizeof(Tabela), SEEK_SET);
+        fread(&tabela, sizeof(Tabela), 1, file);
+        if(tabela.esq)enqueue(&f, tabela.esq);
+        if(tabela.dir)enqueue(&f, tabela.dir);
+    }
+}
+void preOrdemRecursivo(FILE *file, int pos){
+    if(pos){
+        if(ftell(file)/sizeof(Tabela)-1 == 0)pos = 0;
+        fseek(file, pos*sizeof(Tabela), SEEK_SET);
+        fread(&tabela, sizeof(Tabela), 1, file);
+        preOrdemRecursivo(file, tabela.esq);
+        preOrdemRecursivo(file, tabela.dir);
+    }
+}
 void exclusao(Tree *raiz, Tree *e, Tree*pai){
     if(!e->esq && !e->dir){
         if(pai->esq == e)
