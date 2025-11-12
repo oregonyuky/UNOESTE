@@ -9,11 +9,45 @@ typedef struct Tree{
 typedef struct tabela{
     int esq, info, dir;
 } Tabela;
-void inserirArvoreABB(Tree **raiz, Tabela tabela){
-    FILE *file = fopen("arquivo.bat", "rb");
+int gravar(FILE *file, int info){
+    Tabela aux;
+    aux->esq = 0;
+    aux->dir = 0;
+    aux->info = info;
+    fseek(file, 0, SEEK_END);
+    fwrite(aux, sizeof(Tabela), 1, file);
+    return ftell(file)/sizeof(Tabela) - 1;
+}
+void inserirArvoreABB(char arquivo[], int info){
+    FILE *file = fopen(arquivo, "rb");
     if(!file)return;
-    fread(&tabela, sizeof(Tabela), 1, file);
-    
+    Tabela tabela;
+    bool e=1;
+    int posA = 0, posF;
+    while(e){
+        fseek(file, posA, 1);
+        fread(&tabela, sizeof(Tabela), 1, file);
+        if(tabela->info > info){
+            if(tabela->esq == 0){
+                posF = gravar(file, info);
+                tabela->dir = posF;
+                fseek(file, posA, 1);
+                fwrite(&tabela, sizeof(Tabela), 1, file);
+                e=0;
+            }
+            else posA = tabela->esq * sizeof(Tabela);
+        }
+        else if(tabela->info < info){
+            if(tabela->dir == 0){
+                posF = gravar(file, info);
+                tabela->esq = posF;
+                fseek(file, posA, 1);
+                fwrite(&tabela, sizeof(Tabela), 1, file);
+                e=0;
+            }
+            else posA = tabela->dir * sizeof(Tabela);
+        }
+    }
 }
 void exclusao(Tree *raiz, Tree *e, Tree*pai){
     if(!e->esq && !e->dir){
