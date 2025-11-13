@@ -124,12 +124,95 @@ void percorrerNivel(char arquivo[], int pos) {
 }
 void preOrdemRecursivo(FILE *file, int pos){
     Tabela tabela;
-    if(pos != 0){
-        fseek(file, (pos-1)*sizeof(Tabela), SEEK_SET);
+    fseek(file, (pos)*sizeof(Tabela), SEEK_SET);
+    fread(&tabela, sizeof(Tabela), 1, file);
+    printf("%d ", tabela.info);
+    if(tabela.esq!=0)preOrdemRecursivo(file, tabela.esq);
+    if(tabela.dir!=0)preOrdemRecursivo(file, tabela.dir);
+}
+void inOrdemRecursivo(FILE *file, int pos){
+    Tabela tabela;
+    fseek(file, (pos)*sizeof(Tabela), SEEK_SET);
+    fread(&tabela, sizeof(Tabela), 1, file);
+    if(tabela.esq!=0)inOrdemRecursivo(file, tabela.esq);
+    printf("%d ", tabela.info);
+    if(tabela.dir!=0)inOrdemRecursivo(file, tabela.dir);
+}
+void posOrdemRecursivo(FILE *file, int pos){
+    Tabela tabela;
+    fseek(file, (pos)*sizeof(Tabela), SEEK_SET);
+    fread(&tabela, sizeof(Tabela), 1, file);
+    if(tabela.esq!=0)posOrdemRecursivo(file, tabela.esq);
+    if(tabela.dir!=0)posOrdemRecursivo(file, tabela.dir);
+    printf("%d ", tabela.info);
+}
+typedef struct NoPilha {
+    int dado;
+    struct NoPilha *prox;
+} Pilha;
+
+void initP(Pilha **p) {
+    *p = NULL;
+}
+
+int isEmptyP(Pilha *p) {
+    return p == NULL;
+}
+
+void push(Pilha **p, int valor) {
+    Pilha *novo = (Pilha*)malloc(sizeof(Pilha));
+    novo->dado = valor;
+    novo->prox = *p;
+    *p = novo;
+}
+
+void pop(Pilha **p, int *valor) {
+    Pilha *aux = *p, *ant;
+    *valor = aux->dado;
+    *p = (*p)->prox;
+    free(aux);
+}
+
+void preOrdemIterativo(FILE *file){
+    Tabela tabela;
+    Pilha *p;
+    int pos=0;
+    initP(&p);
+    fseek(file, 0, SEEK_SET);
+    fread(&tabela, sizeof(Tabela), 1, file);
+    push(&p, tabela.info);
+    while(!isEmptyP(p)){
+        pop(&p, &pos);
+        fseek(file, pos * sizeof(Tabela), SEEK_SET);
         fread(&tabela, sizeof(Tabela), 1, file);
         printf("%d ", tabela.info);
-        preOrdemRecursivo(file, tabela.esq);
-        preOrdemRecursivo(file, tabela.dir);
+        if(tabela.dir)push(&p, tabela.dir);
+        if(tabela.esq)push(&p, tabela.esq);
+    }
+}
+void inOrdemIterativo(FILE *file){
+    Tabela tabela, aux;
+    Pilha *p;
+    int pos=0;
+    initP(&p);
+    fseek(file, 0, SEEK_SET);
+    fread(&tabela, sizeof(Tabela), 1, file);
+    aux = tabela;
+    push(&p, tabela.info);
+    while(!isEmptyP(p)){
+        pos = aux.info;
+        while(pos){
+            push(&p, pos);
+            fseek(file, pos * sizeof(Tabela), SEEK_SET);
+            fread(&aux, sizeof(Tabela), 1, file);
+            pos = aux.esq;
+        }
+        pop(&p, &pos);
+        fseek(file, pos * sizeof(Tabela), SEEK_SET);
+        fread(&aux, sizeof(Tabela), 1, file);
+        printf("%d ", tabela.info);
+        if(tabela.dir)push(&p, tabela.dir);
+        if(tabela.esq)push(&p, tabela.esq);
     }
 }
 void imprimir(char arquivo[]){
@@ -234,6 +317,9 @@ int main(){
         perror("Deu erro\n");
         return 0;
     }
-    preOrdemRecursivo(file, 1);
+    preOrdemRecursivo(file, 0); puts("");
+    inOrdemRecursivo(file, 0); puts("");
+    posOrdemRecursivo(file, 0); puts("");
+    preOrdemIterativo(file); puts("");
     fclose(file);
 }
