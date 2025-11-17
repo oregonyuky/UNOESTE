@@ -180,7 +180,9 @@ void preOrdemIterativo(FILE *file){
     initP(&p);
     fseek(file, 0, SEEK_SET);
     fread(&tabela, sizeof(Tabela), 1, file);
-    push(&p, tabela.info);
+    printf("%d ", tabela.info);
+    push(&p, tabela.dir);
+    push(&p, tabela.esq);
     while(!isEmptyP(p)){
         pop(&p, &pos);
         fseek(file, pos * sizeof(Tabela), SEEK_SET);
@@ -198,22 +200,33 @@ void inOrdemIterativo(FILE *file){
     fseek(file, 0, SEEK_SET);
     fread(&tabela, sizeof(Tabela), 1, file);
     aux = tabela;
-    push(&p, tabela.info);
+    push(&p, 0);
+    push(&p, tabela.esq);
     while(!isEmptyP(p)){
-        pos = aux.info;
+        pop(&p, &pos);
         while(pos){
             push(&p, pos);
             fseek(file, pos * sizeof(Tabela), SEEK_SET);
             fread(&aux, sizeof(Tabela), 1, file);
             pos = aux.esq;
         }
-        pop(&p, &pos);
-        fseek(file, pos * sizeof(Tabela), SEEK_SET);
-        fread(&aux, sizeof(Tabela), 1, file);
-        printf("%d ", tabela.info);
-        if(tabela.dir)push(&p, tabela.dir);
-        if(tabela.esq)push(&p, tabela.esq);
+        if(!isEmptyP(p)){
+            pop(&p, &pos);
+            fseek(file, pos * sizeof(Tabela), SEEK_SET);
+            fread(&aux, sizeof(Tabela), 1, file);
+            printf("%d ", aux.info);
+            push(&p, aux.dir);
+        }
     }
+}
+void posOrdemIterativo(FILE *file){
+    Tabela tabela;
+    Pilha *p1, *p2;
+    initP(&p1);
+    initP(&p2);
+    fseek(file, 0, SEEK_SET);
+    fread(&tabela, sizeof(Tabela), 1, file);''
+    //push(&p1, )
 }
 void imprimir(char arquivo[]){
     FILE *file = fopen(arquivo, "rb");
@@ -321,5 +334,6 @@ int main(){
     inOrdemRecursivo(file, 0); puts("");
     posOrdemRecursivo(file, 0); puts("");
     preOrdemIterativo(file); puts("");
+    inOrdemIterativo(file); puts("");
     fclose(file);
 }
