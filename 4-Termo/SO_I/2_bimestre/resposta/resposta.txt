@@ -1,0 +1,64 @@
+3, 7, 11, 15
+3 - Não.  
+A solução de estrita alternância não garante exclusão mútua em multiprocessadores porque não impede que ambos os processos verifiquem a variável turn ao mesmo tempo devido a instruções que podem não ser atômicas. Além disso, mesmo funcionando, ela impõe alternância rígida — um processo lento pode atrasar o outro.
+
+7 - As quatro condições para evitar que dois processos estejam na região crítica ao mesmo tempo.
+
+Exclusão mútua:
+Apenas um processo pode estar na região crítica por vez.
+
+Progresso:
+Se a região crítica está livre, o processo que decidirá quem entra não deve estar bloqueado fora da zona crítica.
+
+Espera limitada (bounded waiting):
+Deve haver um limite máximo de vezes que outros processos podem entrar na região crítica antes que um processo que pediu acesso entre.
+
+Não Assunção de Velocidade / Independência de velocidade (no assumptions about speed):
+A solução deve funcionar independentemente da velocidade relativa dos processos e do número de CPUs.
+
+11 - 
+Condições de corrida
+Ocorre quando dois ou mais processos acessam e manipulam dados compartilhados ao mesmo tempo, e o resultado final depende da ordem em que essas operações ocorrem
+Deadlock
+É uma situação em que dois ou mais processos ficam esperando indefinidamente por recursos que nunca sarão liberados, porque cada processo segura um recurso e espera o outro que está  com um processo diferente
+
+Processo 1 (Cliente A)
+// Saque em A
+wait(semA);
+x = saldo_A;
+x = x - 200;
+saldo_A = x;
+signal(semA);
+
+// Depósito em B
+wait(semB);
+x = saldo_B;
+x = x + 100;
+saldo_B = x;
+signal(semB);
+
+🔹 Processo 2 (Cliente B)
+// Saque em A
+wait(semA);
+y = saldo_A;
+y = y - 100;
+saldo_A = y;
+signal(semA);
+
+// Depósito em B
+wait(semB);
+y = saldo_B;
+y = y + 200;
+saldo_B = y;
+signal(semB);
+
+⭐ Por que essa solução é ótima?
+
+Evita condições de corrida (cada variável é protegida).
+
+Permite paralelo máximo:
+Processo 1 pode mexer em A enquanto Processo 2 mexe em B.
+
+Não há deadlock, pois cada operação usa apenas um semáforo por vez.
+
+Solução com semáforos independentes (semA, semB) garantindo integridade e paralelismo
