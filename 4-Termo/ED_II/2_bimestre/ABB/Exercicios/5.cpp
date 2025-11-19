@@ -225,6 +225,73 @@ void exclusaoIterativo(Tree **raiz, Tree *e, Tree*pai){
         }
     }
 }
+Tabela BuscaPreOrdem(FILE *file, int info){
+    Tabela T, aux;
+    Pilha *p;
+    char flag=1;
+    fseek(file, 0, 0);
+    fread(&T, sizeof(Tabela), 1, file);
+    initP(&p);
+    push(&p, T.dir);
+    push(&p, T.esq);
+    while(!isEmptyP(p) && flag){
+        pop(&p, &pos);
+        fseek(file, pos * sizeof(Tabela), 0);
+        fread(&T, sizeof(Tabela), 1, file);
+        if(T.info == info){aux = T; flag=0;}
+        else{
+            if(T.dir)push(&p, T.dir);
+            if(T.esq)push(&p, T.esq);
+        }
+    }
+    if(!flag)return aux;
+    return NULL;
+}
+int BuscaIndex(FILE *file, int pai){
+    Tabela T;
+    int pos=0;
+    rewind(file);
+    while(fread(&T, sizeof(Tabela), 1, file)==1 && flag){
+        if(T.info == info)flag=0;
+        else pos++;
+    }
+    return pos;
+}
+void exclusaoBinario(FILE *file, int filho, int pai){
+    Tabela e = BuscaPreOrdem(file, filho);
+    Tabela p = BuscaPreOrdem(file, pai);
+    if(!e.esq && !e.dir){
+        fseek(file, p.esq * sizeof(Tabela), 0);
+        fread(&T, sizeof(Tabela), 1, file);
+        if(T.info == filho){
+            fseek(file, BuscaIndex(file, pai) * sizeof(Tabela), 0);
+            fread(&T, sizeof(Tabela), 1, file);
+            T.esq = 0;
+            fseek(file, BuscaIndex(file, pai) * sizeof(Tabela), 0);
+            fwrite(&T, sizeof(Tabela), 1, file);
+        }
+        fseek(file, p.dir * sizeof(Tabela), 0);
+        fread(&T, sizeof(Tabela), 1, file);
+        if(T.info == filho){
+            fseek(file, BuscaIndex(file, pai) * sizeof(Tabela), 0);
+            fread(&T, sizeof(Tabela), 1, file);
+            T.dir = 0;
+            fseek(file, BuscaIndex(file, pai) * sizeof(Tabela), 0);
+            fwrite(&T, sizeof(Tabela), 1, file);
+        }
+        int pos = BuscaIndex(file, filho);
+        fseek(file, 0, 2);
+        int posFinal = ftell(file)/sizeof(Tabela) - 1;
+        int k=0;
+        for(int i=pos;i<posFinal-1;i++){
+            T[i] = T[i+1];
+            ++k;
+        }
+        rewind(file);
+        fwrite(file, sizeof(Tabela), K-1, file);
+    }
+
+}
 void exclusaoTabela(FILE *file, int filho, int pai){
     Tabela t;
     fseek(file, pos * sizeof(Tabela), 0);
