@@ -7,6 +7,12 @@ typedef struct {
     NoFila *inicio;
     NoFila *fim;
 } Fila;
+#define MAX 100
+
+typedef struct fila {
+    Tree* dados[MAX];
+    int ini, fim;
+} FILA;
 
 void init(Fila *f) {
     f->inicio = NULL;
@@ -70,4 +76,36 @@ void pop(Pilha **p, int *valor) {
     *valor = aux->dado;
     *p = (*p)->prox;
     free(aux);
+}
+
+void initF(FILA **f) {
+    *f = (FILA*) malloc(sizeof(FILA));
+    (*f)->ini = 0;
+    (*f)->fim = 0;
+}
+
+int isEmptyF(FILA *f) {
+    return (f->ini == f->fim);
+}
+
+void enqueueF(FILA **f, Tree *x) {
+    int prox = (((*f)->fim + 1) % MAX);
+
+    // fila cheia
+    if (prox == (*f)->ini) {
+        printf("Fila cheia!\n");
+        return;
+    }
+
+    (*f)->dados[(*f)->fim] = x;
+    (*f)->fim = prox;
+}
+
+void dequeueF(FILA **f, Tree **no) {
+    if (isEmptyF(*f)) {
+        return;
+    }
+    Tree *x = (*f)->dados[(*f)->ini];
+    (*f)->ini = (((*f)->ini + 1) % MAX);
+    *no = x;
 }

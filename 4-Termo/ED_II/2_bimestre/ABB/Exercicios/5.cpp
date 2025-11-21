@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <conio2.h>
+//#include <conio2.h>
+#include <unistd.h>
 #include "filaPilha.h"
 #define K 7
 typedef struct Tree{
@@ -12,6 +13,36 @@ typedef struct Tree{
 typedef struct tabela{
     int esq, info, dir;
 } Tabela;
+
+void inserirArvoreABB(Tree **raiz, int info){
+    Tree *novo = (Tree *)malloc(sizeof(Tree));
+    novo->info = info;
+    novo->dir = novo->esq = NULL;
+    FILA *f;
+    initF(&f);
+    enqueueF(&f, *raiz);
+    Tree *no;
+    char flag = 1;
+    while(!isEmptyF(f) && flag){
+        dequeueF(&f, &no);
+        if(info < no->info){
+            if(!no->esq){
+                no->esq = novo;
+                flag = 0;
+            }
+            else
+                enqueueF(&f, no->esq);
+        }
+        else if(info > no->info){
+            if(!no->dir){
+                no->dir = novo;
+                flag = 0;
+            }
+            else
+                enqueueF(&f, no->dir);
+        }
+    }
+}
 int gravar(FILE *file, int info){
     Tabela aux;
     aux.esq = 0;
@@ -21,7 +52,7 @@ int gravar(FILE *file, int info){
     fwrite(&aux, sizeof(Tabela), 1, file);
     return ftell(file)/sizeof(Tabela)-1;
 }
-void inserirArvoreABB(FILE *file, int info){
+void inserirArvoreABBbinario(FILE *file, int info){
     Tabela tabela;
     bool e=1;
     int posA = 0, posF;
@@ -228,6 +259,7 @@ void exclusaoIterativo(Tree **raiz, Tree *e, Tree*pai){
 Tabela BuscaPreOrdem(FILE *file, int info){
     Tabela T, aux;
     Pilha *p;
+    int pos;
     char flag=1;
     fseek(file, 0, 0);
     fread(&T, sizeof(Tabela), 1, file);
@@ -245,11 +277,11 @@ Tabela BuscaPreOrdem(FILE *file, int info){
         }
     }
     if(!flag)return aux;
-    return NULL;
 }
-int BuscaIndex(FILE *file, int pai){
+int BuscaIndex(FILE *file, int info){
     Tabela T;
     int pos=0;
+    char flag = 1;
     rewind(file);
     while(fread(&T, sizeof(Tabela), 1, file)==1 && flag){
         if(T.info == info)flag=0;
@@ -257,49 +289,134 @@ int BuscaIndex(FILE *file, int pai){
     }
     return pos;
 }
-void exclusaoBinario(FILE *file, int filho, int pai){
-    Tabela e = BuscaPreOrdem(file, filho);
-    Tabela p = BuscaPreOrdem(file, pai);
+void apagarPorPos(FILE *file, int pos){
+    Tabela T;
+    fseek(file, 0, 2);
+    int total = ftell(file)/sizeof(Tabela);
+    for(int i=pos;i<total-1;i++){
+        fseek(file, (i+1)*sizeof(Tabela), 0);
+        fread(&T, sizeof(Tabela), 1, file);
+        fseek(file, i * sizeof(Tabela), 0);
+        fwrite(&T, sizeof(Tabela), 1, file);
+    }
+     #ifdef _WIN32
+        _chsize(_fileno(file), (total - 1) * sizeof(Tabela));
+    #else
+        ftruncate(fileno(file), (total - 1) * sizeof(Tabela));
+    #endif
+}
+void exclusaoIterativoBinario(FILE *file, int eInfo, int paiInfo){
+    Tabela e, pai, aux, paiAux, temp;
+    int posE = BuscaIndex(file, eInfo);
+    int posPai = BuscaIndex(file, paiInfo);
+    if(posE < 0) return;
+    if(posPai < 0) return;
+    fseek(file, posE * sizeof(Tabela), SEEK_SET);
+    fread(&e, sizeof(Tabela), 1, file);
+    fseek(file, posPai * sizeof(Tabela), SEEK_SET);
+    fread(&pai, sizeof(Tabela), 1, file);
     if(!e.esq && !e.dir){
-        fseek(file, p.esq * sizeof(Tabela), 0);
-        fread(&T, sizeof(Tabela), 1, file);
-        if(T.info == filho){
-            fseek(file, BuscaIndex(file, pai) * sizeof(Tabela), 0);
-            fread(&T, sizeof(Tabela), 1, file);
-            T.esq = 0;
-            fseek(file, BuscaIndex(file, pai) * sizeof(Tabela), 0);
-            fwrite(&T, sizeof(Tabela), 1, file);
-        }
-        fseek(file, p.dir * sizeof(Tabela), 0);
-        fread(&T, sizeof(Tabela), 1, file);
-        if(T.info == filho){
-            fseek(file, BuscaIndex(file, pai) * sizeof(Tabela), 0);
-            fread(&T, sizeof(Tabela), 1, file);
-            T.dir = 0;
-            fseek(file, BuscaIndex(file, pai) * sizeof(Tabela), 0);
-            fwrite(&T, sizeof(Tabela), 1, file);
-        }
-        int pos = BuscaIndex(file, filho);
-        fseek(file, 0, 2);
-        int posFinal = ftell(file)/sizeof(Tabela) - 1;
-        int k=0;
-        for(int i=pos;i<posFinal-1;i++){
-            T[i] = T[i+1];
-            ++k;
-        }
-        rewind(file);
-        fwrite(file, sizeof(Tabela), K-1, file);
+        if(pai.esq == posE) pai.esq = 0;
+        else pai.dir = 0;
+        fseek(file, posPai * sizeof(Tabela), SEEK_SET);
+        fwrite(&pai, sizeof(Tabela), 1, file);
+        apagarPorPos(file, posE);
+        return;
     }
+    else if(!e.esq || !e.dir){
+        int filho = (e.esq != 0 ? e.esq : e.dir);
+        if(pai.esq == posE) pai.esq = filho;
+        else pai.dir = filho;
+        fseek(file, posPai * sizeof(Tabela), SEEK_SET);
+        fwrite(&pai, sizeof(Tabela), 1, file);
+        apagarPorPos(file, posE);
+        return;
+    }
+    int posAux = e.esq;        // começa pelo maior da subárvore esquerda
+    int posPaiAux = posE;
+    fseek(file, posAux * sizeof(Tabela), SEEK_SET);
+    fread(&aux, sizeof(Tabela), 1, file);
+    paiAux = e;
+    while(aux.dir){
+        posPaiAux = posAux;
 
+        fseek(file, aux.dir * sizeof(Tabela), SEEK_SET);
+        fread(&aux, sizeof(Tabela), 1, file);
+
+        posAux = aux.dir;
+    }
+    e.info = aux.info;
+    fseek(file, posE * sizeof(Tabela), SEEK_SET);
+    fwrite(&e, sizeof(Tabela), 1, file);
+    fseek(file, posPaiAux * sizeof(Tabela), SEEK_SET);
+    fread(&paiAux, sizeof(Tabela), 1, file);
+    if(aux.esq)
+        paiAux.dir = aux.esq;
+    else
+        paiAux.dir = 0;
+    fseek(file, posPaiAux * sizeof(Tabela), SEEK_SET);
+    fwrite(&paiAux, sizeof(Tabela), 1, file);
+    apagarPorPos(file, posAux);
 }
-void exclusaoTabela(FILE *file, int filho, int pai){
-    Tabela t;
-    fseek(file, pos * sizeof(Tabela), 0);
-    fread(&t, sizeof(Tabela), 1, file);
-    (!t.esq && !t.dir){
-
+void busca(Tree *raiz, int aux, Tree **e, Tree **pai){
+    if(raiz){
+        if((raiz->esq && raiz->esq->info == aux) || (raiz->dir && raiz->dir->info == aux)){
+            *pai = raiz;
+            if(raiz->esq->info==aux)
+                *e = raiz->esq;
+            else
+                *e = raiz->dir;
+        }
+        else{
+            busca(raiz->esq, aux, e, pai);
+            if(!*pai)
+                busca(raiz->dir, aux, e, pai);
+        }
     }
 }
+int altura(Tree *no){
+    if (no == NULL) return 0;
+    int hE = altura(no->esq);
+    int hD = altura(no->dir);
+    return (hE > hD ? hE : hD) + 1;
+}
+int FB(Tree *no){
+    if (no == NULL) return 0;
+    int hE = altura(no->esq);
+    int hD = altura(no->dir);
+    return hE - hD;
+}
+void balanceamento(Tree **raiz){
+    if (*raiz == NULL) return;
+    FILA *f;
+    initF(&f);
+    Tree *no;
+    int qtdD, qtdE;
+    enqueueF(&f, *raiz);
+    while (!isEmptyF(f)){
+        dequeueF(&f, &no);
+        do {
+            qtdD = qtdE = 0;
+            int fb = FB(no);   // fator de balanceamento desse nó
+            if (fb < -1 || fb > 1){
+                int aux = no->info;
+                Tree *e, *pai;
+                e = pai = NULL; 
+                busca(*raiz, aux, &e, &pai);
+                if (fb < 0)
+                    exclusao(raiz, e, pai, 'e');
+                else
+                    exclusao(raiz, e, pai, 'd');
+                inserirArvoreABB(raiz, aux);
+            }
+        } while (FB(no) < -1 || FB(no) > 1);
+        if (no->esq)
+            enqueueF(&f, no->esq);
+        if (no->dir)
+            enqueueF(&f, no->dir);
+    }
+}
+
 void exibir(Tree *raiz, int x, int y, int dist){
     if(raiz){
         gotoxy(x, y);
@@ -395,7 +512,7 @@ void teste(){
         perror("Deu erro\n");
         return ;
     }
-    inserirArvoreABB(file, 5); puts("");
+    inserirArvoreABBbinario(file, 5); puts("");
     rewind(file);
     imprimirFile(file);
     fclose(file);
