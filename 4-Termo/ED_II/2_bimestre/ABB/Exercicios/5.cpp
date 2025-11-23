@@ -386,7 +386,7 @@ int FB(Tree *no){
     int hD = altura(no->dir);
     return hE - hD;
 }
-void balanceamento(Tree **raiz){
+void balanceamentoAVL(Tree **raiz){
     if (*raiz == NULL) return;
     FILA *f;
     initF(&f);
@@ -397,7 +397,7 @@ void balanceamento(Tree **raiz){
         dequeueF(&f, &no);
         do {
             qtdD = qtdE = 0;
-            int fb = FB(no);   // fator de balanceamento desse nó
+            int fb = FB(no);   
             if (fb < -1 || fb > 1){
                 int aux = no->info;
                 Tree *e, *pai;
