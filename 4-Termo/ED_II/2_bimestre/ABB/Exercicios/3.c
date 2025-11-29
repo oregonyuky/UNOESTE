@@ -32,6 +32,7 @@ Node *pop(Pilha *p) {
     return NULL;
 }
 
+
 void preOrdem(Node *head) {
     if (!head) return;
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "filaPilha.h"
 /********	ARVORE BINARIA DE BUSCA (ABB) 	*********/
 //Nessa arvore o filho da esquerda é sempre menor que o pai 
 //e o filho da direita é sempre maior.
@@ -14,21 +15,21 @@ struct no
 	No* esq;
 	No* dir;
 };
-typedef No* ArvBin;
+typedef No* Tree;
 
-//void init(ArvBin* raiz)
+//void init(Tree* raiz)
 //{
 //	*raiz = NULL;
 //}
-ArvBin* criaArvore()
+Tree* criaArvore()
 {
-	ArvBin* raiz = (ArvBin*) malloc(sizeof(ArvBin));
+	Tree* raiz = (Tree*) malloc(sizeof(Tree));
 	if(raiz != NULL)
 		*raiz = NULL;
 	return raiz;
 }
 
-void liberaNo(ArvBin no)
+void liberaNo(Tree no)
 {
 	if(no != NULL)
 	{
@@ -38,7 +39,7 @@ void liberaNo(ArvBin no)
 		no = NULL;
 	}
 }
-void liberaArvore(ArvBin* raiz)
+void liberaArvore(Tree* raiz)
 {
 	if(raiz != NULL)
 	{
@@ -48,12 +49,12 @@ void liberaArvore(ArvBin* raiz)
 	}
 }
 
-char vazia(ArvBin raiz)
+char vazia(Tree raiz)
 {
 	return raiz == NULL;
 }
 
-int altArvore(ArvBin* raiz)
+int altArvore(Tree* raiz)
 {
 	int altesq, altdir;
 
@@ -67,7 +68,7 @@ int altArvore(ArvBin* raiz)
 	return 0;
 }
 
-int totFolhas(ArvBin* raiz)
+int totFolhas(Tree* raiz)
 {
 	int totesq, totdir;
 	if(!vazia(*raiz))
@@ -84,7 +85,7 @@ int totFolhas(ArvBin* raiz)
 // Pós-Ordem: filho da direita, filho da esquerda e raiz. Garante que visitarei todos os filhos de uma arvore antes de chegar nela.
 //**********************************//
 
-void preOrdem(ArvBin* raiz)
+void preOrdem(Tree* raiz)
 {
 	if(!vazia(*raiz))
 	{
@@ -94,7 +95,7 @@ void preOrdem(ArvBin* raiz)
 	}
 }
 
-void emOrdem(ArvBin* raiz)
+void emOrdem(Tree* raiz)
 {
 	if(!vazia(*raiz))
 	{
@@ -104,7 +105,7 @@ void emOrdem(ArvBin* raiz)
 	}
 }
 
-void emOrdemDecres(ArvBin* raiz)
+void emOrdemDecres(Tree* raiz)
 {
 	if(!vazia(*raiz))
 	{
@@ -114,7 +115,7 @@ void emOrdemDecres(ArvBin* raiz)
 	}
 }
 
-void posOrdem(ArvBin* raiz)
+void posOrdem(Tree* raiz)
 {
 	if(!vazia(*raiz))
 	{
@@ -123,19 +124,19 @@ void posOrdem(ArvBin* raiz)
 		printf("%d\n", (*raiz)->info);		
 	}
 }
-ArvBin CriaNo(int info)
+Tree CriaNo(int info)
 {
-	ArvBin no = (ArvBin) malloc(sizeof(No));
+	Tree no = (Tree) malloc(sizeof(No));
 	no->info = info;
 	no->esq  = NULL;
-	no->dir  = NULL;xzcasdcasdas
+	no->dir  = NULL;
 }
 ////////////////////////////////////////////////////////
-char inserirABB(ArvBin* raiz, int valor)
+char inserirABB(Tree* raiz, int valor)
 {
-	ArvBin no;
-	ArvBin atual;
-	ArvBin ant;
+	Tree no;
+	Tree atual;
+	Tree ant;
 	if(vazia(*raiz))
 	{
 		*raiz = CriaNo(valor);
@@ -163,7 +164,7 @@ char inserirABB(ArvBin* raiz, int valor)
 	}
 	return 0;
 }
-void inserirABBR(ArvBin* raiz, int valor)
+void inserirABBR(Tree* raiz, int valor)
 {
 	if(vazia(*raiz))
 	{
@@ -175,9 +176,9 @@ void inserirABBR(ArvBin* raiz, int valor)
 		else
 			inserirABBR(&(*raiz)->dir, valor);
 }
-ArvBin removeFolha(ArvBin folha)
+Tree removeFolha(Tree folha)
 {
-	ArvBin no1, no2;
+	Tree no1, no2;
 	
 	if(folha->esq == NULL)
 	{
@@ -202,7 +203,7 @@ ArvBin removeFolha(ArvBin folha)
 	
 	return no2;
 }
-ArvBin  consultaABB_I(ArvBin* raiz, int valor, ArvBin aux)
+Tree  consultaABB_I(Tree* raiz, int valor, Tree aux)
 {
 	if(raiz != NULL)
 	{
@@ -218,7 +219,7 @@ ArvBin  consultaABB_I(ArvBin* raiz, int valor, ArvBin aux)
 	}
 	return aux;
 } 
-ArvBin consultaABB_R(ArvBin* raiz, int valor, ArvBin aux)
+Tree consultaABB_R(Tree* raiz, int valor, Tree aux)
 {
 	aux = *raiz;
 	if(aux != NULL)
@@ -234,7 +235,7 @@ ArvBin consultaABB_R(ArvBin* raiz, int valor, ArvBin aux)
 	return NULL;
 } 
 
-void consultaBurra(ArvBin raiz, int info, ArvBin* aux)
+void consultaBurra(Tree raiz, int info, Tree* aux)
 {
 	*aux = NULL;
 	if(!vazia(raiz))
@@ -249,7 +250,7 @@ void consultaBurra(ArvBin raiz, int info, ArvBin* aux)
 		}
 	}
 }
-void consultaBurraI(ArvBin raiz, int info, ArvBin* aux)
+void consultaBurraI(Tree raiz, int info, Tree* aux)
 {
 	while(raiz != NULL && info != raiz->info)
 	{
@@ -266,9 +267,9 @@ void consultaBurraI(ArvBin raiz, int info, ArvBin* aux)
 	- Exibir a arvore no formato de arvore (80/25)
 	- Pre-Ordem, In-Ordem e Pos-ordem interativo
 */
-ArvBin encontrarPai(ArvBin raiz, int folha)
+Tree encontrarPai(Tree raiz, int folha)
 {
-	ArvBin ant = raiz;
+	Tree ant = raiz;
 	while(raiz != NULL && folha != raiz->info)
 	{
 		ant = raiz;
@@ -302,47 +303,69 @@ ArvBin encontrarPai(ArvBin raiz, int folha)
 	30
 20		40
 */
-void exclusao(ArvBin* raiz, ArvBin e, ArvBin pai) //desenvolvido em aula
+
+void exclusao(Tree *raiz, Tree e, Tree pai, char lado)
 {
-	if ( e->esq == NULL && e->dir == NULL ) // é folha
-	{
-		if (e != pai)					//se não for pai
-			if ( e->info > pai->info)	//procuro em qual lado está ligado ao pai
-				pai->dir = NULL;
-			else
-				pai->esq = NULL;
-		else
-			*raiz = NULL;				//retiro a referencia
-		free(e);						//excluo o elemento
-	}
-	else 
-		if ( e->esq == NULL && e->dir == NULL)		//1 filho
-		{
-		
-		}
-		else											//2 filhos
-		{
-			
-		}
-	else								//substituto do lado direito
-	{
-		sub = e->dir;
-		paisub =e;
-		while ( sub->esq != NULL )
-		{
-			paisub = sub;
-			sub = sub->esq;
-		}
-		e->info = sub->info;
-		sub->info++;
-		exclusao(&*raoz, sub, paisub);
-	}
-	
+    Tree sub, paisub;
+    if (e->esq == NULL && e->dir == NULL)
+    {
+        if (e != pai)
+        {
+            if (e->info > pai->info)
+                pai->dir = NULL;
+            else
+                pai->esq = NULL;
+        }
+        else
+            *raiz = NULL;
+
+        free(e);
+        return;
+    }
+    if ((e->esq == NULL && e->dir != NULL) ||
+        (e->esq != NULL && e->dir == NULL))
+    {
+        Tree filho = (e->esq != NULL) ? e->esq : e->dir;
+        if (e != pai)
+        {
+            if (e->info > pai->info)
+                pai->dir = filho;
+            else
+                pai->esq = filho;
+        }
+        else
+            *raiz = filho;
+        free(e);
+        return;
+    }
+    if (lado == 'd')  
+    {
+        sub = e->dir;
+        paisub = e;
+        while (sub->esq != NULL)
+        {
+            paisub = sub;
+            sub = sub->esq;
+        }
+    }
+    else  // lado == 'e'
+    {
+        sub = e->esq;
+        paisub = e;
+        while (sub->dir != NULL)
+        {
+            paisub = sub;
+            sub = sub->dir;
+        }
+    }
+    e->info = sub->info;
+    exclusao(raiz, sub, paisub, lado);
 }
-char removeABB(ArvBin* raiz, int valor)
+
+char removeABB(Tree* raiz, int valor)
 {
-	ArvBin atual = *raiz;
-	ArvBin ant = NULL;
+	Tree atual = *raiz;
+	Tree ant = NULL;
 	if(raiz != NULL)
 	{
 		if(!vazia(*raiz))
@@ -376,29 +399,22 @@ char removeABB(ArvBin* raiz, int valor)
 Balanceamento
 */
 
-int qntNo(ArvBin* folha) //contar a quantidade nos
+int qntNo(Tree folha) //contar a quantidade nos
 {
-	if(folha != NULL)
-	{
-		int esq = qntNo(folha->esq);
-		int dir = qntNo(folha->esq);
-		
-		return esq + dir + 1;
-	}
+	if(folha != NULL)return qntNo(folha->esq) + qntNo(folha->dir) + 1;
 	return 0;
 }
 
-void balanceamento(ArvBin* raiz)
+void balanceamento(Tree **raiz)
 {
 	int qd, qe, fb, aux;
-	ArvBin r = *raiz, *e, *pai;
-	Fila *f;
-	init(&f);
-	enqueue(&f, *raiz);
-	
-	while(!isEmpty(f))
+	Tree r = *raiz, *e, *pai;
+	FILA *f;
+	initF(&f);
+	enqueueF(&f, *raiz);
+	while(!isEmptyF(f))
 	{
-		dequeue(&f, &r);
+		dequeueF(&f, &r);
 		do
 		{
 			qd = qntNo(r->dir);
@@ -419,20 +435,20 @@ void balanceamento(ArvBin* raiz)
 		}while(abs(fb) > 1);
 	
 		if(r->esq != NULL)
-			enqueue(&f, r->esq);
+			enqueueF(&f, r->esq);
 		else if(r->dir != NULL)
-			enqueue(&f, r->dir);
+			enqueueF(&f, r->dir);
 	}
 }
 /////////////////////////////////////////////
-void quantNo(T *raiz, int *count)
+void quantNo(Tree raiz, int *count)
 {
 	*count = 0;
 	Pilha *p;
 	initP(&p);
 
 	if(!vazia(raiz)){
-		push(&p,raiz);
+		push(&p, raiz);
 		(*count)++;
 		while(!isEmptyP(p))
 		{
@@ -452,10 +468,10 @@ void quantNo(T *raiz, int *count)
 	}
 }
 
-void buscaNo(T *raiz, int infopai, T **pai, T **e)
+void buscaNo(Tree raiz, int infopai, Tree *pai, Tree *e)
 {
 	Pilha *p;
-	bool sair = false;
+	char sair = 0;
 	initP(&p);
 
 	push(&p,raiz);
@@ -476,21 +492,21 @@ void buscaNo(T *raiz, int infopai, T **pai, T **e)
 		}
 		
 		if((*e)->info == infopai)
-			sair = true;
+			sair = 1;
 	}
 }
 
-void balanceamento(T **raiz)
+void balanceamento(Tree **raiz)
 {
-	T *r, *e, *pai, *aux;
+	Tree r, *e, *pai, *aux;
 	int qd, qe, fb, auxi;
 	
 	Fila *f;
-	init(&f);
-	enqueue(&f, *raiz);
-	while(!isEmpty(f))
+	initF(&f);
+	enqueueF(&f, *raiz);
+	while(!isEmptyF(f))
 	{
-		dequeue(&f, &r);
+		dequeueF(&f, &r);
 		do
 		{
 			qd = qe = 0;
@@ -502,27 +518,23 @@ void balanceamento(T **raiz)
 				auxi = r->info;
 				buscaNo(*raiz, auxi, &e, &pai);
 				
-				if(r->esq == NULL)
-					r = r->dir;
-				else
-					if(r->dir == NULL)
-						r = r->esq;
+				if(r->esq == NULL)r = r->dir;
+				else if(r->dir == NULL)r = r->esq;
 				
 				if(fb > 0)
-					exclusao(&*raiz, e, pai);
+					exclusao(&*raiz, e, pai, 'd');
 				else
-					exclusao(&*raiz, e, pai);
+					exclusao(&*raiz, e, pai, 'e');
 				
 				insereR(&*raiz, auxi);
 			}
-			
 		}while(abs(fb) > 1);
 	}
 }
 int main()
 {
-	ArvBin* raiz;
-	ArvBin aux;
+	Tree* raiz;
+	Tree aux;
 	raiz = criaArvore();
 	inserirABB(raiz, 100);
 	inserirABB(raiz, 60);

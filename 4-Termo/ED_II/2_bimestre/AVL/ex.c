@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "Pilha.h"
 
 typedef struct no No;
 
@@ -9,27 +10,27 @@ struct no
 	No* esq;
 	No* dir;
 };
-typedef No* ArvAVL;
+typedef No* Tree;
 
-ArvAVL* criaArvore()
+Tree* criaArvore()
 {
-	ArvAVL* raiz = (ArvAVL*) malloc(sizeof(ArvAVL));
+	Tree* raiz = (Tree*) malloc(sizeof(Tree));
 	if(raiz != NULL)
 		*raiz = NULL;
 	return raiz;
 }
 
-void liberaNo(ArvAVL no)
+void liberaNo(Tree *no)
 {
-	if(no != NULL)
+	if(*no != NULL)
 	{
-		liberaNo(no->esq);
-		liberaNo(no->dir);
-		free(no);
-		no = NULL;
+		liberaNo((*no)->esq);
+		liberaNo((*no)->dir);
+		free(*no);
+		*no = NULL;
 	}
 }
-void liberaArvore(ArvAVL* raiz)
+void liberaArvore(Tree* raiz)
 {
 	if(raiz != NULL)
 	{
@@ -39,23 +40,15 @@ void liberaArvore(ArvAVL* raiz)
 	}
 }
 
-char vazia(ArvAVL* raiz)
+char vazia(Tree* raiz)
 {
 	return *raiz == NULL;
 }
 
 int maior(int x, int y) {return (x>y)? x : y;}
 
-int getAlt(ArvAVL folha)
-{
-	if(no == NULL)
-		return -1;
-	return no->alt;
-}
 
-int fatorBalanceamento(ArvAVL folha) {return labs(getAlt(no->esq) - getAlt(no->dir));}
-
-int altArvore(ArvAVL* raiz)
+int altArvore(Tree* raiz)
 {
 	int altesq, altdir;
 
@@ -69,7 +62,7 @@ int altArvore(ArvAVL* raiz)
 	return 0;
 }
 
-int totFolhas(ArvAVL* raiz)
+int totFolhas(Tree* raiz)
 {
 	int totesq, totdir;
 	if(!vazia(raiz))
@@ -86,7 +79,7 @@ int totFolhas(ArvAVL* raiz)
 // Pós-Ordem: filho da direita, filho da esquerda e raiz. Garante que visitarei todos os filhos de uma arvore antes de chegar nela.
 //**********************************//
 
-void preOrdem(ArvAVL* raiz)
+void preOrdem(Tree* raiz)
 {
 	if(!vazia(raiz))
 	{
@@ -96,7 +89,7 @@ void preOrdem(ArvAVL* raiz)
 	}
 }
 
-void emOrdem(ArvAVL* raiz)
+void emOrdem(Tree* raiz)
 {
 	if(!vazia(raiz))
 	{
@@ -106,7 +99,7 @@ void emOrdem(ArvAVL* raiz)
 	}
 }
 
-void posOrdem(ArvAVL* raiz)
+void posOrdem(Tree* raiz)
 {
 	if(!vazia(raiz))
 	{
@@ -115,9 +108,9 @@ void posOrdem(ArvAVL* raiz)
 		printf("%d\n", (*raiz)->info);		
 	}
 }
-char consultaI(ArvAVL* raiz, int valor)
+char consultaI(Tree* raiz, int valor)
 {
-	ArvAVL aux;
+	Tree aux;
 	if(raiz != NULL)
 	{
 		aux = *raiz;
@@ -136,7 +129,7 @@ char consultaI(ArvAVL* raiz, int valor)
 } 
 // INTERATIVO
 
-void pre_ordem (ArvBin raiz)
+void pre_ordem (Tree raiz)
 {
 	Pilha *p;
 	init(&p);
@@ -160,7 +153,7 @@ void pre_ordem (ArvBin raiz)
 	}
 }
 
-void pre_ordem2(ArvBin raiz)
+void pre_ordem2(Tree raiz)
 {
 	Pilha *p;
 	init(&p);
@@ -178,11 +171,11 @@ void pre_ordem2(ArvBin raiz)
 			//raiz = NULL;
 	}
 }
-char consultaR(ArvAVL* raiz, int valor)
+char consultaR(Tree* raiz, int valor)
 {
 	if(raiz != NULL)
 	{
-		if(*raiz != NULL)`
+		if(*raiz != NULL)
 		{
 			if((*raiz)->info == valor)
 					return 1;
@@ -205,38 +198,38 @@ char consultaR(ArvAVL* raiz, int valor)
 // Se A = -2 e B = -1 >>>> RR (Rotação para Direita)
 // Se A = +2 e B = -1 >>>> LR (Rotação para Esquerda Direita)
 // Se A = -2 e B = +1 >>>> RL (Rotação para Direita Esquerda)
-void rotacaoLL(ArvBin* raiz)
+void rotacaoLL(Tree *raiz)
 {
-	ArvBin q, *temp;
+	Tree q, *temp;
 	q = (*raiz)->dir;
 	temp = q->esq;
 	q->esq = *raiz;
-	(*p)->dir = temp;
+	(*raiz)->dir = temp;
 	*raiz = q;
 }
-void rotacaoRR(ArvBin* raiz)
+void rotacaoRR(Tree *raiz)
 {
-	ArvBin q, *temp;
+	Tree q, *temp;
 	q = (*raiz)->esq;
 	temp = q->dir;
 	q->dir = *raiz;
-	raiz->esq = temp;
+	(*raiz)->esq = temp;
 	*raiz = q;
 }
 
-void rotacaoLR(ArvBin* p)
+void rotacaoLR(Tree *p)
 {
-	rotacaoLL(p);
-	rotacaoRR(p);
+	rotacaoLL(*p);
+	rotacaoRR(*p);
 }
 
-void rotacaoLR(ArvBin* p)
+void rotacaoLR(Tree *p)
 {
-	rotacaoRR(p);
-	rotacaoLL(p);
+	rotacaoRR(*p);
+	rotacaoLL(*p);
 }
 
-void insereAVL(ArvBin* raiz, int info, int* rot)
+void insereAVL(Tree *raiz, int info, int* rot)
 {
 	int fb, fbf;
 	if(vazia(*raiz))
@@ -258,7 +251,7 @@ void insereAVL(ArvBin* raiz, int info, int* rot)
 			if(fb == 2)
 			{
 				fbf = fatorBalanceamento((*raiz)->dir) - fatorBalanceamento((*raiz)->esq);
-				if(fb_filho == 1) //(2) (1)
+				if(fbf == 1) //(2) (1)
 					rotacaoLL(&*raiz);
 				else	//(2)(-1)
 				{
@@ -284,6 +277,6 @@ void insereAVL(ArvBin* raiz, int info, int* rot)
 
 int main()
 {
-	ArvAVL* raiz = criaArvore();
+	Tree* raiz = criaArvore();
 }
 
