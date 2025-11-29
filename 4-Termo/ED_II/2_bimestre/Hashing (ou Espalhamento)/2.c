@@ -81,8 +81,7 @@ void insereHashArq()
 			buscaHash(arq, reg.numero, &ender, &achou);
 			if(achou)
 				printf("Numero ja existente!\n");
-			else
-			{
+			else{
 				leReg(&reg);
 				reg.status = 1; reg.elo = 0;			
 				fseek(arq, ender*sizeof(Registro), 0);
