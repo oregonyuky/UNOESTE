@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "FilaPilha.h"
+#include "FilaPIlha.h"
 #define K 2
 KdTree *c(int a, int b){
     KdTree *n = (KdTree*)malloc(sizeof(KdTree*));
@@ -42,13 +42,48 @@ void buscaP(KdTree *r, int ponto[K], int d, int raio){
     }
 }
 void buscaPIterativo(KdTree *r, int ponto[K], int raio){
-    
+    KdTree *aux;
+    PilhaP *pN;
+    Pilha *pD; int d;
+    initP(&pN);
+    init(&pD);
+    pushP(&pN, r);
+    push(&pD, 0);
+    while(!isEmptyP(pN)){
+        popP(&pN, &aux);
+        pop(&pD, &d);
+        if(!aux)continue;
+        char dd = ponto[d] > aux->ponto[d];
+        if(dd && aux->dir){
+            pushP(&pN, aux->dir);
+            push(&pD, (d+1)%K);
+        }
+        else if(!dd && aux->esq){
+            pushP(&pN, aux->esq);
+            push(&pD, (d+1)%K);
+        }
+        if(dist(aux, ponto) <= raio){
+            printf("(%d, %d) ", aux->ponto[0], aux->ponto[1]);
+        }
+        int de = abs(ponto[d] - aux->ponto[d]);
+        if(de < raio){
+            if(!dd && aux->dir){
+                pushP(&pN, aux->dir);
+                push(&pD, (d+1)%K);
+            }
+            else if(dd && aux->esq){
+                pushP(&pN, aux->esq);
+                push(&pD, (d+1)%K);
+            }
+        }
+    }
 }
 int main() {
     KdTree *t = NULL;
     jaInserir(&t);
     int ponto[2] = {3, 2};
-    buscaP(t, ponto, 0, 2);
+    buscaPIterativo(t, ponto, 2); puts("");
+    //buscaP(t, ponto, 0, 2); puts("");
 
     return 0;
 }

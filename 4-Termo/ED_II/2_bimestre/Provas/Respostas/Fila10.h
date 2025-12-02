@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 typedef struct No {
     int dado;
     struct No *prox;
@@ -97,15 +98,14 @@ void dequeueFF(FILA **fila, Tree **removido) {
     free(aux);
 }
 
-typedef struct Func{
-    struct Func *esq, *dir;
-    int pos; // Posição/dado do funcionário no nó
-} Func;
-
+typedef struct cidades{
+    char cidade[50];
+    cidades *esq, *dir, *prim;
+} Cidades;
 #define MAX_PILHA 100 // Tamanho máximo da pilha
 
 typedef struct PilhaP {
-    Func *itens[MAX_PILHA]; // Array de ponteiros para Func
+    Cidades *itens[MAX_PILHA]; // Array de ponteiros para Func
     int topo;              // Índice do topo da pilha
 } PilhaP;
 
@@ -114,6 +114,7 @@ typedef struct PilhaP {
 void initPP(PilhaP **p) {
     *p = (PilhaP *)malloc(sizeof(PilhaP));
     if (*p == NULL) {
+        printf("Erro de alocacao de memoria para a PilhaP.\n");
         exit(1);
     }
     (*p)->topo = -1;
@@ -133,18 +134,19 @@ int isFullPP(PilhaP *p) {
     return p->topo == MAX_PILHA - 1;
 }
 
-void pushPP(PilhaP **p, Func *item) {
+void pushPP(PilhaP **p, Cidades *item) {
     if (*p == NULL) {
         initPP(p);
     }
     if (isFullPP(*p)) {
+        printf("Erro: Pilha Cheia! Nao foi possivel inserir o item.\n");
         return;
     }
     (*p)->topo++;
     (*p)->itens[(*p)->topo] = item;
 }
 
-int popPP(PilhaP **p, Func **item) {
+int popPP(PilhaP **p, Cidades **item) {
     if (*p == NULL || isEmptyPP(*p)) {
         *item = NULL;
         return 0;
